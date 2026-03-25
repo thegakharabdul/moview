@@ -24,6 +24,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_BASE_PATH: /moview/
         run: npm run build
 
       - name: Deploy to GitHub Pages
