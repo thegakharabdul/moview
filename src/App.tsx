@@ -386,6 +386,17 @@ const catalog: Show[] = [
     ownerReview:
       'A rare sequel that expands the original with astonishing visuals and meditative pacing.',
   },
+  {
+    id: 'nuremberg-2025',
+    title: 'Nuremberg 2025',
+    type: 'Movie',
+    year: 2025,
+    genre: 'Historical / Drama',
+    rating: 8.0,
+  imageUrl: '/nuremberg.jpg',
+    ownerReview:
+      'A powerful and thought-provoking depiction of a pivotal historical moment. Strong performances and meticulous production design make it a standout.',
+  },
 ]
 
 const storageKey = 'moview-feedback-v1'
