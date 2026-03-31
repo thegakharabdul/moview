@@ -301,6 +301,35 @@
   color: var(--muted-text);
 }
 
+.region-section {
+  border-radius: 18px;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, rgba(26, 26, 26, 0.4), rgba(12, 12, 12, 0.3));
+  backdrop-filter: blur(8px);
+  display: grid;
+  gap: 1.2rem;
+}
+
+.region-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.region-header h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--brand-red);
+}
+
+.region-header p {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: 0.95rem;
+}
+
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
