@@ -609,6 +609,19 @@ const catalog: Show[] = [
       'Amar Kaushik created a werewolf comedy that blends Indian mythology with contemporary horror. Varun Dhawan\'s transformation sequence parallels moral compromise. The film uses body-horror humor to explore identity and belonging. While occasionally uneven tonally, the film\'s heart lies in celebrating difference rather than mocking it. A charming mess of a movie.',
   },
   {
+    id: 'dhamaal',
+    title: 'Dhamaal',
+    type: 'Movie',
+    year: 2007,
+    genre: 'Comedy / Adventure',
+    rating: 7.5,
+    imageUrl: '/dhamaal.jpg',
+    region: 'Bollywood',
+    ownerReview:
+      'Dhamaal works as a fast-paced ensemble comedy where greed, friendship, and bad luck keep colliding in increasingly ridiculous ways. The treasure-hunt premise is simple but effective, giving the narrative a clear engine while still leaving room for absurd detours and character-driven humor. Cinematography is colorful and energetic, using wide group compositions and practical-location staging to highlight chaos rather than elegance, which suits the film\'s slapstick tone. The visual language is straightforward but lively, with editing that keeps the jokes moving quickly and prevents repetitive gags from stalling momentum. Performances are the film\'s core strength: the lead cast commits fully to physical comedy, timing, and comic frustration, while supporting actors amplify the madness without stealing focus. It is not a subtle film, but it is confidently entertaining and remains one of the more rewatchable mainstream Bollywood comedies of its era.',
+    rottenTomatoesScore: 74,
+  },
+  {
     id: 'phir-hera-pheri',
     title: 'Phir Hera Pheri',
     type: 'Movie',
