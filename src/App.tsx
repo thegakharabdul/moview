@@ -417,7 +417,7 @@ const catalog: Show[] = [
     year: 2026,
     genre: 'Action / Thriller',
     rating: 8.5,
-    imageUrl: PLACEHOLDER_IMAGE,
+    imageUrl: '/war machine.jpg',
     ownerReview:
       'An intense action thriller that delivers high stakes and explosive sequences.',
   },
