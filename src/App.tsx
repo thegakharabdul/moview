@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import './App.css'
 
 type ShowType = 'Movie' | 'Series' | 'Show'
-type Region = 'Hollywood' | 'Bollywood' | 'Lollywood'
+type Region = 'Hollywood' | 'Bollywood' | 'Lollywood' | 'Korean'
 
 type Show = {
   id: string
@@ -37,7 +37,7 @@ function resolveImageUrl(show: Show): string {
     return show.imageUrl
   }
 
-  if (show.region === 'Bollywood' || show.region === 'Lollywood') {
+  if (show.region === 'Bollywood' || show.region === 'Lollywood' || show.region === 'Korean') {
     return LOCAL_FALLBACK_POSTER
   }
 
@@ -59,6 +59,45 @@ const catalog: Show[] = [
     ownerReview:
       'A relentless geopolitical thriller that treats global conflict with surprising nuance for an action vehicle. The protagonist is not a hero but a soldier caught between ideological factions. The action sequences are visceral and grounded—no superhero physics, just human bodies breaking under force. The screenplay integrates contemporary anxieties about military intervention without becoming preachy. Pacing builds relentlessly toward a climax that raises moral questions rather than celebrating victory. An action film that wants to say something about power, consequence, and human cost.',
     rottenTomatoesScore: 82,
+  },
+  {
+    id: 'avatar-3',
+    title: 'Avatar 3',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Sci-Fi / Adventure',
+    rating: 8.4,
+    imageUrl: '/avatar 3.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'James Cameron expands Pandora with a story that deepens the moral ambiguity of the Na\'vi-human conflict instead of repeating earlier beats. The screenplay balances large-scale worldbuilding with an intimate family core, giving emotional stakes to every set piece. Cinematography is consistently immersive, with fluid camera movement through volcanic biomes and bioluminescent nightscapes that feel tactile rather than purely digital. The visual effects remain industry-leading, but what elevates the film is how performance capture translates subtle facial emotion into fully believable character drama. Sam Worthington and Zoe Saldana anchor the film with mature, grounded work, while the ensemble brings distinct energy to newer clans and rival perspectives. The result is a visually astonishing chapter that still finds room for character-driven storytelling.',
+    rottenTomatoesScore: 84,
+  },
+  {
+    id: 'avatar-2',
+    title: 'Avatar 2',
+    type: 'Movie',
+    year: 2022,
+    genre: 'Sci-Fi / Adventure',
+    rating: 8.1,
+    imageUrl: '/avatar 2.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Avatar: The Way of Water reframes the franchise as a family survival epic, shifting from frontier conquest to questions of belonging, migration, and legacy. Cameron\'s direction is patient, allowing scenes to breathe so that the oceanic ecosystem of Pandora feels lived-in and spiritually coherent. Underwater cinematography is the technical highlight, with layered depth, color gradients, and movement that create a genuine sense of awe. Simon Franglen\'s score complements the visuals without overwhelming the emotional beats, and the editing maintains momentum despite the long runtime by alternating spectacle with character-focused scenes. Sam Worthington, Zoe Saldana, and Sigourney Weaver deliver emotionally credible performances that make the quieter family conflicts resonate as strongly as the action. A grand sequel that marries technical ambition with heartfelt drama.',
+    rottenTomatoesScore: 76,
+  },
+  {
+    id: 'avatar-1',
+    title: 'Avatar',
+    type: 'Movie',
+    year: 2009,
+    genre: 'Sci-Fi / Adventure',
+    rating: 8.0,
+    imageUrl: '/avatar.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Avatar succeeds as blockbuster cinema because it fuses familiar mythic storytelling with revolutionary visual language. The premise is straightforward but effective: a soldier enters an alien world and is forced to choose between imperial loyalty and moral awakening. Cameron stages Pandora as both fantasy and ecological warning, using wide panoramic compositions and luminous production design to make the environment feel sacred and vulnerable. The film\'s pacing is deliberate in its first half, investing in cultural detail before escalating into high-impact action with clear spatial geography. Sam Worthington brings physical commitment to Jake\'s transformation, while Zoe Saldana gives Neytiri emotional precision that grounds the romance. Sigourney Weaver and Stephen Lang sharpen the ideological conflict from opposite ends. Its narrative blueprint is classical, but its craft remains landmark-level spectacle.',
+    rottenTomatoesScore: 81,
   },
   {
     id: 'nuremberg-2025',
@@ -228,11 +267,24 @@ const catalog: Show[] = [
     year: 2019,
     genre: 'Thriller / Social Satire',
     rating: 9.2,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg',
-    region: 'Hollywood',
+    imageUrl: '/parasite.jpg',
+    region: 'Korean',
     ownerReview:
       'Bong Joon-ho\'s masterpiece weaponizes genre to expose class fractures with surgical precision. The Kim family\'s infiltration of the wealthy Park household starts as darkly comic and escalates into something genuinely devastating. Every prop and architectural detail carries thematic weight about affluence and inequality. Song Kang-ho\'s performance captures a man maintaining dignity while losing everything. The film refuses easy heroes or villains. Won Best Picture by defeating prestige favorites—richly deserved.',
     rottenTomatoesScore: 98,
+  },
+  {
+    id: 'train-to-busan',
+    title: 'Train to Busan',
+    type: 'Movie',
+    year: 2016,
+    genre: 'Action / Horror',
+    rating: 8.3,
+    imageUrl: '/train to busan.jpg',
+    region: 'Korean',
+    ownerReview:
+      'Yeon Sang-ho turns a zombie outbreak thriller into an emotional story about selfishness, sacrifice, and social responsibility. Set mostly inside a speeding train, the film uses confined spaces and sharp blocking to create relentless tension while still giving each character a clear emotional arc. Gong Yoo anchors the narrative with a convincing transformation from detached businessman to protective father, and Ma Dong-seok delivers a standout supporting performance full of grit and warmth. The pacing is tight, the action geography is easy to follow, and the final act lands with real pathos. A genre film with both visceral thrills and genuine heart.',
+    rottenTomatoesScore: 95,
   },
   {
     id: 'the-boys',
@@ -480,45 +532,6 @@ const catalog: Show[] = [
     ownerReview:
       'A surprisingly effective family comedy that earns its emotional beats through genuine character work. Jamie Lee Curtis and Lindsay Lohan create electric chemistry. The script smartly uses the body swap to force both characters to walk in each other\'s shoes, building empathy through comic situations. The film avoids schmaltz despite inherent sentimentality, keeping things breezy and entertaining. A reliable choice for family viewing that surprisingly holds up to nostalgia and affection.',
     rottenTomatoesScore: 61,
-  },
-  {
-    id: 'back-to-the-future',
-    title: 'Back to the Future',
-    type: 'Movie',
-    year: 1985,
-    genre: 'Comedy / Sci-Fi',
-    rating: 8.5,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/nTEz3FxB7yX1yVlNdYL2vQwt8EJ.jpg',
-    region: 'Hollywood',
-    ownerReview:
-      'Robert Zemeckis created the perfect blockbuster—a time-travel romp with genuine emotional stakes. Christopher Lloyd\'s crazed scientist and Michael J. Fox\'s enthusiastic teenager have perfect chemistry. The script respects temporal logic while maintaining breakneck pacing. Every frame crackles with energy. The film became a cultural phenomenon because it nailed the formula: spectacle, humor, sentiment, and adventure. Three films, and only the first truly satisfied all components.',
-    rottenTomatoesScore: 85,
-  },
-  {
-    id: 'jaws',
-    title: 'Jaws',
-    type: 'Movie',
-    year: 1975,
-    genre: 'Thriller / Horror',
-    rating: 8.0,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/V3N0bFXEzFurR1CqrSNKSbLlc8q.jpg',
-    region: 'Hollywood',
-    ownerReview:
-      'Spielberg\'s debut feature essentially created the modern blockbuster. Forced to work with a malfunctioning mechanical shark, Spielberg crafted suspense through suggestion, music, and editing rather than spectacle. The small-town politics subplot grounds the horror in human conflict. Roy Scheider, Robert Shaw, and Richard Dreyfuss create palpable tension. Pacing builds relentlessly across two hours. The minimalist approach paradoxically creates maximum dread. Essential cinema.',
-    rottenTomatoesScore: 93,
-  },
-  {
-    id: 'casablanca',
-    title: 'Casablanca',
-    type: 'Movie',
-    year: 1942,
-    genre: 'Drama / Romance',
-    rating: 8.5,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/gJB8gxLkDTZHZVJN1Z8SevumBS1.jpg',
-    region: 'Hollywood',
-    ownerReview:
-      'Michael Curtiz created a wartime romance that transcends its historical moment to speak to timeless themes of love, sacrifice, and duty. Humphrey Bogart and Ingrid Bergman create electric tension while maintaining emotional restraint befitting the era. The supporting cast—Peter Lorre, Claude Rains, Sydney Greenstreet—provides rich character texture. Every scene crackles with purpose. The ending remains devastating precisely because it refuses sentimentality. Essential cinema.',
-    rottenTomatoesScore: 97,
   },
   // ========== BOLLYWOOD ==========
   {
@@ -958,6 +971,7 @@ const regionOptions: SelectOption<RegionFilter>[] = [
   { value: 'Hollywood', label: 'Hollywood' },
   { value: 'Bollywood', label: 'Bollywood' },
   { value: 'Lollywood', label: 'Lollywood' },
+  { value: 'Korean', label: 'Korean' },
 ]
 
 const categoryOptions: SelectOption<CategoryFilter>[] = [
@@ -1259,7 +1273,7 @@ function App() {
 
           {region === 'All' ? (
             <>
-              {(['Hollywood', 'Bollywood', 'Lollywood'] as const).map((regionName) => {
+              {(['Hollywood', 'Bollywood', 'Lollywood', 'Korean'] as const).map((regionName) => {
                 const regionShows = filteredAndSortedCatalog.filter(
                   (show) => show.region === regionName,
                 )
