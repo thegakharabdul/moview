@@ -27,6 +27,8 @@ type SelectOption<T extends string> = {
   label: string
 }
 
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="450"%3E%3Crect fill="%23333" width="300" height="450"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="16" font-family="Arial"%3EImage not available%3C/text%3E%3C/svg%3E'
+
 const catalog: Show[] = [
   {
     id: 'stranger-things',
@@ -408,6 +410,17 @@ const catalog: Show[] = [
     ownerReview:
       'A powerful and thought-provoking depiction of a pivotal historical moment. Strong performances and meticulous production design make it a standout.',
   },
+  {
+    id: 'war-machine-2026',
+    title: 'War Machine',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Action / Thriller',
+    rating: 8.5,
+    imageUrl: 'https://via.placeholder.com/300x450/222/999?text=War+Machine+2026',
+    ownerReview:
+      'An intense action thriller that delivers high stakes and explosive sequences.',
+  },
 ]
 
 const storageKey = 'moview-feedback-v1'
@@ -558,6 +571,13 @@ function App() {
     })
   }
 
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget
+    if (img.src !== PLACEHOLDER_IMAGE) {
+      img.src = PLACEHOLDER_IMAGE
+    }
+  }
+
   return (
     <div className="page-shell">
       <header className="site-nav">
@@ -627,7 +647,7 @@ function App() {
             <div className="row-scroller">
               {topRated.map((show) => (
                 <article key={show.id} className="show-card mini" onClick={() => openShowDetails(show.id)}>
-                  <img src={show.imageUrl} alt={show.title} className="show-poster" />
+                  <img src={show.imageUrl} alt={show.title} className="show-poster" onError={handleImageError} />
                   <div className="card-overlay">
                     <h3>{show.title}</h3>
                     <p className="genre">{show.genre}</p>
@@ -646,7 +666,7 @@ function App() {
             <div className="row-scroller">
               {latestDrops.map((show) => (
                 <article key={show.id} className="show-card mini" onClick={() => openShowDetails(show.id)}>
-                  <img src={show.imageUrl} alt={show.title} className="show-poster" />
+                  <img src={show.imageUrl} alt={show.title} className="show-poster" onError={handleImageError} />
                   <div className="card-overlay">
                     <h3>{show.title}</h3>
                     <p className="genre">{show.year} • {show.type}</p>
@@ -689,7 +709,7 @@ function App() {
             {filteredAndSortedCatalog.map((show) => {
               return (
                 <article key={show.id} className="show-card">
-                  <img src={show.imageUrl} alt={show.title} className="show-poster" />
+                  <img src={show.imageUrl} alt={show.title} className="show-poster" onError={handleImageError} />
                   <div className="card-overlay">
                     <div className="show-header">
                       <p className="type-tag">{show.type}</p>
@@ -760,7 +780,7 @@ function App() {
 
             <p className="modal-hint">Tip: click outside this panel to close</p>
 
-            <img src={activeShow.imageUrl} alt={activeShow.title} className="modal-poster" />
+            <img src={activeShow.imageUrl} alt={activeShow.title} className="modal-poster" onError={handleImageError} />
 
             <div className="modal-meta">
               <p className="type-tag">{activeShow.type}</p>
