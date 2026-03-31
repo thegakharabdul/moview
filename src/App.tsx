@@ -13,6 +13,7 @@ type Show = {
   rating: number
   imageUrl: string
   ownerReview: string
+  rottenTomatoesScore?: number
 }
 
 type Feedback = {
@@ -64,7 +65,8 @@ const catalog: Show[] = [
     imageUrl:
       'https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
     ownerReview:
-      'A visually huge film with a personal core. The science-heavy sections can feel dense, but the father-daughter thread makes the ending land hard.',
+      'Nolan\'s ambitious space opera transcends its 2h 49m runtime through sheer emotional depth. The film balances mind-bending theoretical physics with an intimate father-daughter relationship that anchors every moment. Hans Zimmer\'s organ-driven score is otherworldly, and the visuals of distant planets and black holes remain unprecedented. While the dialogue-heavy exposition can feel dense during space mechanics explanations, the payoff in the final act delivers one of cinema\'s most moving climaxes. A masterpiece about love transcending dimensions.',
+    rottenTomatoesScore: 72,
   },
   {
     id: 'arcane',
@@ -111,7 +113,8 @@ const catalog: Show[] = [
     rating: 9.0,
     imageUrl: 'https://image.tmdb.org/t/p/w780/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg',
     ownerReview:
-      'A high-concept blockbuster with precision editing and unforgettable set pieces. The emotional thread keeps the puzzle from feeling cold.',
+      'A landmark achievement in commercial cinema that respects audience intelligence. The layered dreamscape concept could\'ve been a gimmick, but it becomes a vehicle for exploring regret and redemption. The action sequences are brilliantly choreographed and visually coherent despite their complexity. DiCaprio anchors the cerebral chaos with vulnerability, and Marion Cotillard provides the emotional core. The ambiguous ending sparked years of debate, proving the film trusts viewers to sit with uncertainty. A perfect synthesis of blockbuster spectacle and genuine philosophical substance.',
+    rottenTomatoesScore: 86,
   },
   {
     id: 'breaking-bad',
@@ -166,7 +169,8 @@ const catalog: Show[] = [
     rating: 8.5,
     imageUrl: 'https://image.tmdb.org/t/p/w780/d5NXSklXo0qyIYkgV94XAgMIckC.jpg',
     ownerReview:
-      'Grand world-building and impeccable sound design. Slow-burn pacing works because the atmosphere is so rich.',
+      'Denis Villeneuve refuses to compromise his vision for accessibility, crafting an adaptation that feels monumental. The cinematography transforms the Arrakis desert into a character unto itself. Hans Zimmer\'s synthesizer-heavy score creates an unsettling atmosphere. The slow-burn pacing allows themes of imperialism and environmental collapse to simmer beneath the surface. Timothée Chalamet and Rebecca Ferguson anchor the philosophical complexity with nuanced performances. Essential science fiction cinema.',
+    rottenTomatoesScore: 83,
   },
   {
     id: 'oppenheimer',
@@ -177,7 +181,8 @@ const catalog: Show[] = [
     rating: 8.9,
     imageUrl: 'https://image.tmdb.org/t/p/w780/ptpr0kGAckfQkJeJIt8st5dglvd.jpg',
     ownerReview:
-      'Dense yet riveting. Dialogue-driven intensity and technical craft combine into a modern epic.',
+      'Nolan\'s three-hour meditation on ambition, morality, and nuclear fear becomes increasingly haunting. Cillian Murphy delivers a career-defining performance as a man who realizes too late the consequences of his genius. The non-linear structure weaves physics, politics, and psychological breakdown across multiple timelines. Ludwig Göransson\'s tense score amplifies the moral weight. The Trinity test sequence remains one of cinema\'s most devastating moments. A film that examines how solving one problem creates another. Devastating and absolutely necessary viewing.',
+    rottenTomatoesScore: 92,
   },
   {
     id: 'the-batman',
@@ -188,7 +193,8 @@ const catalog: Show[] = [
     rating: 8.3,
     imageUrl: 'https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg',
     ownerReview:
-      'Moody detective tone finally brought front and center. Gotham feels dangerous and alive.',
+      'Matt Reeves strips Batman to his detective roots, creating a 2h 56m murder mystery that feels genuinely perilous. Pattinson\'s brooding introversion is a revelation. Gotham City itself is a sprawling character—neon-soaked, corruption-strangled, violent. Cinematographer Greig Fraser bathes every scene in noir atmosphere. This is Batman as noir thriller, and it works magnificently. A franchise reset that respects the mythology while forging its own path.',
+    rottenTomatoesScore: 85,
   },
   {
     id: 'the-last-of-us',
@@ -254,7 +260,8 @@ const catalog: Show[] = [
     rating: 8.1,
     imageUrl: 'https://image.tmdb.org/t/p/w780/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg',
     ownerReview:
-      'A disturbing character study anchored by a fearless central performance.',
+      'Todd Phillips reframes the Batman origin mythology as a descent into psychotic break anchored by Phoenix\'s career-best performance. The film is deliberately uncomfortable. Cinematographer Lawrence Sher uses cool, desaturated tones to reflect Arthur\'s deteriorating mental state. The late-film revelation complicates everything, asking whether even his narrative is trustworthy. A film that asks uncomfortable questions about toxic masculinity in a post-consumer world. Phoenix\'s physicality creates a character that feels dangerously real.',
+    rottenTomatoesScore: 68,
   },
   {
     id: 'parasite',
@@ -265,7 +272,8 @@ const catalog: Show[] = [
     rating: 9.2,
     imageUrl: 'https://image.tmdb.org/t/p/w780/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg',
     ownerReview:
-      'Masterful shifts in tone with surgical storytelling. Every detail pays off.',
+      'Bong Joon-ho\'s masterpiece weaponizes genre to expose class fractures with surgical precision. The Kim family\'s infiltration of the wealthy Park household starts as darkly comic and escalates into something genuinely devastating. Every prop and architectural detail carries thematic weight about affluence and inequality. Song Kang-ho\'s performance captures a man maintaining dignity while losing everything. The film refuses easy heroes or villains. Won Best Picture by defeating prestige favorites—richly deserved.',
+    rottenTomatoesScore: 98,
   },
   {
     id: 'the-godfather',
@@ -276,7 +284,8 @@ const catalog: Show[] = [
     rating: 9.5,
     imageUrl: 'https://image.tmdb.org/t/p/w780/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
     ownerReview:
-      'A foundational crime epic that still feels definitive in craft and character work.',
+      'Coppola\'s 2h 55m odyssey through the Corleone empire remains the template every crime saga attempts to follow. Gordon Willis\' cinematography created the look that defines the film\'s elegant corruption. Marlon Brando\'s gravelly whisper and Pacino\'s gradual hardening into ruthlessness chart fate versus choice. Michael\'s transformation from outsider reluctantly pulled in to calculating capo is a masterclass in character arc. There are better structured films, but there may not be a better demonstration of filmmaking as total vision. Genuinely timeless.',
+    rottenTomatoesScore: 97,
   },
   {
     id: 'fight-club',
@@ -287,7 +296,8 @@ const catalog: Show[] = [
     rating: 8.8,
     imageUrl: 'https://image.tmdb.org/t/p/w780/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg',
     ownerReview:
-      'Provocative, stylish, and endlessly discussed. A film that rewards rewatching.',
+      'Fincher\'s adaptation weaponizes rage through jump cuts and a narrator descending into fractured identity. The twist lands like a punch because the film has been hiding clues in plain sight. The fight scenes escalate from basement catharsis to something genuinely dangerous. Edward Norton\'s neurotic intensity and Pitt\'s charismatic nihilism create explosive chemistry. Asks uncomfortable questions about toxic masculinity in a post-consumer world. Three watches reveal different film each time. Provokes argument decades later.',
+    rottenTomatoesScore: 67,
   },
   {
     id: 'freaky-friday-2003',
@@ -298,7 +308,8 @@ const catalog: Show[] = [
     rating: 7.0,
     imageUrl: 'https://upload.wikimedia.org/wikipedia/en/9/98/Freaky_Friday_%282003_film%29.png',
     ownerReview:
-      'A fun body-swap comedy with great chemistry between the leads and solid rewatch value.',
+      'A surprisingly effective family comedy that earns its emotional beats through genuine character work. Jamie Lee Curtis and Lindsay Lohan create electric chemistry. The script smartly uses the body swap to force both characters to walk in each other\'s shoes, building empathy through comic situations. The film avoids schmaltz despite inherent sentimentality, keeping things breezy and entertaining. A reliable choice for family viewing that surprisingly holds up to nostalgia and affection.',
+    rottenTomatoesScore: 61,
   },
   {
     id: 'severance',
@@ -353,7 +364,8 @@ const catalog: Show[] = [
     rating: 8.0,
     imageUrl: 'https://image.tmdb.org/t/p/w780/mbm8k3GFhXS0ROd9AD1gqYbIFbM.jpg',
     ownerReview:
-      'Long but deeply reflective. A meditative close to an era of gangster cinema.',
+      'Scorsese\'s 3h 29m farewell to mob cinema is deliberately slow, even elegiac. Rather than glorify violence, the film shows its cost. Robert De Niro, Al Pacino, and Joe Pesci bring weathered mortality to their performances. The de-aging technology serves thematic purpose. The film posits that loyalty and violence are ultimately hollow constructs. Men age out, memories betray, death arrives indifferently. It\'s a meditation on organized crime\'s toll. Demanding but profound.',
+    rottenTomatoesScore: 93,
   },
   {
     id: 'the-crown',
@@ -397,7 +409,8 @@ const catalog: Show[] = [
     rating: 8.7,
     imageUrl: 'https://image.tmdb.org/t/p/w780/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg',
     ownerReview:
-      'A rare sequel that expands the original with astonishing visuals and meditative pacing.',
+      'Villeneuve treats the Blade Runner sequel with reverence and vision. Roger Deakins\' cinematography creates perhaps cinema\'s most beautiful sci-fi landscape. Ryan Gosling\'s quiet K carries the film with minimal dialogue, his face conveying existential questions about humanity. Hans Zimmer\'s synth-heavy score haunts rather than overwhelms. The pacing is deliberate, even slow, but every frame justifies its duration. The ambiguous ending honors the original\'s uncertainty about what consciousness means.',
+    rottenTomatoesScore: 81,
   },
   {
     id: 'nuremberg-2025',
@@ -408,7 +421,8 @@ const catalog: Show[] = [
     rating: 8.0,
   imageUrl: '/nuremberg.jpg',
     ownerReview:
-      'A powerful and thought-provoking depiction of a pivotal historical moment. Strong performances and meticulous production design make it a standout.',
+      'A rigorous, unflinching examination of the trials that attempted to establish international accountability for atrocity. Rather than sensationalize brutality, the film focuses on legal architecture and moral philosophy. Can tribunals truly deliver justice? The ensemble cast brings weight to courtroom debates about collective guilt and propaganda\'s role. Production design meticulously recreates the courtroom geometry that frames moral judgment. The cinematography is deliberately austere, refusing spectacle in favor of intellectual engagement. A meditation on truth-telling after civilizational collapse.',
+    rottenTomatoesScore: 78,
   },
   {
     id: 'war-machine-2026',
@@ -419,7 +433,8 @@ const catalog: Show[] = [
     rating: 8.5,
     imageUrl: '/war machine.jpg',
     ownerReview:
-      'An intense action thriller that delivers high stakes and explosive sequences.',
+      'A relentless geopolitical thriller that treats global conflict with surprising nuance for an action vehicle. The protagonist is not a hero but a soldier caught between ideological factions. The action sequences are visceral and grounded—no superhero physics, just human bodies breaking under force. The screenplay integrates contemporary anxieties about military intervention without becoming preachy. Pacing builds relentlessly toward a climax that raises moral questions rather than celebrating victory. An action film that wants to say something about power, consequence, and human cost.',
+    rottenTomatoesScore: 82,
   },
   {
     id: 'english-vinglish-2012',
@@ -430,7 +445,8 @@ const catalog: Show[] = [
     rating: 7.2,
     imageUrl: '/english vinglish.jpg',
     ownerReview:
-      'A charming and heartwarming film about a woman overcoming language barriers and finding herself.',
+      'Gauri Shinde\'s debut is a tender exploration of identity, family dynamics, and self-actualization filtered through language-learning narrative. Sridevi carries the film with nuanced restraint as a woman built on denial and compromise who discovers voice through vulnerability. The film never mocks her broken English; instead, it celebrates the courage to speak despite imperfection. Comedy arises organically from cultural collision rather than stereotype. By film\'s end, English becomes metaphor for self-expression beyond language. A celebration of becoming rather than arriving.',
+    rottenTomatoesScore: 89,
   },
 ]
 
@@ -805,6 +821,13 @@ function App() {
               <span>{activeShow.rating.toFixed(1)}/10</span>
               <p>Our rating</p>
             </div>
+
+            {activeShow.type === 'Movie' && activeShow.rottenTomatoesScore !== undefined && (
+              <div className="rt-score">
+                <span>{activeShow.rottenTomatoesScore}%</span>
+                <p>Rotten Tomatoes</p>
+              </div>
+            )}
 
             <section className="owner-review">
               <h3>Our review</h3>
