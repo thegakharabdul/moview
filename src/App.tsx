@@ -421,6 +421,17 @@ const catalog: Show[] = [
     ownerReview:
       'An intense action thriller that delivers high stakes and explosive sequences.',
   },
+  {
+    id: 'english-vinglish-2012',
+    title: 'English Vinglish',
+    type: 'Movie',
+    year: 2012,
+    genre: 'Comedy / Drama',
+    rating: 7.2,
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTQyNTkyODEwM15BMl5BanBnXkFtZTcwNTI0NzA3OA@@._V1_SX300.jpg',
+    ownerReview:
+      'A charming and heartwarming film about a woman overcoming language barriers and finding herself.',
+  },
 ]
 
 const storageKey = 'moview-feedback-v1'
