@@ -288,6 +288,17 @@ const catalog: Show[] = [
       'Provocative, stylish, and endlessly discussed. A film that rewards rewatching.',
   },
   {
+    id: 'freaky-friday-2003',
+    title: 'Freaky Friday',
+    type: 'Movie',
+    year: 2003,
+    genre: 'Comedy / Family',
+    rating: 7.0,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/9/98/Freaky_Friday_%282003_film%29.png',
+    ownerReview:
+      'A fun body-swap comedy with great chemistry between the leads and solid rewatch value.',
+  },
+  {
     id: 'severance',
     title: 'Severance',
     type: 'Show',
