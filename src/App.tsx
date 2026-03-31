@@ -417,7 +417,7 @@ const catalog: Show[] = [
     year: 2026,
     genre: 'Action / Thriller',
     rating: 8.5,
-    imageUrl: 'https://via.placeholder.com/300x450/222/999?text=War+Machine+2026',
+    imageUrl: PLACEHOLDER_IMAGE,
     ownerReview:
       'An intense action thriller that delivers high stakes and explosive sequences.',
   },
