@@ -428,7 +428,7 @@ const catalog: Show[] = [
     year: 2012,
     genre: 'Comedy / Drama',
     rating: 7.2,
-    imageUrl: '/enlish vinglish.jpg',
+    imageUrl: '/english vinglish.jpg',
     ownerReview:
       'A charming and heartwarming film about a woman overcoming language barriers and finding herself.',
   },
