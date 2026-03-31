@@ -30,7 +30,19 @@ type SelectOption<T extends string> = {
   label: string
 }
 
-const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="450"%3E%3Crect fill="%23333" width="300" height="450"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999" font-size="16" font-family="Arial"%3EImage not available%3C/text%3E%3C/svg%3E'
+const LOCAL_FALLBACK_POSTER = '/poster-fallback.svg'
+
+function resolveImageUrl(show: Show): string {
+  if (show.imageUrl.startsWith('/')) {
+    return show.imageUrl
+  }
+
+  if (show.region === 'Bollywood' || show.region === 'Lollywood') {
+    return LOCAL_FALLBACK_POSTER
+  }
+
+  return show.imageUrl
+}
 
 const catalog: Show[] = [
   // ========== HOLLYWOOD ==========
@@ -510,13 +522,39 @@ const catalog: Show[] = [
   },
   // ========== BOLLYWOOD ==========
   {
+    id: 'dhurandar-2',
+    title: 'Dhurandar 2',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Action / Thriller',
+    rating: 7.8,
+    imageUrl: '/dhurandar.jpg',
+    region: 'Bollywood',
+    ownerReview:
+      'Dhurandar 2 deepens the franchise story by following its lead hero into a larger conspiracy where personal loyalty collides with public duty. The screenplay keeps the emotional spine clear, so even the high-stakes twists feel connected to character choices instead of pure spectacle. Cinematography leans into wide, kinetic frames during action passages, then shifts to tighter, lower-light compositions in confrontational scenes to underline moral pressure. The visuals are polished and scale-driven, with stronger production design, cleaner stunt geography, and explosive set pieces that still remain readable. Performances carry the film: the lead brings conviction and restraint, the antagonist adds menace without caricature, and the supporting cast gives the drama enough texture that the sequel feels bigger emotionally, not just louder technically.',
+    rottenTomatoesScore: 79,
+  },
+  {
+    id: 'dhurandar',
+    title: 'Dhurandar',
+    type: 'Movie',
+    year: 2025,
+    genre: 'Action / Drama',
+    rating: 7.6,
+    imageUrl: '/dhurandar.jpg',
+    region: 'Bollywood',
+    ownerReview:
+      'Dhurandar opens as a revenge-driven action drama and gradually evolves into a character story about justice, anger, and the cost of power. The plot follows a familiar commercial template, but it is staged with enough narrative momentum that each major turn feels earned. Cinematography gives the film an energetic but controlled rhythm, using sharp contrast, moving camera setups, and practical-location framing to keep tension alive. Visually, the film blends mass-cinema scale with contemporary texture, especially in its action blocks where choreography, editing, and sound design work together effectively. The performances are a key strength: the lead anchors the film with commanding screen presence, emotional scenes are played with sincerity, and the supporting ensemble adds weight to the hero arc rather than functioning as filler. It is a confident franchise starter that works both as spectacle and as character-led drama.',
+    rottenTomatoesScore: 74,
+  },
+  {
     id: 'chup-2-revenge',
     title: 'Chup: Revenge of the Artist',
     type: 'Movie',
     year: 2023,
     genre: 'Thriller / Dark Comedy',
     rating: 8.2,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/glwdX9fHwKLwjN57M6FbdAkwwCG.jpg',
+    imageUrl: '/chup revenge of the artist.jpg',
     region: 'Bollywood',
     ownerReview:
       'Balaji Mohan crafted a meta-thriller about a serial killer targeting film critics. Sunny Deol\'s ruthless protagonist becomes darkly sympathetic through thematic examination of artistic integrity versus commercial compromise. The film asks uncomfortable questions about criticism\'s role in cinema. Blood-soaked and absurdist, yet emotionally intelligent. A refreshing departure from Bollywood convention while maintaining commercial appeal.',
@@ -528,7 +566,7 @@ const catalog: Show[] = [
     year: 2023,
     genre: 'Comedy / Drama',
     rating: 7.8,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/7V8c9HmfPEj8wqGMKP31oy4UGYO.jpg',
+    imageUrl: '/dunki.jpg',
     region: 'Bollywood',
     ownerReview:
       'Rajkumar Hirani created an immigration comedy that balances humor with legitimate social commentary. Shah Rukh Khan\'s character navigates the absurdities of immigration law while confronting class inequality. The film doesn\'t shy from political critique while maintaining entertainment value. Mahira Khan provides emotional counterweight. A rare Bollywood film that entertains and educates simultaneously.',
@@ -540,7 +578,7 @@ const catalog: Show[] = [
     year: 2024,
     genre: 'Horror / Comedy',
     rating: 7.5,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/jqJDvV3Jk07sOvMTvZX5xwzKM0h.jpg',
+    imageUrl: '/bhool bhulaiyaa 3.jpg',
     region: 'Bollywood',
     ownerReview:
       'A delightfully absurd supernatural comedy that prioritizes entertainment over coherence. Kartik Aaryan\'s manic energy carries the film through convoluted plot mechanics. The haunted house setting becomes excuse for elaborate set pieces and comedic scenarios. While narratively loose, the chemistry between leads sustains momentum. A film comfortable with its own silliness.',
@@ -552,7 +590,7 @@ const catalog: Show[] = [
     year: 2022,
     genre: 'Horror / Comedy',
     rating: 7.2,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/6LkGJeVLGXlvvjFyLBVYXHNXVgR.jpg',
+    imageUrl: '/bhediya.jpg',
     region: 'Bollywood',
     ownerReview:
       'Amar Kaushik created a werewolf comedy that blends Indian mythology with contemporary horror. Varun Dhawan\'s transformation sequence parallels moral compromise. The film uses body-horror humor to explore identity and belonging. While occasionally uneven tonally, the film\'s heart lies in celebrating difference rather than mocking it. A charming mess of a movie.',
@@ -564,7 +602,7 @@ const catalog: Show[] = [
     year: 2006,
     genre: 'Comedy / Crime',
     rating: 7.3,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/y5z3GVz60gE3x7tPsqhQBnPV8xI.jpg',
+    imageUrl: '/phir hera pheri.jpg',
     region: 'Bollywood',
     ownerReview:
       'Neeraj Vora created a heist comedy that prioritizes character charm over plot coherence. Akshay Kumar and Suniel Shetty\'s chemistry carries the film through absurd twists. The film understands that Bollywood audiences attend for stars and humor rather than narrative logic. Entertaining within its own logic.',
@@ -576,7 +614,7 @@ const catalog: Show[] = [
     year: 2001,
     genre: 'Romance / Comedy',
     rating: 8.1,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/xzFDJ6V9KLvFxKG9JsQxxyKwb7a.jpg',
+    imageUrl: '/dil chahta hai.jpg',
     region: 'Bollywood',
     ownerReview:
       'Farhan Akhtar\'s directorial debut revolutionized Bollywood by introducing naturalism and genuine character development. Three friends navigate relationships with emotional complexity rarely seen in Indian cinema. The famous Portugal sequence captures wanderlust and introspection. Aamir Khan and Saif Ali Khan\'s performances feel lived-in rather than performed. A watershed moment in Hindi cinema.',
@@ -588,7 +626,7 @@ const catalog: Show[] = [
     year: 2006,
     genre: 'Drama / Action',
     rating: 8.0,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/xT2YNP0Kpqrd0P4hgKGOqVSFsL3.jpg',
+    imageUrl: '/rang de basanti.jpg',
     region: 'Bollywood',
     ownerReview:
       'Rakeysh Omprakash Mehra created a youth-oriented political thriller that ignited conversations about activism and sacrifice. Aamir Khan\'s character evolution from apathetic to politically engaged tracks personal awakening. The film argues that individual conscience can catalyze systemic change. Climactic action sequence remains shocking through emotional investment. A rare Bollywood film that entertains while challenging complacency.',
@@ -600,7 +638,7 @@ const catalog: Show[] = [
     year: 2001,
     genre: 'Historical / Drama',
     rating: 8.2,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/Qv3lbKJsAi0gWBfMKwXh0nFa5Xp.jpg',
+    imageUrl: '/lagaan.jpg',
     region: 'Bollywood',
     ownerReview:
       'Ashutosh Gowariker created an epic period film that uses cricket as metaphor for colonial resistance. Aamir Khan\'s village headman mobilizes his community against oppressive British taxation. The cricket match becomes climactic battle, elevating sports entertainment into political allegory. The scope is genuinely cinematic—landscapes dwarf characters, reinforcing power dynamics. A film that proved Bollywood could achieve international prestige. Nominated for Academy Award.',
@@ -612,7 +650,7 @@ const catalog: Show[] = [
     year: 2009,
     genre: 'Romance / Drama',
     rating: 7.9,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/xbXZsQqz5aP7Jrws0csoM5KYoqI.jpg',
+    imageUrl: '/dev.d.jpg',
     region: 'Bollywood',
     ownerReview:
       'Anurag Kashyap subverted the Devdas narrative by centering the female character\'s agency. Abhay Deol\'s Dev spirals toward addiction while Mahie Gill\'s character transcends victimhood. The film refuses romantic redemption, instead depicting genuine psychological damage. Cinematography captures urban decay and despair. A dark, uncompromising adaptation that subverts Bollywood convention.',
@@ -624,7 +662,7 @@ const catalog: Show[] = [
     year: 2016,
     genre: 'Thriller / Legal Drama',
     rating: 8.0,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/B6TDxGYg0q7aXS28Rp35K8AQBHP.jpg',
+    imageUrl: '/pink.jpg',
     region: 'Bollywood',
     ownerReview:
       'Aniruddha Roy Chowdhury created a courtroom drama that challenges victim-blaming through meticulous legal procedure. Three women navigate false accusations of assault. Amitabh Bachchan\'s lawyer provides institutional critique while defending their rights. The film refuses sensationalism, instead examining how society judges women. A rare Bollywood film that entertained while advancing social conversation.',
@@ -636,7 +674,7 @@ const catalog: Show[] = [
     year: 2001,
     genre: 'Romance / Drama',
     rating: 7.4,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/9j0X4aahBwKPGwxo3TJqJJw5S5a.jpg',
+    imageUrl: '/kabhi khushi kabhie gham.jpg',
     region: 'Bollywood',
     ownerReview:
       'Karan Johar perfected the family melodrama formula—multigenerational conflict resolved through emotional catharsis. Shah Rukh Khan and Kajol\'s chemistry transcends their roles. The film\'s logic is entirely emotional rather than rational, but it works magnificently within that framework. Excessive production design captures aspiration and spectacle. A comfort film that defined an era.',
@@ -661,7 +699,7 @@ const catalog: Show[] = [
     year: 2021,
     genre: 'Legal Drama / Thriller',
     rating: 8.4,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/P1Z3bS3Vq2p5W8Wm8yR5RcAl4fK.jpg',
+    imageUrl: '/jai bhim.jpg',
     region: 'Bollywood',
     ownerReview:
       'S. Nithya Menen created a searing indictment of caste-based oppression and judicial corruption. Suriya\'s lawyer fights for marginalized communities exploited by the system. The film doesn\'t shy from depicting brutality while maintaining focus on human dignity. Cinematography captures humid despair. A rare Indian film that achieves political urgency alongside commercial success.',
@@ -673,7 +711,7 @@ const catalog: Show[] = [
     year: 1994,
     genre: 'Biography / Action',
     rating: 7.6,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/rtkxLQEU4VSwV8CEzcJ5J3rVXLz.jpg',
+    imageUrl: '/bandit queen.jpg',
     region: 'Bollywood',
     ownerReview:
       'Shekhar Kapur created a controversial biography of Phoolan Devi that refused to sanitize her violent rise. The film depicts brutality without glorifying it, instead examining how patriarchal oppression drives women toward rebellion. Seema Biswas\'s performance is animal and uncompromising. The censorship battle that followed proved the film\'s cultural impact. Uncomfortable and essential cinema.',
@@ -685,7 +723,7 @@ const catalog: Show[] = [
     year: 1977,
     genre: 'Action / Comedy',
     rating: 7.5,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/OdLvRgvFpVIAvQZr0LvGKjBRLs.jpg',
+    imageUrl: '/amar akbar anthony.jpg',
     region: 'Bollywood',
     ownerReview:
       'Manmohan Desai created a definitional masala film—three brothers separated at birth, raised under different religions, reunited for action-packed chaos. Amitabh Bachchan dominates every frame with charisma. The film\'s logic is absurdist, but earnestness sells every moment. Comedy, action, romance—everything coexist without contradiction. A blueprint for Bollywood spectacle.',
@@ -697,7 +735,7 @@ const catalog: Show[] = [
     year: 1975,
     genre: 'Western / Action',
     rating: 8.1,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/k4Y5y8scj0aHUMRxCBQM8aL6Dkk.jpg',
+    imageUrl: '/sholay.jpg',
     region: 'Bollywood',
     ownerReview:
       'Ramesh Sippy created the Indian Western—a 3.5-hour epic that defined commercial cinema for a generation. Two drifters hired to capture a dacoit. The film has everything: action, romance, comedy, philosophy. Amitabh Bachchan and Dharmendra\'s chemistry is monumental. Laxmikant-Pyarelal\'s score elevates everything. A foundational film that proved Bollywood could achieve international scope.',
@@ -709,7 +747,7 @@ const catalog: Show[] = [
     year: 1960,
     genre: 'Historical / Romance',
     rating: 7.8,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/qJsxWPvRYvTQY4XEuLDzFwZ6UTb.jpg',
+    imageUrl: '/mughal e  azam.jpg',
     region: 'Bollywood',
     ownerReview:
       'K. Asif created a technological marvel for its era—sweeping historical drama with elaborate sets and cinematography. A Mughal emperor and a slave girl forbidden romance becomes metaphor for duty versus desire. Dilip Kumar delivers restrained performance amid production spectacle. The film\'s length matches its ambition. A monument of Indian cinema.',
@@ -721,7 +759,7 @@ const catalog: Show[] = [
     year: 1957,
     genre: 'Drama / Social Realism',
     rating: 7.7,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/2KKFxTLDJCtvJ3fWKNw9hKb0Qq0.jpg',
+    imageUrl: '/mother india.jpg',
     region: 'Bollywood',
     ownerReview:
       'Mehboob Khan created an early socially conscious Bollywood film emphasizing agrarian hardship and maternal sacrifice. Nargis\'s performance as a widow navigating poverty and violence remains devastating. The film uses melodrama to emotional effect rather than sentimentality. A watershed moment for Indian cinema pursuing neorealist ambitions.',
@@ -733,7 +771,7 @@ const catalog: Show[] = [
     year: 1994,
     genre: 'Comedy / Romance',
     rating: 7.6,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/hkHdNshm1bZLW8i5ks7KbEFz3bg.jpg',
+    imageUrl: '/andaaz apna apna.jpg',
     region: 'Bollywood',
     ownerReview:
       'Rajul Kumarmukherjee\'s slapstick comedy champions physical humor and character absurdity. Two conmen pursue wealthy heiress. Aamir Khan and Salman Khan\'s chemistry creates comedic alchemy. The film doesn\'t require plot logic, just earnest commitment to silliness. A cult favorite that elevated comedy in Indian cinema.',
@@ -745,7 +783,7 @@ const catalog: Show[] = [
     year: 1995,
     genre: 'Romance / Drama',
     rating: 8.0,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/uPnqKjrHzsL90PNIXfamLWFoDXM.jpg',
+    imageUrl: '/dilwale dulhaniya le jayenge.jpg',
     region: 'Bollywood',
     ownerReview:
       'Aditya Chopra directed what became the defining romance of Hindi cinema—two young people negotiating parental expectations and personal choice. Shah Rukh Khan\'s earnest romantic hero transcended stereotypes. The film balanced traditional values with modern sensibilities. The Swiss scenery becomes character itself. Essential Bollywood that defined an era.',
@@ -758,7 +796,7 @@ const catalog: Show[] = [
     year: 2024,
     genre: 'Drama / Social',
     rating: 8.2,
-    imageUrl: '/aag-lagey-basti-main.jpg',
+    imageUrl: '/aag lage basti mein.jpg',
     region: 'Lollywood',
     ownerReview:
       'A powerful social drama that ignites urgent conversations about inequality and systemic injustice. Director\'s unflinching portrayal of urban despair and community resilience creates a visceral, thought-provoking experience that resonates long after viewing.',
@@ -770,7 +808,7 @@ const catalog: Show[] = [
     year: 2023,
     genre: 'Comedy / Drama',
     rating: 7.8,
-    imageUrl: '/na-maloom-afraad-3.jpg',
+    imageUrl: '/na maloon afraad.jpg',
     region: 'Lollywood',
     ownerReview:
       'The trilogy\'s final installment maintains the franchise\'s comedic charm while exploring deeper themes of friendship and loyalty. Smart humor balanced with genuine emotional stakes delivers entertainment with substance.',
@@ -782,7 +820,7 @@ const catalog: Show[] = [
     year: 2023,
     genre: 'Comedy / Coming-of-Age',
     rating: 8.0,
-    imageUrl: '/load-wedding.jpg',
+    imageUrl: '/load wedding.jpg',
     region: 'Lollywood',
     ownerReview:
       'A refreshing coming-of-age comedy that celebrates Pakistani youth culture with infectious energy. Warm-hearted storytelling about friendship and ambition, shot with vibrant cinematography that captures the spirit of contemporary Lahore.',
@@ -794,7 +832,7 @@ const catalog: Show[] = [
     year: 2021,
     genre: 'Comedy / Drama',
     rating: 7.5,
-    imageUrl: '/khel-khel-mein.jpg',
+    imageUrl: '/khel khel mein.jpg',
     region: 'Lollywood',
     ownerReview:
       'An ensemble comedy that weaves multiple interconnected stories with wit and heart. While plot threads occasionally tangle, the chemistry between cast members and cultural specificity make it an entertaining snapshot of Karachi life.',
@@ -818,7 +856,7 @@ const catalog: Show[] = [
     year: 2016,
     genre: 'Comedy / Romance',
     rating: 7.2,
-    imageUrl: '/actor-in-law.jpg',
+    imageUrl: '/actor in law.jpg',
     region: 'Lollywood',
     ownerReview:
       'A lighthearted romantic comedy that plays with Lahore\'s film industry backdrop. While the plot follows predictable beats, the chemistry between leads and satirical takes on celebrity culture provide consistent entertainment.',
@@ -830,7 +868,7 @@ const catalog: Show[] = [
     year: 2014,
     genre: 'Comedy / Drama',
     rating: 7.6,
-    imageUrl: '/na-maloom-afraad.jpg',
+    imageUrl: '/na maloon afraad.jpg',
     region: 'Lollywood',
     ownerReview:
       'A triple-narrative comedy that revitalized Pakistani cinema with intelligent humor and relatable characters. Three interconnected stories weave together with genuine laughs and unexpected emotional depth, marking a watershed moment for Lollywood.',
@@ -866,22 +904,10 @@ const catalog: Show[] = [
     year: 2007,
     genre: 'Drama / Romance',
     rating: 7.8,
-    imageUrl: '/khuda-kay-liye.jpg',
+    imageUrl: '/khuda kay liye.jpg',
     region: 'Lollywood',
     ownerReview:
       'A transformative film that reignited Pakistani cinema with nuanced storytelling and artistic vision. The exploration of faith, identity, and redemption through intimate characterization set a new benchmark for local filmmaking.',
-  },
-  {
-    id: 'the-legend-of-bilal',
-    title: 'The Legend of Bilal',
-    type: 'Movie',
-    year: 2015,
-    genre: 'Animation / History',
-    rating: 7.1,
-    imageUrl: '/the-legend-of-bilal.jpg',
-    region: 'Lollywood',
-    ownerReview:
-      'Pakistan\'s first anime film brings Islamic history to life with stunning animation and cultural pride. While pacing occasionally falters, the ambition to create original mythology rooted in heritage delivers an inspiring and visually beautiful experience.',
   },
   {
     id: '3-bahadur',
@@ -890,22 +916,10 @@ const catalog: Show[] = [
     year: 2015,
     genre: 'Animation / Action',
     rating: 6.9,
-    imageUrl: '/3-bahadur.jpg',
+    imageUrl: '/3 bahadur.jpg',
     region: 'Lollywood',
     ownerReview:
       'An animated adventure that captures Pakistani heroism and humor with infectious energy. While the narrative remains simple, the film\'s celebration of local culture and infectious enthusiasm make it delightful family viewing.',
-  },
-  {
-    id: 'zarqa',
-    title: 'Zarqa',
-    type: 'Movie',
-    year: 2015,
-    genre: 'Thriller / Drama',
-    rating: 7.6,
-    imageUrl: '/zarqa.jpg',
-    region: 'Lollywood',
-    ownerReview:
-      'A provocative thriller that grapples with contemporary terrorism through the perspective of a female protagonist. Bold thematic choices and strong performances create tension, though execution sometimes prioritizes message over narrative elegance.',
   },
   {
     id: 'aina',
@@ -1028,6 +1042,7 @@ function App() {
   }, [])
 
   const featuredShow = catalog[heroIndex % catalog.length]
+  const featuredImageUrl = resolveImageUrl(featuredShow)
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -1099,8 +1114,9 @@ function App() {
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     const img = event.currentTarget
-    if (img.src !== PLACEHOLDER_IMAGE) {
-      img.src = PLACEHOLDER_IMAGE
+    const fallback = img.dataset.fallback || LOCAL_FALLBACK_POSTER
+    if (img.src !== fallback) {
+      img.src = fallback
     }
   }
 
@@ -1140,7 +1156,7 @@ function App() {
           <section
             className="hero"
             style={{
-              backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.86)), url(${featuredShow.imageUrl})`,
+              backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.86)), url(${featuredImageUrl})`,
             }}
           >
             <p className="live-pill">
@@ -1173,7 +1189,7 @@ function App() {
             <div className="row-scroller">
               {topRated.map((show) => (
                 <article key={show.id} className="show-card mini" onClick={() => openShowDetails(show.id)}>
-                  <img src={show.imageUrl} alt={show.title} className="show-poster" onError={handleImageError} />
+                  <img src={resolveImageUrl(show)} alt={show.title} className="show-poster" data-fallback={LOCAL_FALLBACK_POSTER} onError={handleImageError} />
                   <div className="card-overlay">
                     <h3>{show.title}</h3>
                     <p className="genre">{show.genre}</p>
@@ -1192,7 +1208,7 @@ function App() {
             <div className="row-scroller">
               {latestDrops.map((show) => (
                 <article key={show.id} className="show-card mini" onClick={() => openShowDetails(show.id)}>
-                  <img src={show.imageUrl} alt={show.title} className="show-poster" onError={handleImageError} />
+                  <img src={resolveImageUrl(show)} alt={show.title} className="show-poster" data-fallback={LOCAL_FALLBACK_POSTER} onError={handleImageError} />
                   <div className="card-overlay">
                     <h3>{show.title}</h3>
                     <p className="genre">{show.year} • {show.type}</p>
@@ -1257,7 +1273,7 @@ function App() {
                     <div className="catalog-grid">
                       {regionShows.map((show) => (
                         <article key={show.id} className="show-card">
-                          <img src={show.imageUrl} alt={show.title} className="show-poster" onError={handleImageError} />
+                          <img src={resolveImageUrl(show)} alt={show.title} className="show-poster" data-fallback={LOCAL_FALLBACK_POSTER} onError={handleImageError} />
                           <div className="card-overlay">
                             <div className="show-header">
                               <p className="type-tag">{show.type}</p>
@@ -1291,7 +1307,7 @@ function App() {
               {filteredAndSortedCatalog.map((show) => {
                 return (
                   <article key={show.id} className="show-card">
-                    <img src={show.imageUrl} alt={show.title} className="show-poster" onError={handleImageError} />
+                    <img src={resolveImageUrl(show)} alt={show.title} className="show-poster" data-fallback={LOCAL_FALLBACK_POSTER} onError={handleImageError} />
                     <div className="card-overlay">
                       <div className="show-header">
                         <p className="type-tag">{show.type}</p>
@@ -1363,7 +1379,7 @@ function App() {
 
             <p className="modal-hint">Tip: click outside this panel to close</p>
 
-            <img src={activeShow.imageUrl} alt={activeShow.title} className="modal-poster" onError={handleImageError} />
+            <img src={resolveImageUrl(activeShow)} alt={activeShow.title} className="modal-poster" data-fallback={LOCAL_FALLBACK_POSTER} onError={handleImageError} />
 
             <div className="modal-meta">
               <p className="type-tag">{activeShow.type}</p>
