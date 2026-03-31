@@ -41,7 +41,7 @@ const catalog: Show[] = [
     imageUrl:
       'https://image.tmdb.org/t/p/w780/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
     ownerReview:
-      'The small-town mystery setup is excellent, and the cast chemistry carries every season. Some story arcs dip in pace, but the nostalgia and emotional payoff are worth it.',
+      'The Duffer Brothers nailed the small-town mystery box formula by grounding supernatural horror in intimate character relationships and authentic 1980s Americana. The ensemble cast chemistry is the series\' greatest asset—every minor character becomes believable and invested. Season One remains a masterclass in pacing and tension, introducing the Upside Down with perfect proportions of horror and wonder. The chemistry between Winona Ryder\' desperate maternal love and David Harbour\'s gruff redemption carries emotional weight through grotesque set pieces. Later seasons expand scope to global stakes, sometimes sacrificing the intimate horror for spectacle, but never losing the core family dynamics. The show understands that monsters are scariest when they threaten people you care about. A phenomenon that revitalized genre television.',
   },
   {
     id: 'dark',
@@ -53,7 +53,7 @@ const catalog: Show[] = [
     imageUrl:
       'https://image.tmdb.org/t/p/w780/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg',
     ownerReview:
-      'Complex, layered, and confidently written. This is one of the few time-travel stories that rewards deep attention without losing emotional grounding.',
+      'Baran bo Odar and Jantje Friese created the gold standard for time-travel television by refusing to compromise on logic or emotional stakes. The small German town of Winden becomes a character itself—every location carries narrative weight. The interwoven timelines and family trees demand viewer engagement and reward detailed attention with revelations that recontextualize earlier scenes. Rather than rely on spectacle, Dark builds dread through inevitability. The cinematography is deliberately cold, all grays and amber light, reflecting a world trapped by fate. The ensemble embraces quiet desperation. By series end, the show argues that every small action echoes across decades with devastating consequence. A masterpiece of serialized television that respects audience intelligence.',
   },
   {
     id: 'interstellar',
@@ -78,7 +78,7 @@ const catalog: Show[] = [
     imageUrl:
       'https://image.tmdb.org/t/p/w780/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg',
     ownerReview:
-      'Rare case where visual style and character writing are equally strong. Every episode feels premium, and the world-building is sharp without being overwhelming.',
+      'Christian Linke and Alex Yee created an animated series that proves the medium can match live-action cinema in emotional complexity and thematic depth. The story of childhood friendship fractured by class conflict and magical ambition becomes a meditation on power and legacy. The animation style—fluid character animation paired with detailed comic-book backgrounds—creates visual poetry. Each act escalates with confidence, introducing new characters and thematic complexity without losing emotional core. The soundtrack by Imagine Dragons and Sting amplifies character arcs. By series end, every character feels trapped by systems larger than themselves. A rare animated series aimed at adults that achieves profound storytelling. Visually stunning and narratively perfect.',
   },
   {
     id: 'money-heist',
@@ -90,7 +90,7 @@ const catalog: Show[] = [
     imageUrl:
       'https://image.tmdb.org/t/p/w780/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg',
     ownerReview:
-      'High-stakes entertainment with great momentum and iconic characters. It can become melodramatic, but it knows how to keep viewers hooked.',
+      'Alex de la Iglesia created a Spanish heist series that understands entertainment momentum and character mythology. The Professor\' genius scheme unfolds across seasons with escalating complications that feel earned rather than contrived. The ensemble cast members—Lisbon, Denver, Berlin—transcend archetypes through consistent character writing. The series doesn\'t fear melodrama; instead, it embraces emotional stakes alongside tactical planning. Cinematography shifts between tense interiors and sprawling landscapes, reinforcing scale and danger. Later seasons expand globally, testing narrative coherence, but the core appeal remains—watching intelligent people execute impossible plans. The show is self-aware about its own implausibility, winking at the audience without breaking tension. Addictive television that knows exactly what it wants to be.',
   },
   {
     id: 'the-bear',
@@ -102,7 +102,7 @@ const catalog: Show[] = [
     imageUrl:
       'https://image.tmdb.org/t/p/w780/sHFlbKS3WLqMnp9t2ghADIJFnuQ.jpg',
     ownerReview:
-      'Fast, intense, and surprisingly heartfelt. The show captures stress and ambition with a realism that is hard to fake.',
+      'Christopher Storer created a kitchen-set drama that transforms restaurant work into existential struggle. Jeremy Allen White\' Carmen Carmen\'s return to Chicago to salvage his family\'s failing sandwich shop becomes a proxy for inherited trauma and redemption. The show understands kitchen dynamics—intensity, respect, failure—through camera work that mirrors stress-cam scenes from fine dining documentaries. Every character wants something different, creating organic conflict. Ebon Moss-Bachrach\'s Richie steals scenes with wounded pride and surprising depth. The series balances absurdist comedy with devastating character moments. By season end, the restaurant renovations become metaphor for internal transformation. A show about ambitious people failing spectacularly while maintaining dignity. Thrilling and deeply human.',
   },
   {
     id: 'inception',
@@ -125,7 +125,7 @@ const catalog: Show[] = [
     rating: 9.6,
     imageUrl: 'https://image.tmdb.org/t/p/w780/ineLOBPG8AZsluYwnkMpHRyu7L.jpg',
     ownerReview:
-      'Near-perfect character descent storytelling. Every season raises stakes while preserving believable motivations.',
+      'Vince Gilligan created television\' greatest moral descent by tracking Walter White from desperate teacher to ruthless kingpin with forensic precision. Every season escalates stakes while maintaining character logic—Walt isn\'t driven by external forces but by ego and pride masquerading as necessity. Bryan Cranston\'s performance captures white-collar resentment morphing into sociopathy. Aaron Paul\'s Jesse Pinkman provides moral counterweight, watching his mentor destroy everything including him. The series understands that chemistry is not just the show\'s metaphor but its structure—tense ingredients combining into explosive reactions. The cinematography captures New Mexico\'s beauty to juxtapose against moral ugliness. By series end, Walt achieves everything he wanted and loses everything that mattered. A tragedy about how ambition consumes the ambitious.',
   },
   {
     id: 'peaky-blinders',
@@ -136,7 +136,7 @@ const catalog: Show[] = [
     rating: 8.8,
     imageUrl: 'https://image.tmdb.org/t/p/w780/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg',
     ownerReview:
-      'Stylish, sharp, and powered by magnetic performances. It balances cool factor with meaningful family conflict.',
+      'Steven Knight created a post-WWI crime saga where trauma becomes the hidden engine driving every character. Birmingham\' Shelby gang uses violence and ambitious schemes to escape poverty, but history and family psychology prove more dangerous than any rival. Cillian Murphy\'s Thomas Shelby carries emotional scars beneath calculated ruthlessness. The production design is meticulous, creating a grimy universe where expensive suits contrast with brutal methods. The series balances cool aesthetics—sharp editing, anachronistic music—with devastating psychological depth. Later seasons expand scope internationally while maintaining intimate family dysfunction. Helen McCrory as Polly provides moral anchor. The show argues that violence inherited becomes generational curse. A period crime epic that uses style to hide desperate, broken people.',
   },
   {
     id: 'squid-game',
@@ -147,7 +147,7 @@ const catalog: Show[] = [
     rating: 8.4,
     imageUrl: 'https://image.tmdb.org/t/p/w780/dDlEmu3EZ0Pgg93K2SVNLCjCSvE.jpg',
     ownerReview:
-      'Clever social commentary wrapped in brutal suspense. Visually iconic and impossible to ignore.',
+      'Hwang Dong-hyuk created a phenomenon by weaponizing childhood games into metaphor for economic desperation. Hundreds of debt-burdened people compete in familiar games—red light green light, marbles, glass bridge—knowing elimination means death. The genius is using deceptively simple mechanics to explore trust, betrayal, and class hierarchy. Lee Jung-jae\' Seong Gi-hun carries the series through moral compromise and traumatic choice. The production design contrasts pastel-colored game arenas with brutal human consequences. Each game escalates stakes while revealing character. The series doesn\'t shy from depicting death—it becomes almost mundane, which is exactly the point. A meditation on how capitalism transforms humans into commodities. Visceral, socially conscious entertainment.',
   },
   {
     id: 'chernobyl',
@@ -158,7 +158,7 @@ const catalog: Show[] = [
     rating: 9.3,
     imageUrl: 'https://image.tmdb.org/t/p/w780/hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg',
     ownerReview:
-      'Relentlessly tense and devastatingly human. An exceptional mini-series with documentary-like weight.',
+      'Craig Mazin created a five-episode miniseries that transcends historical recounting to become tragedy about systemic corruption and human courage. The 1986 nuclear disaster becomes lens through which to examine Soviet bureaucracy, denial, and the price of truth. Jared Harris\'s Valery Legasov embodies the scientist forced to navigate political lies while racing against apocalypse. Stellan Skarsgård\'s Boris Shcherbina represents the regime attempting damage control. The production design recreates Pripyat with haunting authenticity. Every act builds toward increasingly devastating human cost. The series doesn\'t sensationalize; instead, it documents quiet horror—men liquidating reactors, families evacuated, futures erased. The final episode cements thematic weight through courtroom testimony about truth versus official narrative. A masterpiece of historical drama that feels urgently contemporary.',
   },
   {
     id: 'dune',
@@ -205,7 +205,7 @@ const catalog: Show[] = [
     rating: 9.1,
     imageUrl: 'https://image.tmdb.org/t/p/w780/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg',
     ownerReview:
-      'Excellent adaptation that respects the source while expanding emotional nuance.',
+      'Craig Mazin adapted Naughty Dog\'s acclaimed game by amplifying character psychology over spectacle and action. Pedro Pascal\'s Joel—a smuggler hardened by apocalypse—is partnered with Ellie, a girl immune to the fungal plague. Their relationship becomes the show\'s emotional core, building slowly from transaction to genuine care. The series excels in episodic storytelling, with individual episodes exploring side characters and expanding the world\'s history. Episode 3\'s Texas story rivals greatest television moments for emotional devastation. The production design depicts nature reclaiming civilization without romance—brutality beneath beauty. Violence carries weight rather than spectacle. Gabriel Luna\'s Tommy and Anna Torv\'s Maria provide complex family dynamics. The series argues that survival means nothing without connection. A television adaptation that honors its source while transcending it through intimate character work.',
   },
   {
     id: 'the-boys',
@@ -216,7 +216,7 @@ const catalog: Show[] = [
     rating: 8.7,
     imageUrl: 'https://image.tmdb.org/t/p/w780/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg',
     ownerReview:
-      'Violent, cynical, and unexpectedly character-driven. The satire lands because it is brutally honest.',
+      'Eric Kripke created a superhero satire that uses graphic violence to critique corporate fascism and unchecked power. Superheroes aren\'t idealistic symbols but commodified celebrities—products marketed by ruthless corporations. Antony Starr\'s Homelander embodies corporate sociopathy, a charming psychopath whose violence escalates across seasons. Karl Urban\'s Billy Butcher hunts superheroes with vendetta-driven obsession. The ensemble balances satire with genuine character stakes. Violence is intentionally grotesque—not thrilling but nauseating, reinforcing that power without accountability creates horror. The series deconstructs superhero mythology by asking uncomfortable questions about accountability and propaganda. Satire sharpens with each season as real-world politics increasingly mirrors the show\'s fiction. Crude, cynical, and wickedly smart.',
   },
   {
     id: 'black-mirror',
@@ -227,7 +227,7 @@ const catalog: Show[] = [
     rating: 8.5,
     imageUrl: 'https://image.tmdb.org/t/p/w780/5UaYsGZOFhjFDwQh6GuLjjA1WlF.jpg',
     ownerReview:
-      'At its best, it is unnervingly prophetic. Standout episodes still set the benchmark for tech dread.',
+      'Charlie Brooker created an anthology series that functions as sociological horror—near-future technology amplifying existing human flaws into dystopia. Each episode explores how tools intended to improve life become instruments of control or humiliation. The first season\'s "White Christmas" examines consciousness as commodity. "San Junipero" becomes transcendent romance despite its digital premise. "Nosedive" depicts social credit systems predating their real-world implementation. The genius is grounding sci-fi speculation in immediately recognizable human psychology and social dynamics. Best episodes blur line between entertainment and genuine dread. Later seasons lose sharpness, relying on twist endings rather than thematic depth, but earlier work remains unnervingly prophetic. A show that understood technology before technology understood itself.',
   },
   {
     id: 'mindhunter',
@@ -238,7 +238,7 @@ const catalog: Show[] = [
     rating: 8.9,
     imageUrl: 'https://image.tmdb.org/t/p/w780/fbKE87mojpIETWepSbD5Qt741fp.jpg',
     ownerReview:
-      'Methodical and deeply unsettling. Dialogue scenes feel as suspenseful as action sequences.',
+      'David Fincher directed the pilot and set the template—meticulous procedural about FBI profilers constructing criminal psychology from interview sessions. Jonathan Groff\'s Holden Ford obsesses over understanding serial killers, interviewing incarcerated men to map behavioral patterns. Holt McCallany\'s Bill Tench provides grounded counterweight to Holden\'s emerging theorizing. The genius is making dialogue scenes as suspenseful as interrogations. Cinematography favors cold institutional lighting, reinforcing sterile psychological dissection. The show understands that motivation matters more than crime scenes. Interviews with real killers—Ed Kemper, Jerry Brudos—create psychological dread through casual, articulate evil. Rather than glorify violence, the series dissects mindset. Cancelled prematurely, but the first two seasons remain masterwork of procedural television. Unnerving, methodical brilliance.',
   },
   {
     id: 'ozark',
@@ -249,7 +249,7 @@ const catalog: Show[] = [
     rating: 8.4,
     imageUrl: 'https://image.tmdb.org/t/p/w780/pCGyPVrI9Fzw6rE1Pvi4BIXF6ET.jpg',
     ownerReview:
-      'Cold, tense, and consistently unpredictable. It thrives on moral compromise and pressure-cooker pacing.',
+      'Bill Dubuque created a pressure-cooker crime series where a financial advisor launders cartel money in rural Missouri, transforming his ordinary family into money criminals. Jason Bateman carries the series through moral compromise—each decision justified until he\'s unrecognizable. Laura Linney\'s Wendy evolves from victim into architect of family ambitions. The Ozarks become character themselves—beautiful landscape masking criminal infrastructure. The series escalates stakes methodically—each season raising danger while complicating escape routes. Supporting characters are fully realized, with Julia Garner\'s Ruth breaking out as emotional core. The final season spreads itself thin but maintains tension through character relationships rather than plot mechanics. The show understands that criminals convincing themselves of morality become most dangerous. Cold, pervasive dread throughout.',
   },
   {
     id: 'joker',
@@ -320,7 +320,7 @@ const catalog: Show[] = [
     rating: 8.9,
     imageUrl: 'https://image.tmdb.org/t/p/w780/7WTsnHkbA0FaG6R9twfFde0I9hl.jpg',
     ownerReview:
-      'Original premise executed with confidence. Corporate horror has never felt this precise.',
+      'Dan Erickson created a sci-fi premise that becomes perfect corporate horror—workers surgically severed so their work consciousness and personal consciousness never meet. Employees arrive at sterile offices with no memories of personal lives; outside workers live unaware of work identities. Adam Scott\'s Mark Scout navigates the uncanny disconnect between severed selves. The series examines labor, identity, and consent with philosophical precision. Production design contrasts brutalist workplace architecture with intimate personal spaces, reinforcing existential splitting. The mystery deepens across episodes as workers discover their severing hides exploitation. Each episode escalates questions about autonomy and corporate control. The cinematography is meticulous, with cold lighting inside the workplace growing warmer as Mark\'s personal life expands. A original premise executed with thematic precision.',
   },
   {
     id: 'loki',
@@ -331,7 +331,7 @@ const catalog: Show[] = [
     rating: 8.3,
     imageUrl: 'https://image.tmdb.org/t/p/w780/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg',
     ownerReview:
-      'Stylized timelines and playful writing make this one of the strongest MCU series.',
+      'Michael Waldron crafted the MCU\'s most stylistically confident limited series, retrofitting the trickster god into temporal bureaucracy. Tom Hiddleston\'s Loki evolves from chaotic villain into person grappling with variant selves and nexus timelines. The series embraces high-concept sci-fi philosophy—free will versus predetermined fate—without losing playful tone. Owen Wilson\'s Mobius balances gravitas with humor. Sophia Di Martino\'s Sylvie provides Loki\'s moral mirror. The production design oscillates between retro-futuristic and timeless minimalism. The series excels at blending MCU spectacle with intimate character work, particularly Loki\'s evolution from self-serving narcissist toward genuine connection. The climax recontextualizes the entire MCU. Where other MCU shows stumble with pacing, Loki maintains momentum while exploring identity and choice across variants. Stylish, smart, emotionally resonant.',
   },
   {
     id: 'narcos',
@@ -342,7 +342,7 @@ const catalog: Show[] = [
     rating: 8.6,
     imageUrl: 'https://image.tmdb.org/t/p/w780/rTmal9fDbwh5F0waol2hq35U4ah.jpg',
     ownerReview:
-      'Gritty and addictive. The documentary flavor adds realism without killing momentum.',
+      'Joe Pettigrew and Carlo Bernard created a crime epic structured around DEA agent Steve Murphy hunting Colombian kingpin Pablo Escobar. Pedro Pascal\'s Murphy navigates institutional corruption and moral compromise during the height of drug trafficking. Wagner Moura\'s Escobar is charismatic and increasingly volatile—a man building empire while paranoia corrodes judgment. The series uses documentary-style narration to anchor chaos while maintaining narrative momentum. Cinematography captures Colombia\'s tropical beauty contrasted against cartel brutality. The first season remains taut procedural; later seasons expand scope geographically while potentially losing psychological sharpness. The real-life events give narrative weight—this tragedy actually occurred. The series examines how war on drugs became personal vendetta. Gritty, addictive, and unapologetically violent television.',
   },
   {
     id: 'wednesday',
@@ -353,7 +353,7 @@ const catalog: Show[] = [
     rating: 8.0,
     imageUrl: 'https://image.tmdb.org/t/p/w780/9PFonBhy4cQy7Jz20NpMygczOkv.jpg',
     ownerReview:
-      'Stylish gothic mystery with a charismatic lead and a strong episodic hook.',
+      'Tim Burton directed the pilot for a Addams Family spinoff centered on Wednesday\'s Nevermore Academy years. Jenna Ortega\'s Wednesday is sardonic, formidable, and beautifully performed—a protagonist motivated by investigation rather than typical teenage concerns. The mystery unfolds methodically: a serial killer murdering outcasts in the mining town parallels Wednesday\'s investigation of family secrets. Burton\'s signature aesthetic—goth gothic, whimsy masking darkness—permeates production design. The ensemble supports without overshadowing; Gwendoline Christie\'s principal Larissa Weems carries parental complexity. The romance subplot feels earned rather than obligatory. The series balances standalone episodic investigations with serial mythology. While some plot threads feel convenient, the character work and stylistic consistency carry momentum. A breakout hit that modernized source mythology successfully.',
   },
   {
     id: 'irishman',
@@ -376,7 +376,7 @@ const catalog: Show[] = [
     rating: 8.6,
     imageUrl: 'https://image.tmdb.org/t/p/w780/1M876KPjulVwppEpldhdc8V4o68.jpg',
     ownerReview:
-      'Elegant production and restrained performances deliver rich political drama.',
+      'Peter Morgan created a lavish historical drama examining the British monarchy through intimate character focus rather than pageantry. Claire Foy\'s Elizabeth II embodies public restraint versus private anguish—a woman bound by obligation and constitutional duty. The series excels at political maneuvering, showing how queens exercise power through diplomatic subtlety. Gillian Anderson\'s Margaret Thatcher and Olivia Colman\'s later-years Elizabeth bring thematic complexity. Cinematography is deliberately formal, mirrors and frames emphasizing institutional grandeur versus personal isolation. The series navigates allegations and real-life events with dramatization, occasionally favoring narrative drama over historical accuracy—criticism that\'s fair but misses the point. The show examines duty versus personality, institution versus individual. Later seasons become more theatrical as real-world politics blur with fictional interpretation. Elegant, complex, and utterly compelling.',
   },
   {
     id: 'haunting-hill-house',
@@ -387,7 +387,7 @@ const catalog: Show[] = [
     rating: 8.7,
     imageUrl: 'https://image.tmdb.org/t/p/w780/38PkhBGRQtmVx2drvPik3F42qHO.jpg',
     ownerReview:
-      'Haunting visuals and emotional writing combine into one of the strongest modern horror shows.',
+      'Mike Flanagan adapted Shirley Jackson\'s novel by balancing supernatural horror with family trauma exploration. The Crain family\'s childhood experiences in Hill House echo across adulthood, with psychological damage proving more destructive than ghosts. The production design—creeping shadows, architectural dread—makes the house genuinely unsettling. Flanagan\'s signature extended takes and subtle reveals create sustained tension. Each episode focuses on different family member, revealing how shared trauma creates divergent coping mechanisms. The cinematography moves between warm memories and cold present-day darkness, reinforcing temporal fracture. Victoria Pedretti\'s Nell carries emotional core, with her climactic episode ranking among television\'s greatest hours. The show understands that horror\'s most effective when grounded in believable emotional stakes. Later episodes venture into supernatural spectacle but maintain character focus. A rare horror series that balances scares with profound character writing.',
   },
   {
     id: 'better-call-saul',
@@ -398,7 +398,7 @@ const catalog: Show[] = [
     rating: 9.4,
     imageUrl: 'https://image.tmdb.org/t/p/w780/zjg4jpK1Wp2kiRvtt5ND0kznako.jpg',
     ownerReview:
-      'Meticulous character writing and visual storytelling at the highest TV level.',
+      'Peter Gould and Vince Gilligan crafted a prequel to Breaking Bad that arguably surpasses its predecessor through meticulous character work and thematic precision. Bob Odenkirk\'s Jimmy McGill transforms from struggling lawyer into slick criminal attorney Saul Goodman, but the series refuses to glamorize his descent. Instead, it traces how rationalization and moral compromise compound. Kim Wexler, played with devastating nuance by Rhea Seehorn, becomes the show\'s moral center—someone repeatedly choosing complicity beside Jimmy. Jonathan Banks returns as Mike Ehrmantraut, and his storyline parallels Jimmy\'s moral erosion through profession rather than personality. The cinematography is deliberately composed, using negative space and symmetry to reinforce institutional coldness. The series takes time with scenes—no rushed momentum, just meticulous attention to dialogue and reaction. The final season devastates through accumulated consequence. A triumph of long-form serialized television that trusts viewers with silence and restraint.',
   },
   {
     id: 'blade-runner-2049',
