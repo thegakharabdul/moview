@@ -18,6 +18,11 @@ type Show = {
   region: Region
 }
 
+type ShowDetails = {
+  cast: string[]
+  synopsis: string
+}
+
 type Feedback = {
   id: string
   name: string
@@ -31,6 +36,123 @@ type SelectOption<T extends string> = {
 }
 
 const LOCAL_FALLBACK_POSTER = '/poster-fallback.svg'
+const CAST_FALLBACK = ['Cast details are being updated']
+
+const showCastById: Partial<Record<string, string[]>> = {
+  'war-machine-2026': ['Alan Ritchson', 'Dennis Quaid', 'Stephan James', 'Jai Courtney', 'Esai Morales', 'Daniel Webber'],
+  'avatar-3': ['Sam Worthington', 'Zoe Saldana', 'Sigourney Weaver', 'Stephen Lang', 'Kate Winslet', 'Cliff Curtis'],
+  'avatar-2': ['Sam Worthington', 'Zoe Saldana', 'Sigourney Weaver', 'Stephen Lang', 'Kate Winslet', 'Cliff Curtis', 'Britain Dalton'],
+  'avatar-1': ['Sam Worthington', 'Zoe Saldana', 'Sigourney Weaver', 'Stephen Lang', 'Michelle Rodriguez', 'Giovanni Ribisi'],
+  'nuremberg-2025': ['Rami Malek', 'Russell Crowe', 'Michael Shannon', 'Leo Woodall', 'Richard E. Grant', 'Colin Hanks'],
+  oppenheimer: ['Cillian Murphy', 'Emily Blunt', 'Matt Damon', 'Robert Downey Jr.', 'Florence Pugh', 'Benny Safdie', 'Josh Hartnett'],
+  'the-last-of-us': ['Pedro Pascal', 'Bella Ramsey', 'Gabriel Luna', 'Anna Torv', 'Nico Parker', 'Murray Bartlett', 'Nick Offerman'],
+  'the-batman': ['Robert Pattinson', 'Zoe Kravitz', 'Paul Dano', 'Jeffrey Wright', 'John Turturro', 'Colin Farrell', 'Andy Serkis'],
+  severance: ['Adam Scott', 'Britt Lower', 'Patricia Arquette', 'Zach Cherry', 'Tramell Tillman', 'John Turturro', 'Christopher Walken'],
+  wednesday: ['Jenna Ortega', 'Emma Myers', 'Joy Sunday', 'Hunter Doohan', 'Gwendoline Christie', 'Riki Lindhome', 'Catherine Zeta-Jones'],
+  'the-bear': ['Jeremy Allen White', 'Ayo Edebiri', 'Ebon Moss-Bachrach', 'Lionel Boyce', 'Liza Colon-Zayas', 'Abby Elliott', 'Matty Matheson'],
+  loki: ['Tom Hiddleston', 'Sophia Di Martino', 'Owen Wilson', 'Gugu Mbatha-Raw', 'Wunmi Mosaku', 'Jonathan Majors', 'Ke Huy Quan'],
+  arcane: ['Hailee Steinfeld', 'Ella Purnell', 'Katie Leung', 'Kevin Alejandro', 'Harry Lloyd', 'Toks Olagundoye', 'Jason Spisak'],
+  dune: ['Timothee Chalamet', 'Rebecca Ferguson', 'Oscar Isaac', 'Zendaya', 'Josh Brolin', 'Stellan Skarsgard', 'Javier Bardem'],
+  'squid-game': ['Lee Jung-jae', 'Park Hae-soo', 'Wi Ha-joon', 'Jung Ho-yeon', 'Heo Sung-tae', 'Anupam Tripathi', 'Lee Byung-hun'],
+  chernobyl: ['Jared Harris', 'Stellan Skarsgard', 'Emily Watson', 'Paul Ritter', 'Jessie Buckley', 'Adam Nagaitis', 'Sam Troughton'],
+  joker: ['Joaquin Phoenix', 'Robert De Niro', 'Zazie Beetz', 'Frances Conroy', 'Brett Cullen', 'Shea Whigham', 'Bill Camp'],
+  parasite: ['Song Kang-ho', 'Lee Sun-kyun', 'Cho Yeo-jeong', 'Choi Woo-shik', 'Park So-dam', 'Jang Hye-jin', 'Park Myung-hoon'],
+  'train-to-busan': ['Gong Yoo', 'Jung Yu-mi', 'Ma Dong-seok', 'Kim Su-an', 'Kim Eui-sung', 'Choi Woo-shik', 'Ahn So-hee'],
+  'the-boys': ['Karl Urban', 'Jack Quaid', 'Antony Starr', 'Erin Moriarty', 'Laz Alonso', 'Tomer Capone', 'Karen Fukuhara'],
+  irishman: ['Robert De Niro', 'Al Pacino', 'Joe Pesci', 'Harvey Keitel', 'Ray Romano', 'Bobby Cannavale', 'Anna Paquin'],
+  'black-mirror': ['Daniel Kaluuya', 'Bryce Dallas Howard', 'Jon Hamm', 'Michaela Coel', 'Jesse Plemons', 'Rory Kinnear', 'Salma Hayek'],
+  narcos: ['Wagner Moura', 'Pedro Pascal', 'Boyd Holbrook', 'Paulina Gaitan', 'Bruno Bichir', 'Damian Alcazar', 'Joanna Christie'],
+  ozark: ['Jason Bateman', 'Laura Linney', 'Julia Garner', 'Sofia Hublitz', 'Skylar Gaertner', 'Charlie Tahan', 'Lisa Emery'],
+  mindhunter: ['Jonathan Groff', 'Holt McCallany', 'Anna Torv', 'Hannah Gross', 'Cotter Smith', 'Stacey Roca', 'Joe Tuttle'],
+  'money-heist': ['Alvaro Morte', 'Ursula Corbero', 'Itziar Ituno', 'Pedro Alonso', 'Miguel Herran', 'Jaime Lorente', 'Esther Acebo'],
+  'peaky-blinders': ['Cillian Murphy', 'Paul Anderson', 'Sophie Rundle', 'Finn Cole', 'Helen McCrory', 'Natasha OKeeffe', 'Tom Hardy'],
+  'breaking-bad': ['Bryan Cranston', 'Aaron Paul', 'Anna Gunn', 'Dean Norris', 'RJ Mitte', 'Betsy Brandt', 'Bob Odenkirk'],
+  'better-call-saul': ['Bob Odenkirk', 'Rhea Seehorn', 'Jonathan Banks', 'Patrick Fabian', 'Michael Mando', 'Tony Dalton', 'Giancarlo Esposito'],
+  'the-crown': ['Claire Foy', 'Olivia Colman', 'Imelda Staunton', 'Matt Smith', 'Tobias Menzies', 'Vanessa Kirby', 'Jonathan Pryce'],
+  'stranger-things': ['Millie Bobby Brown', 'Finn Wolfhard', 'David Harbour', 'Winona Ryder', 'Gaten Matarazzo', 'Caleb McLaughlin', 'Noah Schnapp'],
+  dark: ['Louis Hofmann', 'Lisa Vicari', 'Maja Schone', 'Oliver Masucci', 'Karoline Eichhorn', 'Andreas Pietschmann', 'Jordis Triebel'],
+  'haunting-hill-house': ['Michiel Huisman', 'Carla Gugino', 'Elizabeth Reaser', 'Oliver Jackson-Cohen', 'Victoria Pedretti', 'Kate Siegel', 'Henry Thomas'],
+  inception: ['Leonardo DiCaprio', 'Joseph Gordon-Levitt', 'Elliot Page', 'Tom Hardy', 'Ken Watanabe', 'Marion Cotillard', 'Cillian Murphy'],
+  'blade-runner-2049': ['Ryan Gosling', 'Harrison Ford', 'Ana de Armas', 'Robin Wright', 'Sylvia Hoeks', 'Jared Leto', 'Dave Bautista'],
+  interstellar: ['Matthew McConaughey', 'Anne Hathaway', 'Jessica Chastain', 'Michael Caine', 'Mackenzie Foy', 'Casey Affleck', 'Matt Damon'],
+  'fight-club': ['Edward Norton', 'Brad Pitt', 'Helena Bonham Carter', 'Meat Loaf', 'Jared Leto', 'Zach Grenier', 'Richmond Arquette'],
+  'the-green-mile': ['Tom Hanks', 'Michael Clarke Duncan', 'David Morse', 'Bonnie Hunt', 'James Cromwell', 'Sam Rockwell', 'Doug Hutchison'],
+  'the-godfather': ['Marlon Brando', 'Al Pacino', 'James Caan', 'Robert Duvall', 'Diane Keaton', 'Talia Shire', 'John Cazale'],
+  'freaky-friday-2003': ['Jamie Lee Curtis', 'Lindsay Lohan', 'Mark Harmon', 'Harold Gould', 'Chad Michael Murray', 'Stephen Tobolowsky', 'Christina Vidal'],
+  'dhurandar-2': ['Randeep Hooda', 'Nawazuddin Siddiqui', 'Taapsee Pannu', 'Manoj Bajpayee', 'Vijay Varma', 'Rasika Dugal'],
+  dhurandar: ['Randeep Hooda', 'Nawazuddin Siddiqui', 'Manoj Bajpayee', 'Vijay Varma', 'Sobhita Dhulipala', 'Rajkummar Rao'],
+  'chup-2-revenge': ['Dulquer Salmaan', 'Shreya Dhanwanthary', 'Sunny Deol', 'Pooja Bhatt', 'Amitabh Bachchan', 'Saranya Ponvannan'],
+  dunki: ['Shah Rukh Khan', 'Taapsee Pannu', 'Vicky Kaushal', 'Boman Irani', 'Vikram Kochhar', 'Anil Grover', 'Jyoti Subhash'],
+  'bhool-bhulaiya-3': ['Kartik Aaryan', 'Vidya Balan', 'Triptii Dimri', 'Rajpal Yadav', 'Sanjay Mishra', 'Ashwini Kalsekar'],
+  bhediya: ['Varun Dhawan', 'Kriti Sanon', 'Abhishek Banerjee', 'Deepak Dobriyal', 'Paalin Kabak', 'Saurabh Shukla'],
+  dhamaal: ['Sanjay Dutt', 'Arshad Warsi', 'Riteish Deshmukh', 'Javed Jaffrey', 'Aashish Chaudhary', 'Asrani', 'Sanjay Mishra'],
+  'phir-hera-pheri': ['Akshay Kumar', 'Suniel Shetty', 'Paresh Rawal', 'Bipasha Basu', 'Rimi Sen', 'Rajpal Yadav', 'Sharat Saxena'],
+  'dil-chahta-hai': ['Aamir Khan', 'Saif Ali Khan', 'Akshaye Khanna', 'Preity Zinta', 'Sonali Kulkarni', 'Dimple Kapadia', 'Ayub Khan'],
+  'rang-de-basanti': ['Aamir Khan', 'Siddharth', 'Sharman Joshi', 'Kunal Kapoor', 'Atul Kulkarni', 'Soha Ali Khan', 'Madhavan'],
+  lagaan: ['Aamir Khan', 'Gracy Singh', 'Rachel Shelley', 'Paul Blackthorne', 'Suhasini Mulay', 'Kulbhushan Kharbanda', 'Yashpal Sharma'],
+  'dev-d': ['Abhay Deol', 'Mahi Gill', 'Kalki Koechlin', 'Dibyendu Bhattacharya', 'Parakh Madan', 'Mahendra Shrivas'],
+  pink: ['Amitabh Bachchan', 'Taapsee Pannu', 'Kirti Kulhari', 'Andrea Tariang', 'Angad Bedi', 'Piyush Mishra', 'Tushar Pandey'],
+  'kabhi-khushi-kabhie-gham': ['Amitabh Bachchan', 'Jaya Bachchan', 'Shah Rukh Khan', 'Kajol', 'Hrithik Roshan', 'Kareena Kapoor', 'Rani Mukerji'],
+  'english-vinglish-2012': ['Sridevi', 'Adil Hussain', 'Mehdi Nebbou', 'Priya Anand', 'Sujata Kumar', 'Navika Kotia', 'Shivansh Kotia'],
+  'jai-bhim': ['Suriya', 'Lijomol Jose', 'Manikandan', 'Prakash Raj', 'Rajisha Vijayan', 'Rao Ramesh', 'Guru Somasundaram'],
+  'bandit-queen': ['Seema Biswas', 'Nirmal Pandey', 'Rajesh Vivek', 'Raghubir Yadav', 'Saurabh Shukla', 'Govind Namdeo'],
+  'amar-akbar-anthony': ['Amitabh Bachchan', 'Vinod Khanna', 'Rishi Kapoor', 'Parveen Babi', 'Shabana Azmi', 'Neetu Singh', 'Pran'],
+  sholay: ['Amitabh Bachchan', 'Dharmendra', 'Amjad Khan', 'Sanjeev Kumar', 'Hema Malini', 'Jaya Bhaduri', 'A.K. Hangal'],
+  'mughal-a-5': ['Prithviraj Kapoor', 'Dilip Kumar', 'Madhubala', 'Durga Khote', 'Ajit', 'Nigar Sultana', 'Murad'],
+  'mother-india': ['Nargis', 'Sunil Dutt', 'Rajendra Kumar', 'Raaj Kumar', 'Kanhaiyalal', 'Kumkum', 'Chanchal'],
+  'andaz-apna-apna': ['Aamir Khan', 'Salman Khan', 'Raveena Tandon', 'Karisma Kapoor', 'Paresh Rawal', 'Shakti Kapoor', 'Viju Khote'],
+  'dilwale-dulhaniya-le-jayenge': ['Shah Rukh Khan', 'Kajol', 'Amrish Puri', 'Farida Jalal', 'Anupam Kher', 'Satish Shah', 'Mandira Bedi'],
+  'carry-on-jatta': ['Gippy Grewal', 'Mahie Gill', 'Gurpreet Ghuggi', 'Binnu Dhillon', 'Jaswinder Bhalla', 'Karamjit Anmol', 'Shavinder Mahal'],
+  ardaas: ['Gippy Grewal', 'Gurpreet Ghuggi', 'Karamjit Anmol', 'Rana Ranbir', 'Isha Rikhi', 'Mandy Takhar', 'Ammy Virk'],
+  qismat: ['Ammy Virk', 'Sargun Mehta', 'Guggu Gill', 'Tania', 'Harby Sangha', 'Satwant Kaur', 'Manpreet Mani'],
+  'chall-mera-putt': ['Amrinder Gill', 'Simi Chahal', 'Iftikhar Thakur', 'Nirmal Rishi', 'Agha Majid', 'Hardeep Gill', 'Nasir Chinyoti'],
+  sufna: ['Ammy Virk', 'Tania', 'Jagjeet Sandhu', 'Seema Kaushal', 'Kaka Kautki', 'Mohan Baggad', 'Balwinder Bullet'],
+  'aag-lagey-basti-main': ['Mehwish Hayat', 'Fahad Mustafa', 'Naveed Raza', 'Asad Siddiqui', 'Nadia Afgan', 'Ayesha Omar'],
+  'na-maloom-afraad-3': ['Fahad Mustafa', 'Javed Sheikh', 'Mohsin Abbas Haider', 'Urwa Hocane', 'Hania Aamir', 'Kubra Khan'],
+  'load-wedding': ['Fahad Mustafa', 'Mehwish Hayat', 'Samina Ahmad', 'Faiza Hasan', 'Nayyar Ejaz', 'Noor ul Hassan'],
+  'khel-khel-mein': ['Sajal Aly', 'Bilal Abbas Khan', 'Ahsan Khan', 'Marina Khan', 'Javed Sheikh', 'Mani Liaqat'],
+  joyland: ['Ali Junejo', 'Alina Khan', 'Rasti Farooq', 'Sarwat Gilani', 'Sohail Sameer', 'Salmaan Peerzada'],
+  'actor-in-law': ['Fahad Mustafa', 'Mehwish Hayat', 'Omair Rana', 'Nayyar Ejaz', 'Irfan Khoosat', 'Alyy Khan'],
+  'na-maloom-afraad': ['Fahad Mustafa', 'Javed Sheikh', 'Mohsin Abbas Haider', 'Urwa Hocane', 'Kubra Khan', 'Salman Shahid'],
+  waar: ['Shaan Shahid', 'Shamoon Abbasi', 'Ayesha Khan', 'Meesha Shafi', 'Hamza Ali Abbasi', 'Ali Azmat', 'Kamran Lashari'],
+  bol: ['Humaima Malick', 'Mahira Khan', 'Atif Aslam', 'Iman Ali', 'Manzar Sehbai', 'Shafqat Cheema', 'Zaib Rehman'],
+  'khuda-kay-liye': ['Shaan Shahid', 'Fawad Khan', 'Iman Ali', 'Naseeruddin Shah', 'Rasheed Naz', 'Simi Rehal', 'Humayun Kazmi'],
+  '3-bahadur': ['Behroze Sabzwari', 'Sarwat Gilani', 'Muneeb Butt', 'Nimra Bucha', 'Nadia Jamil', 'Dania Enwer'],
+  aina: ['Nadeem Baig', 'Shabnam', 'Qavi Khan', 'Lehri', 'Talish', 'Rangeela', 'Nayyar Sultana'],
+  armaan: ['Waheed Murad', 'Zeba', 'Nirala', 'Lehri', 'Rozina', 'Ilyas Kashmiri', 'Saiqa'],
+}
+
+function createStorySynopsis(show: Show): string {
+  const cleanedReview = show.ownerReview.replace(/\s+/g, ' ').trim()
+  if (!cleanedReview) {
+    return `${show.title} is a ${show.genre} ${show.type.toLowerCase()} from ${show.year}.`
+  }
+
+  const sentences = cleanedReview.match(/[^.!?]+[.!?]?/g) ?? []
+  const synopsis = sentences
+    .map((sentence) => sentence.trim())
+    .filter(Boolean)
+    .slice(0, 2)
+    .join(' ')
+
+  if (!synopsis) {
+    return `${show.title} is a ${show.genre} ${show.type.toLowerCase()} from ${show.year}.`
+  }
+
+  if (synopsis.length <= 300) {
+    return synopsis
+  }
+
+  return `${synopsis.slice(0, 297).trimEnd()}...`
+}
+
+function getShowDetails(show: Show): ShowDetails {
+  const curatedCast = showCastById[show.id]
+  return {
+    cast: curatedCast && curatedCast.length > 0 ? curatedCast : CAST_FALLBACK,
+    synopsis: createStorySynopsis(show),
+  }
+}
 
 function resolveImageUrl(show: Show): string {
   if (show.imageUrl.startsWith('/')) {
@@ -1135,6 +1257,12 @@ function App() {
     [activeShowId],
   )
 
+  const showDetailsById = useMemo(() => {
+    return Object.fromEntries(
+      catalog.map((show) => [show.id, getShowDetails(show)]),
+    ) as Record<string, ShowDetails>
+  }, [])
+
   const topRated = useMemo(() => {
     return [...catalog].sort((a, b) => b.rating - a.rating).slice(0, 5)
   }, [])
@@ -1145,6 +1273,7 @@ function App() {
 
   const featuredShow = catalog[heroIndex % catalog.length]
   const featuredImageUrl = resolveImageUrl(featuredShow)
+  const activeShowDetails = activeShow ? showDetailsById[activeShow.id] : null
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -1502,6 +1631,16 @@ function App() {
                 <p>Rotten Tomatoes</p>
               </div>
             )}
+
+            <section className="owner-review">
+              <h3>Storyline</h3>
+              <p>{activeShowDetails?.synopsis ?? 'Story synopsis is not available yet.'}</p>
+            </section>
+
+            <section className="owner-review">
+              <h3>Cast</h3>
+              <p>{(activeShowDetails?.cast ?? CAST_FALLBACK).join(', ')}</p>
+            </section>
 
             <section className="owner-review">
               <h3>Our review</h3>
