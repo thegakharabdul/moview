@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import './App.css'
 
 type ShowType = 'Movie' | 'Series' | 'Show'
-type Region = 'Hollywood' | 'Bollywood' | 'Lollywood' | 'Korean'
+type Region = 'Hollywood' | 'Bollywood' | 'Punjabi' | 'Lollywood' | 'Korean'
 
 type Show = {
   id: string
@@ -827,6 +827,67 @@ const catalog: Show[] = [
     ownerReview:
       'Aditya Chopra directed what became the defining romance of Hindi cinema—two young people negotiating parental expectations and personal choice. Shah Rukh Khan\'s earnest romantic hero transcended stereotypes. The film balanced traditional values with modern sensibilities. The Swiss scenery becomes character itself. Essential Bollywood that defined an era.',
   },
+  // ========== PUNJABI ==========
+  {
+    id: 'carry-on-jatta',
+    title: 'Carry On Jatta',
+    type: 'Movie',
+    year: 2012,
+    genre: 'Comedy / Family',
+    rating: 7.6,
+    imageUrl: '/carry on jatta.jpg',
+    region: 'Punjabi',
+    ownerReview:
+      'A high-energy Punjabi comedy built around escalating misunderstandings, rapid-fire dialogue, and a cast fully committed to chaos. Gippy Grewal and the ensemble sustain a playful tone from start to finish, while the screenplay keeps piling on comic tension without losing clarity. It is broad, loud, and extremely entertaining in the best commercial-comedy sense.',
+  },
+  {
+    id: 'ardaas',
+    title: 'Ardaas',
+    type: 'Movie',
+    year: 2016,
+    genre: 'Drama / Social',
+    rating: 8.0,
+    imageUrl: '/ardaas.jpg',
+    region: 'Punjabi',
+    ownerReview:
+      'Gippy Grewal directs a sincere village-centered drama that threads multiple social concerns through emotional storytelling. The film works because it stays grounded in community life rather than sermonizing, with performances that feel lived-in and compassionate. A thoughtful Punjabi film with a strong moral core and genuine warmth.',
+  },
+  {
+    id: 'qismat',
+    title: 'Qismat',
+    type: 'Movie',
+    year: 2018,
+    genre: 'Romance / Drama',
+    rating: 8.1,
+    imageUrl: '/qismat.jpg',
+    region: 'Punjabi',
+    ownerReview:
+      'A romantic drama that begins with youthful charm and gradually turns into a meditation on timing, regret, and emotional maturity. Ammy Virk and Sargun Mehta bring strong chemistry and restraint, helping the film land its bittersweet arc without melodramatic excess. One of the more emotionally resonant modern Punjabi romances.',
+  },
+  {
+    id: 'chall-mera-putt',
+    title: 'Chal Mera Putt',
+    type: 'Movie',
+    year: 2019,
+    genre: 'Comedy / Drama',
+    rating: 7.9,
+    imageUrl: '/chal mera putt.jpg',
+    region: 'Punjabi',
+    ownerReview:
+      'A warm immigrant-life dramedy that balances humor with everyday struggle. The writing captures friendship, homesickness, and cultural adaptation with natural dialogue and affectionate character work. Instead of big plot mechanics, it relies on human moments, which gives the film its authenticity and charm.',
+  },
+  {
+    id: 'sufna',
+    title: 'Sufna',
+    type: 'Movie',
+    year: 2020,
+    genre: 'Romance / Drama',
+    rating: 7.7,
+    imageUrl: '/sufna.jpg',
+    region: 'Punjabi',
+    ownerReview:
+      'A soft-toned romantic drama that favors emotional sincerity over plot twists. Ammy Virk and Tania deliver understated performances, while the film\'s music and visual palette create a gentle, lyrical mood. It is a heartfelt relationship story with a clean narrative line and strong emotional payoff.',
+  },
   // ========== LOLLYWOOD ==========
   {
     id: 'aag-lagey-basti-main',
@@ -996,6 +1057,7 @@ const regionOptions: SelectOption<RegionFilter>[] = [
   { value: 'All', label: 'All Regions' },
   { value: 'Hollywood', label: 'Hollywood' },
   { value: 'Bollywood', label: 'Bollywood' },
+  { value: 'Punjabi', label: 'Punjabi' },
   { value: 'Lollywood', label: 'Lollywood' },
   { value: 'Korean', label: 'Korean' },
 ]
@@ -1299,7 +1361,7 @@ function App() {
 
           {region === 'All' ? (
             <>
-              {(['Hollywood', 'Bollywood', 'Lollywood', 'Korean'] as const).map((regionName) => {
+              {(['Hollywood', 'Bollywood', 'Punjabi', 'Lollywood', 'Korean'] as const).map((regionName) => {
                 const regionShows = filteredAndSortedCatalog.filter(
                   (show) => show.region === regionName,
                 )
