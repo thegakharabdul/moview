@@ -508,6 +508,19 @@ const catalog: Show[] = [
     rottenTomatoesScore: 67,
   },
   {
+    id: 'the-green-mile',
+    title: 'The Green Mile',
+    type: 'Movie',
+    year: 1999,
+    genre: 'Drama / Fantasy',
+    rating: 8.6,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Frank Darabont turns a supernatural prison story into an emotional epic about justice, compassion, and moral burden. Tom Hanks anchors the film with restraint while Michael Clarke Duncan delivers a profoundly humane performance that gives the story its soul. The narrative moves patiently but every scene deepens the ethical tension around punishment and mercy. A heartbreaking, deeply empathetic classic that earns its long runtime.',
+    rottenTomatoesScore: 79,
+  },
+  {
     id: 'the-godfather',
     title: 'The Godfather',
     type: 'Movie',
