@@ -77,6 +77,7 @@ const showCastById: Partial<Record<string, string[]>> = {
   interstellar: ['Matthew McConaughey', 'Anne Hathaway', 'Jessica Chastain', 'Michael Caine', 'Mackenzie Foy', 'Casey Affleck', 'Matt Damon'],
   'fight-club': ['Edward Norton', 'Brad Pitt', 'Helena Bonham Carter', 'Meat Loaf', 'Jared Leto', 'Zach Grenier', 'Richmond Arquette'],
   'the-green-mile': ['Tom Hanks', 'Michael Clarke Duncan', 'David Morse', 'Bonnie Hunt', 'James Cromwell', 'Sam Rockwell', 'Doug Hutchison'],
+  'forrest-gump': ['Tom Hanks', 'Robin Wright', 'Gary Sinise', 'Sally Field', 'Mykelti Williamson', 'Michael Conner Humphreys', 'Haley Joel Osment'],
   'the-godfather': ['Marlon Brando', 'Al Pacino', 'James Caan', 'Robert Duvall', 'Diane Keaton', 'Talia Shire', 'John Cazale'],
   'freaky-friday-2003': ['Jamie Lee Curtis', 'Lindsay Lohan', 'Mark Harmon', 'Harold Gould', 'Chad Michael Murray', 'Stephen Tobolowsky', 'Christina Vidal'],
   'dhurandar-2': ['Randeep Hooda', 'Nawazuddin Siddiqui', 'Taapsee Pannu', 'Manoj Bajpayee', 'Vijay Varma', 'Rasika Dugal'],
@@ -279,7 +280,7 @@ const catalog: Show[] = [
     year: 2022,
     genre: 'Sci-Fi / Mystery',
     rating: 8.9,
-    imageUrl: 'https://image.tmdb.org/t/p/w780/7WTsnHkbA0FaG6R9twfFde0I9hl.jpg',
+    imageUrl: 'https://media.themoviedb.org/t/p/w600_and_h900_face/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg',
     region: 'Hollywood',
     ownerReview:
       'Dan Erickson created a sci-fi premise that becomes perfect corporate horror—workers surgically severed so their work consciousness and personal consciousness never meet. Employees arrive at sterile offices with no memories of personal lives; outside workers live unaware of work identities. Adam Scott\'s Mark Scout navigates the uncanny disconnect between severed selves. The series examines labor, identity, and consent with philosophical precision. Production design contrasts brutalist workplace architecture with intimate personal spaces, reinforcing existential splitting. The mystery deepens across episodes as workers discover their severing hides exploitation. Each episode escalates questions about autonomy and corporate control. The cinematography is meticulous, with cold lighting inside the workplace growing warmer as Mark\'s personal life expands. A original premise executed with thematic precision.',
@@ -615,6 +616,19 @@ const catalog: Show[] = [
     ownerReview:
       'Nolan\'s ambitious space opera transcends its 2h 49m runtime through sheer emotional depth. The film balances mind-bending theoretical physics with an intimate father-daughter relationship that anchors every moment. Hans Zimmer\'s organ-driven score is otherworldly, and the visuals of distant planets and black holes remain unprecedented. While the dialogue-heavy exposition can feel dense during space mechanics explanations, the payoff in the final act delivers one of cinema\'s most moving climaxes. A masterpiece about love transcending dimensions.',
     rottenTomatoesScore: 72,
+  },
+  {
+    id: 'forrest-gump',
+    title: 'Forrest Gump',
+    type: 'Movie',
+    year: 1994,
+    genre: 'Drama / Comedy / Romance',
+    rating: 9.0,
+    imageUrl: 'https://media.themoviedb.org/t/p/w600_and_h900_face/saHP97rTPS5eLmrLQEcANmKrsFl.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A warmly directed classic that uses one man\'s extraordinary life to trace several decades of American history without losing its emotional simplicity. Tom Hanks gives Forrest an understated sincerity that keeps the film grounded even when the story travels through war, politics, and pop culture spectacle. The movie works because it never mocks its central character; instead, it treats kindness, persistence, and loyalty as heroic traits. Robert Zemeckis balances sentiment with momentum, and the film\'s emotional beats still land because they are built on character rather than gimmick. A crowd-pleasing drama that remains instantly recognizable for good reason.',
+    rottenTomatoesScore: 75,
   },
   {
     id: 'fight-club',
