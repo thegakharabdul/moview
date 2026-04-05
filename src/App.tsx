@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import './App.css'
 
 type ShowType = 'Movie' | 'Series' | 'Show'
-type Region = 'Hollywood' | 'Bollywood' | 'Punjabi' | 'Lollywood' | 'Korean'
+type Region = 'Hollywood' | 'Bollywood' | 'Punjabi' | 'Lollywood' | 'Asian'
 
 type Show = {
   id: string
@@ -79,6 +79,7 @@ const showCastById: Partial<Record<string, string[]>> = {
   'the-green-mile': ['Tom Hanks', 'Michael Clarke Duncan', 'David Morse', 'Bonnie Hunt', 'James Cromwell', 'Sam Rockwell', 'Doug Hutchison'],
   'forrest-gump': ['Tom Hanks', 'Robin Wright', 'Gary Sinise', 'Sally Field', 'Mykelti Williamson', 'Michael Conner Humphreys', 'Haley Joel Osment'],
   'the-godfather': ['Marlon Brando', 'Al Pacino', 'James Caan', 'Robert Duvall', 'Diane Keaton', 'Talia Shire', 'John Cazale'],
+  dasim: ['Zulfa Maharani', 'Omar Daniel', 'Adinda Thomas', 'Meriam Bellina', 'Dinda Kanyadewi', 'Morgan Oey', 'Arswendy Bening Swara'],
   'freaky-friday-2003': ['Jamie Lee Curtis', 'Lindsay Lohan', 'Mark Harmon', 'Harold Gould', 'Chad Michael Murray', 'Stephen Tobolowsky', 'Christina Vidal'],
   'dhurandar-2': ['Randeep Hooda', 'Nawazuddin Siddiqui', 'Taapsee Pannu', 'Manoj Bajpayee', 'Vijay Varma', 'Rasika Dugal'],
   dhurandar: ['Randeep Hooda', 'Nawazuddin Siddiqui', 'Manoj Bajpayee', 'Vijay Varma', 'Sobhita Dhulipala', 'Rajkummar Rao'],
@@ -121,6 +122,14 @@ const showCastById: Partial<Record<string, string[]>> = {
   '3-bahadur': ['Behroze Sabzwari', 'Sarwat Gilani', 'Muneeb Butt', 'Nimra Bucha', 'Nadia Jamil', 'Dania Enwer'],
   aina: ['Nadeem Baig', 'Shabnam', 'Qavi Khan', 'Lehri', 'Talish', 'Rangeela', 'Nayyar Sultana'],
   armaan: ['Waheed Murad', 'Zeba', 'Nirala', 'Lehri', 'Rozina', 'Ilyas Kashmiri', 'Saiqa'],
+  'harry-potter-1': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Richard Harris', 'Maggie Smith', 'Alan Rickman', 'Robbie Coltrane'],
+  'harry-potter-2': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Kenneth Branagh', 'Maggie Smith', 'Alan Rickman', 'Jason Isaacs'],
+  'harry-potter-3': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Gary Oldman', 'David Thewlis', 'Michael Gambon', 'Alan Rickman'],
+  'harry-potter-4': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Ralph Fiennes', 'Brendan Gleeson', 'Robert Pattinson', 'Alan Rickman'],
+  'harry-potter-5': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Helena Bonham Carter', 'Imelda Staunton', 'Michael Gambon', 'Alan Rickman'],
+  'harry-potter-6': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Jim Broadbent', 'Michael Gambon', 'Alan Rickman', 'Tom Felton'],
+  'harry-potter-7-1': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Ralph Fiennes', 'Helena Bonham Carter', 'Alan Rickman', 'Bill Nighy'],
+  'harry-potter-7-2': ['Daniel Radcliffe', 'Emma Watson', 'Rupert Grint', 'Ralph Fiennes', 'Alan Rickman', 'Michael Gambon', 'Maggie Smith'],
 }
 
 function createStorySynopsis(show: Show): string {
@@ -160,7 +169,7 @@ function resolveImageUrl(show: Show): string {
     return show.imageUrl
   }
 
-  if (show.region === 'Bollywood' || show.region === 'Lollywood' || show.region === 'Korean') {
+  if (show.region === 'Bollywood' || show.region === 'Lollywood') {
     return LOCAL_FALLBACK_POSTER
   }
 
@@ -391,10 +400,23 @@ const catalog: Show[] = [
     genre: 'Thriller / Social Satire',
     rating: 9.2,
     imageUrl: '/parasite.jpg',
-    region: 'Korean',
+    region: 'Asian',
     ownerReview:
       'Bong Joon-ho\'s masterpiece weaponizes genre to expose class fractures with surgical precision. The Kim family\'s infiltration of the wealthy Park household starts as darkly comic and escalates into something genuinely devastating. Every prop and architectural detail carries thematic weight about affluence and inequality. Song Kang-ho\'s performance captures a man maintaining dignity while losing everything. The film refuses easy heroes or villains. Won Best Picture by defeating prestige favorites—richly deserved.',
     rottenTomatoesScore: 98,
+  },
+  {
+    id: 'dasim',
+    title: 'Dasim',
+    type: 'Movie',
+    year: 2025,
+    genre: 'Horror',
+    rating: 7.5,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/ulKWRfIn4okrZTNgFFLaayAYcEX.jpg',
+    region: 'Asian',
+    ownerReview:
+      'An Indonesian horror film that leans into domestic tension and supernatural disturbance rather than relying only on jump scares. The story builds dread through a married couple pushed into a house filled with suspicion, family conflict, and eerie interruptions that keep escalating. Its strength is atmosphere: the film uses quiet scenes, uneasy pacing, and emotional paranoia to make the terror feel personal. The cast sells the fear and confusion well, and the central mystery gives the horror structure instead of randomness. A solid regional genre entry with a strong haunted-house energy.',
+    rottenTomatoesScore: 72,
   },
   {
     id: 'train-to-busan',
@@ -404,7 +426,7 @@ const catalog: Show[] = [
     genre: 'Action / Horror',
     rating: 8.3,
     imageUrl: '/train to busan.jpg',
-    region: 'Korean',
+    region: 'Asian',
     ownerReview:
       'Yeon Sang-ho turns a zombie outbreak thriller into an emotional story about selfishness, sacrifice, and social responsibility. Set mostly inside a speeding train, the film uses confined spaces and sharp blocking to create relentless tension while still giving each character a clear emotional arc. Gong Yoo anchors the narrative with a convincing transformation from detached businessman to protective father, and Ma Dong-seok delivers a standout supporting performance full of grit and warmth. The pacing is tight, the action geography is easy to follow, and the final act lands with real pathos. A genre film with both visceral thrills and genuine heart.',
     rottenTomatoesScore: 95,
@@ -681,6 +703,110 @@ const catalog: Show[] = [
     ownerReview:
       'A surprisingly effective family comedy that earns its emotional beats through genuine character work. Jamie Lee Curtis and Lindsay Lohan create electric chemistry. The script smartly uses the body swap to force both characters to walk in each other\'s shoes, building empathy through comic situations. The film avoids schmaltz despite inherent sentimentality, keeping things breezy and entertaining. A reliable choice for family viewing that surprisingly holds up to nostalgia and affection.',
     rottenTomatoesScore: 61,
+  },
+  {
+    id: 'harry-potter-1',
+    title: 'Harry Potter and the Sorcerer\'s Stone',
+    type: 'Movie',
+    year: 2001,
+    genre: 'Fantasy / Adventure',
+    rating: 8.1,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A charming and confident franchise opener that captures the wonder of discovering Hogwarts for the first time. Chris Columbus balances childlike awe with enough darkness to hint at bigger conflicts ahead. Strong ensemble work and practical set design make the world feel tangible and timeless.',
+    rottenTomatoesScore: 81,
+  },
+  {
+    id: 'harry-potter-2',
+    title: 'Harry Potter and the Chamber of Secrets',
+    type: 'Movie',
+    year: 2002,
+    genre: 'Fantasy / Mystery',
+    rating: 7.9,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Darker and more atmospheric than the first film, this sequel expands Hogwarts mythology while keeping the central trio emotionally engaging. The mystery structure is clean, the basilisk finale is tense, and the story sharpens themes of prejudice and identity within magical society.',
+    rottenTomatoesScore: 82,
+  },
+  {
+    id: 'harry-potter-3',
+    title: 'Harry Potter and the Prisoner of Azkaban',
+    type: 'Movie',
+    year: 2004,
+    genre: 'Fantasy / Coming-of-Age',
+    rating: 8.6,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/aWxwnYoe8p2d2fcxOqtvAtJ72Rw.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Alfonso Cuaron transforms the series with richer visual language, stronger emotional nuance, and a confident tonal shift toward adolescence. Time-travel mechanics are handled elegantly, and the film stands out for balancing suspense, humor, and character growth without losing momentum.',
+    rottenTomatoesScore: 90,
+  },
+  {
+    id: 'harry-potter-4',
+    title: 'Harry Potter and the Goblet of Fire',
+    type: 'Movie',
+    year: 2005,
+    genre: 'Fantasy / Adventure',
+    rating: 8.2,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/fECBtHlr0RB3foNHDiCBXeg9Bv9.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'The Triwizard Tournament gives this chapter kinetic energy while the story pivots decisively toward tragedy. Tournament set pieces are consistently exciting, but the true weight comes from the closing turn that signals the end of childhood safety and the beginning of war.',
+    rottenTomatoesScore: 88,
+  },
+  {
+    id: 'harry-potter-5',
+    title: 'Harry Potter and the Order of the Phoenix',
+    type: 'Movie',
+    year: 2007,
+    genre: 'Fantasy / Drama',
+    rating: 8.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/5aOyriWkPec0zUDxmHFP9qMmBaj.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A politically charged entry that examines propaganda, institutional denial, and youth resistance. Imelda Staunton\'s Umbridge is memorably chilling, and the film successfully channels Harry\'s anger and isolation as the wizarding world refuses to confront looming danger.',
+    rottenTomatoesScore: 78,
+  },
+  {
+    id: 'harry-potter-6',
+    title: 'Harry Potter and the Half-Blood Prince',
+    type: 'Movie',
+    year: 2009,
+    genre: 'Fantasy / Drama',
+    rating: 8.1,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/z7uo9zmQdQwU5ZJHFpv2Upl30i1.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Elegant cinematography and a melancholic tone make this one of the series\' most visually distinctive chapters. While it includes lighter relationship beats, the film\'s core focus is Voldemort\'s history and Dumbledore\'s burden, culminating in a devastating final act.',
+    rottenTomatoesScore: 84,
+  },
+  {
+    id: 'harry-potter-7-1',
+    title: 'Harry Potter and the Deathly Hallows: Part 1',
+    type: 'Movie',
+    year: 2010,
+    genre: 'Fantasy / Adventure',
+    rating: 8.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/iGoXIpQb7Pot00EEdwpwPajheZ5.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A deliberate and intimate road-movie structure allows the trio\'s friendship to carry the narrative as institutions collapse around them. The slower pacing is purposeful, emphasizing fear, uncertainty, and sacrifice before the saga\'s final confrontation.',
+    rottenTomatoesScore: 77,
+  },
+  {
+    id: 'harry-potter-7-2',
+    title: 'Harry Potter and the Deathly Hallows: Part 2',
+    type: 'Movie',
+    year: 2011,
+    genre: 'Fantasy / Action',
+    rating: 8.5,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/c54HpQmuwXjHq2C9wmoACjxoom3.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A high-stakes finale that pays off years of character arcs with emotional clarity and scale. The Battle of Hogwarts is epic without losing personal stakes, and Alan Rickman\'s late-film revelations add unexpected poignancy to the saga\'s closing movements.',
+    rottenTomatoesScore: 96,
   },
   // ========== BOLLYWOOD ==========
   {
@@ -1186,6 +1312,21 @@ const catalog: Show[] = [
 const storageKey = 'moview-feedback-v1'
 type CategoryFilter = 'All' | ShowType
 type RegionFilter = 'All' | Region
+type GenreFilter =
+  | 'All'
+  | 'Action'
+  | 'Adventure'
+  | 'Animation'
+  | 'Comedy'
+  | 'Crime'
+  | 'Drama'
+  | 'Family'
+  | 'Fantasy'
+  | 'Horror'
+  | 'Mystery'
+  | 'Romance'
+  | 'Sci-Fi'
+  | 'Thriller'
 type SortOption = 'rating-desc' | 'rating-asc' | 'year-desc' | 'title-asc'
 type Page = 'home' | 'library' | 'about'
 
@@ -1195,7 +1336,7 @@ const regionOptions: SelectOption<RegionFilter>[] = [
   { value: 'Bollywood', label: 'Bollywood' },
   { value: 'Punjabi', label: 'Punjabi' },
   { value: 'Lollywood', label: 'Lollywood' },
-  { value: 'Korean', label: 'Korean' },
+  { value: 'Asian', label: 'Asian' },
 ]
 
 const categoryOptions: SelectOption<CategoryFilter>[] = [
@@ -1203,6 +1344,41 @@ const categoryOptions: SelectOption<CategoryFilter>[] = [
   { value: 'Movie', label: 'Movies' },
   { value: 'Series', label: 'Series' },
   { value: 'Show', label: 'Shows' },
+]
+
+function getSimpleGenre(genre: string): Exclude<GenreFilter, 'All'> {
+  const value = genre.toLowerCase()
+
+  if (value.includes('sci-fi') || value.includes('sci fi')) return 'Sci-Fi'
+  if (value.includes('action')) return 'Action'
+  if (value.includes('adventure')) return 'Adventure'
+  if (value.includes('animation')) return 'Animation'
+  if (value.includes('comedy')) return 'Comedy'
+  if (value.includes('crime')) return 'Crime'
+  if (value.includes('horror')) return 'Horror'
+  if (value.includes('mystery')) return 'Mystery'
+  if (value.includes('romance')) return 'Romance'
+  if (value.includes('fantasy')) return 'Fantasy'
+  if (value.includes('family')) return 'Family'
+  if (value.includes('thriller')) return 'Thriller'
+  return 'Drama'
+}
+
+const genreOptions: SelectOption<GenreFilter>[] = [
+  { value: 'All', label: 'All Genres' },
+  { value: 'Action', label: 'Action' },
+  { value: 'Adventure', label: 'Adventure' },
+  { value: 'Animation', label: 'Animation' },
+  { value: 'Comedy', label: 'Comedy' },
+  { value: 'Crime', label: 'Crime' },
+  { value: 'Drama', label: 'Drama' },
+  { value: 'Family', label: 'Family' },
+  { value: 'Fantasy', label: 'Fantasy' },
+  { value: 'Horror', label: 'Horror' },
+  { value: 'Mystery', label: 'Mystery' },
+  { value: 'Romance', label: 'Romance' },
+  { value: 'Sci-Fi', label: 'Sci-Fi' },
+  { value: 'Thriller', label: 'Thriller' },
 ]
 
 const sortOptions: SelectOption<SortOption>[] = [
@@ -1227,6 +1403,7 @@ function App() {
   const [page, setPage] = useState<Page>('home')
   const [region, setRegion] = useState<RegionFilter>('All')
   const [category, setCategory] = useState<CategoryFilter>('All')
+  const [genre, setGenre] = useState<GenreFilter>('All')
   const [sortBy, setSortBy] = useState<SortOption>('rating-desc')
   const [activeShowId, setActiveShowId] = useState<string | null>(null)
   const [showFeedbackForm, setShowFeedbackForm] = useState(false)
@@ -1250,6 +1427,10 @@ function App() {
       filtered = filtered.filter((show) => show.type === category)
     }
 
+    if (genre !== 'All') {
+      filtered = filtered.filter((show) => getSimpleGenre(show.genre) === genre)
+    }
+
     filtered.sort((a, b) => {
       if (sortBy === 'rating-desc') {
         return b.rating - a.rating
@@ -1264,7 +1445,7 @@ function App() {
     })
 
     return filtered
-  }, [region, category, sortBy])
+  }, [region, category, genre, sortBy])
 
   const activeShow = useMemo(
     () => catalog.find((show) => show.id === activeShowId) ?? null,
@@ -1490,6 +1671,16 @@ function App() {
             </label>
 
             <label>
+              Genre
+              <DarkSelect
+                value={genre}
+                onChange={(value) => setGenre(value as GenreFilter)}
+                options={genreOptions}
+                ariaLabel="Genre"
+              />
+            </label>
+
+            <label>
               Sort
               <DarkSelect
                 value={sortBy}
@@ -1504,7 +1695,7 @@ function App() {
 
           {region === 'All' ? (
             <>
-              {(['Hollywood', 'Bollywood', 'Punjabi', 'Lollywood', 'Korean'] as const).map((regionName) => {
+              {(['Hollywood', 'Bollywood', 'Punjabi', 'Lollywood', 'Asian'] as const).map((regionName) => {
                 const regionShows = filteredAndSortedCatalog.filter(
                   (show) => show.region === regionName,
                 )
