@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+﻿import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import './App.css'
 
@@ -36,6 +36,8 @@ type SelectOption<T extends string> = {
 }
 
 const LOCAL_FALLBACK_POSTER = '/poster-fallback.svg'
+const MCU_SHARED_POSTER =
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Marvel_Cinematic_Universe_logo.png/1280px-Marvel_Cinematic_Universe_logo.png'
 const CAST_FALLBACK = ['Cast details are being updated']
 
 const showCastById: Partial<Record<string, string[]>> = {
@@ -44,6 +46,13 @@ const showCastById: Partial<Record<string, string[]>> = {
   'avatar-2': ['Sam Worthington', 'Zoe Saldana', 'Sigourney Weaver', 'Stephen Lang', 'Kate Winslet', 'Cliff Curtis', 'Britain Dalton'],
   'avatar-1': ['Sam Worthington', 'Zoe Saldana', 'Sigourney Weaver', 'Stephen Lang', 'Michelle Rodriguez', 'Giovanni Ribisi'],
   'nuremberg-2025': ['Rami Malek', 'Russell Crowe', 'Michael Shannon', 'Leo Woodall', 'Richard E. Grant', 'Colin Hanks'],
+  'inside-out-2': ['Amy Poehler', 'Maya Hawke', 'Kensington Tallman', 'Liza Lapira', 'Phyllis Smith', 'Lewis Black'],
+  'wild-robot-2024': ['Lupita Nyongo', 'Pedro Pascal', 'Kit Connor', 'Bill Nighy', 'Stephanie Hsu', 'Mark Hamill'],
+  'across-the-spider-verse': ['Shameik Moore', 'Hailee Steinfeld', 'Brian Tyree Henry', 'Luna Lauren Velez', 'Oscar Isaac', 'Jake Johnson'],
+  'into-the-spider-verse': ['Shameik Moore', 'Jake Johnson', 'Hailee Steinfeld', 'Mahershala Ali', 'Brian Tyree Henry', 'Lily Tomlin'],
+  'coco-2017': ['Anthony Gonzalez', 'Gael Garcia Bernal', 'Benjamin Bratt', 'Alanna Ubach', 'Renee Victor', 'Ana Ofelia Murguia'],
+  'klaus-2019': ['Jason Schwartzman', 'J.K. Simmons', 'Rashida Jones', 'Joan Cusack', 'Norm Macdonald', 'Will Sasso'],
+  'ratatouille-2007': ['Patton Oswalt', 'Ian Holm', 'Lou Romano', 'Brian Dennehy', 'Peter Sohn', 'Brad Garrett'],
   oppenheimer: ['Cillian Murphy', 'Emily Blunt', 'Matt Damon', 'Robert Downey Jr.', 'Florence Pugh', 'Benny Safdie', 'Josh Hartnett'],
   'the-last-of-us': ['Pedro Pascal', 'Bella Ramsey', 'Gabriel Luna', 'Anna Torv', 'Nico Parker', 'Murray Bartlett', 'Nick Offerman'],
   'the-batman': ['Robert Pattinson', 'Zoe Kravitz', 'Paul Dano', 'Jeffrey Wright', 'John Turturro', 'Colin Farrell', 'Andy Serkis'],
@@ -79,6 +88,65 @@ const showCastById: Partial<Record<string, string[]>> = {
   'the-green-mile': ['Tom Hanks', 'Michael Clarke Duncan', 'David Morse', 'Bonnie Hunt', 'James Cromwell', 'Sam Rockwell', 'Doug Hutchison'],
   'forrest-gump': ['Tom Hanks', 'Robin Wright', 'Gary Sinise', 'Sally Field', 'Mykelti Williamson', 'Michael Conner Humphreys', 'Haley Joel Osment'],
   'the-godfather': ['Marlon Brando', 'Al Pacino', 'James Caan', 'Robert Duvall', 'Diane Keaton', 'Talia Shire', 'John Cazale'],
+  'blood-diamond': ['Leonardo DiCaprio', 'Djimon Hounsou', 'Jennifer Connelly', 'Arnold Vosloo', 'Jimi Mistry', 'Basil Wallace', 'Michael Sheen'],
+  'narnia-1': ['Georgie Henley', 'Skandar Keynes', 'William Moseley', 'Anna Popplewell', 'Tilda Swinton', 'James McAvoy', 'Liam Neeson'],
+  'narnia-2': ['Georgie Henley', 'Skandar Keynes', 'William Moseley', 'Anna Popplewell', 'Ben Barnes', 'Peter Dinklage', 'Liam Neeson'],
+  'narnia-3': ['Georgie Henley', 'Skandar Keynes', 'Ben Barnes', 'Will Poulter', 'Anna Popplewell', 'Simon Pegg', 'Liam Neeson'],
+  'pirates-1': ['Johnny Depp', 'Orlando Bloom', 'Keira Knightley', 'Geoffrey Rush', 'Jack Davenport', 'Jonathan Pryce', 'Lee Arenberg'],
+  'pirates-2': ['Johnny Depp', 'Orlando Bloom', 'Keira Knightley', 'Geoffrey Rush', 'Bill Nighy', 'Stellan Skarsgard', 'Naomie Harris'],
+  'pirates-3': ['Johnny Depp', 'Orlando Bloom', 'Keira Knightley', 'Geoffrey Rush', 'Bill Nighy', 'Chow Yun-fat', 'Keith Richards'],
+  'pirates-4': ['Johnny Depp', 'Penelope Cruz', 'Ian McShane', 'Geoffrey Rush', 'Kevin McNally', 'Sam Claflin', 'Astrid Berges-Frisbey'],
+  'pirates-5': ['Johnny Depp', 'Javier Bardem', 'Kaya Scodelario', 'Brenton Thwaites', 'Geoffrey Rush', 'Kevin McNally', 'Golshifteh Farahani'],
+  'mcu-iron-man': ['Robert Downey Jr.', 'Gwyneth Paltrow', 'Terrence Howard', 'Jeff Bridges'],
+  'mcu-incredible-hulk': ['Edward Norton', 'Liv Tyler', 'Tim Roth', 'William Hurt'],
+  'mcu-iron-man-2': ['Robert Downey Jr.', 'Gwyneth Paltrow', 'Don Cheadle', 'Scarlett Johansson'],
+  'mcu-thor': ['Chris Hemsworth', 'Natalie Portman', 'Tom Hiddleston', 'Anthony Hopkins'],
+  'mcu-captain-america-first-avenger': ['Chris Evans', 'Hayley Atwell', 'Sebastian Stan', 'Tommy Lee Jones'],
+  'mcu-avengers-2012': ['Robert Downey Jr.', 'Chris Evans', 'Scarlett Johansson', 'Chris Hemsworth'],
+  'mcu-iron-man-3': ['Robert Downey Jr.', 'Gwyneth Paltrow', 'Don Cheadle', 'Guy Pearce'],
+  'mcu-thor-dark-world': ['Chris Hemsworth', 'Natalie Portman', 'Tom Hiddleston', 'Anthony Hopkins'],
+  'mcu-captain-america-winter-soldier': ['Chris Evans', 'Scarlett Johansson', 'Sebastian Stan', 'Anthony Mackie'],
+  'mcu-guardians-vol1': ['Chris Pratt', 'Zoe Saldana', 'Dave Bautista', 'Vin Diesel'],
+  'mcu-age-of-ultron': ['Robert Downey Jr.', 'Chris Evans', 'Scarlett Johansson', 'Mark Ruffalo'],
+  'mcu-ant-man': ['Paul Rudd', 'Evangeline Lilly', 'Michael Douglas', 'Corey Stoll'],
+  'mcu-civil-war': ['Chris Evans', 'Robert Downey Jr.', 'Scarlett Johansson', 'Sebastian Stan'],
+  'mcu-doctor-strange': ['Benedict Cumberbatch', 'Chiwetel Ejiofor', 'Rachel McAdams', 'Tilda Swinton'],
+  'mcu-guardians-vol2': ['Chris Pratt', 'Zoe Saldana', 'Dave Bautista', 'Kurt Russell'],
+  'mcu-homecoming': ['Tom Holland', 'Michael Keaton', 'Zendaya', 'Robert Downey Jr.'],
+  'mcu-ragnarok': ['Chris Hemsworth', 'Tom Hiddleston', 'Cate Blanchett', 'Mark Ruffalo'],
+  'mcu-black-panther': ['Chadwick Boseman', 'Michael B. Jordan', 'Lupita Nyong\'o', 'Danai Gurira'],
+  'mcu-infinity-war': ['Robert Downey Jr.', 'Chris Hemsworth', 'Chris Evans', 'Josh Brolin'],
+  'mcu-ant-man-wasp': ['Paul Rudd', 'Evangeline Lilly', 'Michael PeÃ±a', 'Michelle Pfeiffer'],
+  'mcu-captain-marvel': ['Brie Larson', 'Samuel L. Jackson', 'Ben Mendelsohn', 'Jude Law'],
+  'mcu-endgame': ['Robert Downey Jr.', 'Chris Evans', 'Scarlett Johansson', 'Chris Hemsworth'],
+  'mcu-far-from-home': ['Tom Holland', 'Zendaya', 'Jake Gyllenhaal', 'Samuel L. Jackson'],
+  'mcu-black-widow': ['Scarlett Johansson', 'Florence Pugh', 'David Harbour', 'Rachel Weisz'],
+  'mcu-shang-chi': ['Simu Liu', 'Awkwafina', 'Tony Leung', 'Michelle Yeoh'],
+  'mcu-eternals': ['Gemma Chan', 'Richard Madden', 'Angelina Jolie', 'Salma Hayek'],
+  'mcu-no-way-home': ['Tom Holland', 'Zendaya', 'Benedict Cumberbatch', 'Jacob Batalon'],
+  'mcu-multiverse-madness': ['Benedict Cumberbatch', 'Elizabeth Olsen', 'Xochitl Gomez', 'Chiwetel Ejiofor'],
+  'mcu-love-and-thunder': ['Chris Hemsworth', 'Natalie Portman', 'Christian Bale', 'Tessa Thompson'],
+  'mcu-wakanda-forever': ['Letitia Wright', 'Lupita Nyong\'o', 'Danai Gurira', 'Angela Bassett'],
+  'mcu-quantumania': ['Paul Rudd', 'Evangeline Lilly', 'Jonathan Majors', 'Kathryn Newton'],
+  'mcu-guardians-vol3': ['Chris Pratt', 'Zoe Saldana', 'Dave Bautista', 'Bradley Cooper'],
+  'mcu-the-marvels': ['Brie Larson', 'Teyonah Parris', 'Iman Vellani', 'Samuel L. Jackson'],
+  'mcu-deadpool-wolverine': ['Ryan Reynolds', 'Hugh Jackman', 'Emma Corrin', 'Matthew Macfadyen'],
+  'mcu-brave-new-world': ['Anthony Mackie', 'Harrison Ford', 'Danny Ramirez', 'Shira Haas'],
+  'mcu-thunderbolts': ['Florence Pugh', 'Sebastian Stan', 'David Harbour', 'Wyatt Russell'],
+  'mcu-wandavision': ['Elizabeth Olsen', 'Paul Bettany', 'Kathryn Hahn', 'Teyonah Parris'],
+  'mcu-falcon-winter-soldier': ['Anthony Mackie', 'Sebastian Stan', 'Wyatt Russell', 'Erin Kellyman'],
+  'mcu-what-if': ['Jeffrey Wright', 'Hayley Atwell', 'Chadwick Boseman', 'Benedict Cumberbatch'],
+  'mcu-hawkeye': ['Jeremy Renner', 'Hailee Steinfeld', 'Vera Farmiga', 'Alaqua Cox'],
+  'mcu-moon-knight': ['Oscar Isaac', 'Ethan Hawke', 'May Calamawy', 'F. Murray Abraham'],
+  'mcu-ms-marvel': ['Iman Vellani', 'Aramis Knight', 'Matt Lintz', 'Zenobia Shroff'],
+  'mcu-she-hulk': ['Tatiana Maslany', 'Ginger Gonzaga', 'Jameela Jamil', 'Mark Ruffalo'],
+  'mcu-secret-invasion': ['Samuel L. Jackson', 'Ben Mendelsohn', 'Emilia Clarke', 'Kingsley Ben-Adir'],
+  'mcu-echo': ['Alaqua Cox', 'Chaske Spencer', 'Zahn McClarnon', 'Vincent D\'Onofrio'],
+  'mcu-agatha-all-along': ['Kathryn Hahn', 'Aubrey Plaza', 'Patti LuPone', 'Joe Locke'],
+  'mcu-daredevil-born-again': ['Charlie Cox', 'Vincent D\'Onofrio', 'Margarita Levieva', 'Deborah Ann Woll'],
+  'mcu-ironheart': ['Dominique Thorne', 'Anthony Ramos', 'Lyric Ross', 'Alden Ehrenreich'],
+  'mcu-i-am-groot': ['Vin Diesel', 'Bradley Cooper', 'Fred Tatasciore', 'James Gunn'],
+  'mcu-friendly-spider-man': ['Hudson Thames', 'Colman Domingo', 'Charlie Cox', 'Paul F. Tompkins'],
   dasim: ['Zulfa Maharani', 'Omar Daniel', 'Adinda Thomas', 'Meriam Bellina', 'Dinda Kanyadewi', 'Morgan Oey', 'Arswendy Bening Swara'],
   'freaky-friday-2003': ['Jamie Lee Curtis', 'Lindsay Lohan', 'Mark Harmon', 'Harold Gould', 'Chad Michael Murray', 'Stephen Tobolowsky', 'Christina Vidal'],
   'dhurandar-2': ['Randeep Hooda', 'Nawazuddin Siddiqui', 'Taapsee Pannu', 'Manoj Bajpayee', 'Vijay Varma', 'Rasika Dugal'],
@@ -165,6 +233,10 @@ function getShowDetails(show: Show): ShowDetails {
 }
 
 function resolveImageUrl(show: Show): string {
+  if (show.id.startsWith('mcu-') && show.imageUrl === LOCAL_FALLBACK_POSTER) {
+    return MCU_SHARED_POSTER
+  }
+
   if (show.imageUrl.startsWith('/')) {
     return show.imageUrl
   }
@@ -189,7 +261,7 @@ const catalog: Show[] = [
     imageUrl: '/war machine.jpg',
     region: 'Hollywood',
     ownerReview:
-      'A relentless geopolitical thriller that treats global conflict with surprising nuance for an action vehicle. The protagonist is not a hero but a soldier caught between ideological factions. The action sequences are visceral and grounded—no superhero physics, just human bodies breaking under force. The screenplay integrates contemporary anxieties about military intervention without becoming preachy. Pacing builds relentlessly toward a climax that raises moral questions rather than celebrating victory. An action film that wants to say something about power, consequence, and human cost.',
+      'A relentless geopolitical thriller that treats global conflict with surprising nuance for an action vehicle. The protagonist is not a hero but a soldier caught between ideological factions. The action sequences are visceral and groundedâ€”no superhero physics, just human bodies breaking under force. The screenplay integrates contemporary anxieties about military intervention without becoming preachy. Pacing builds relentlessly toward a climax that raises moral questions rather than celebrating victory. An action film that wants to say something about power, consequence, and human cost.',
     rottenTomatoesScore: 82,
   },
   {
@@ -245,6 +317,409 @@ const catalog: Show[] = [
     rottenTomatoesScore: 78,
   },
   {
+    id: 'inside-out-2',
+    title: 'Inside Out 2',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Animation / Family',
+    rating: 8.2,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A smart follow-up that turns teenage anxiety into visual storytelling while keeping the emotional clarity and humor that made the original work so well.',
+    rottenTomatoesScore: 91,
+  },
+  {
+    id: 'wild-robot-2024',
+    title: 'The Wild Robot',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Animation / Adventure',
+    rating: 8.5,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/eG9lz41mJqsI4J6ubMtVqD26q2J.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'DreamWorks delivers a beautiful survival story with painterly visuals, warm humor, and a surprisingly moving core about parenthood and belonging.',
+    rottenTomatoesScore: 96,
+  },
+  {
+    id: 'across-the-spider-verse',
+    title: 'Spider-Man: Across the Spider-Verse',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Animation / Superhero',
+    rating: 8.9,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A kinetic, emotionally sharp sequel with bold visual styles, strong character stakes, and one of the most ambitious cliffhangers in recent animation.',
+    rottenTomatoesScore: 95,
+  },
+  {
+    id: 'into-the-spider-verse',
+    title: 'Spider-Man: Into the Spider-Verse',
+    type: 'Movie',
+    year: 2018,
+    genre: 'Animation / Superhero',
+    rating: 8.8,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Still a benchmark for modern animation, blending comic-book craft, heartfelt coming-of-age writing, and dazzling action choreography.',
+    rottenTomatoesScore: 97,
+  },
+  {
+    id: 'coco-2017',
+    title: 'Coco',
+    type: 'Movie',
+    year: 2017,
+    genre: 'Animation / Fantasy',
+    rating: 8.7,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/6Ryitt95xrO8KXuqRGm1fUuNwqF.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A vibrant, music-rich family film with emotional precision that builds to a final act both intimate and unforgettable.',
+    rottenTomatoesScore: 97,
+  },
+  {
+    id: 'klaus-2019',
+    title: 'Klaus',
+    type: 'Movie',
+    year: 2019,
+    genre: 'Animation / Comedy',
+    rating: 8.3,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/q125RHUDgR4gjwh1QkfYuJLYkL.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A handcrafted-looking holiday story with excellent comic timing, sharp art direction, and sincere character growth.',
+    rottenTomatoesScore: 95,
+  },
+  {
+    id: 'ratatouille-2007',
+    title: 'Ratatouille',
+    type: 'Movie',
+    year: 2007,
+    genre: 'Animation / Comedy',
+    rating: 8.6,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/t3vaWRPSf6WjDSamIkKDs1iQWna.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Pixar turns food, ambition, and self-doubt into a deeply charming film that remains one of the studio\'s most rewatchable classics.',
+    rottenTomatoesScore: 96,
+  },
+  {
+    id: 'mcu-brave-new-world',
+    title: 'Captain America: Brave New World',
+    type: 'Movie',
+    year: 2025,
+    genre: 'Action / Superhero',
+    rating: 7.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/pzIddUEMWhWzfvLI3TwxUG2wGoi.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A grounded political action entry that pushes Sam Wilson into a conspiracy built around leadership, trust, and legacy. It plays more like a pressure-cooker thriller than a flashy spectacle, which suits the character well.',
+  },
+  {
+    id: 'mcu-thunderbolts',
+    title: 'Thunderbolts',
+    type: 'Movie',
+    year: 2025,
+    genre: 'Action / Ensemble',
+    rating: 7.6,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/hqcexYHbiTBfDIdDWxrxPtVndBX.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A bruised team-up that works because the cast carries the tension, humor, and reluctant loyalty between damaged characters. It feels like the MCU finally letting misfits drive the mission instead of the other way around.',
+  },
+  {
+    id: 'mcu-daredevil-born-again',
+    title: 'Daredevil: Born Again',
+    type: 'Series',
+    year: 2025,
+    genre: 'Action / Crime',
+    rating: 8.2,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/xDUoAsU8lQHOOoRkFiBuarmACDN.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A street-level revival that restores the legal and vigilante tension that made the character work in the first place. The darker tone and compact stakes make it feel distinct from the bigger cosmic MCU entries.',
+  },
+  {
+    id: 'mcu-ironheart',
+    title: 'Ironheart',
+    type: 'Series',
+    year: 2025,
+    genre: 'Action / Sci-Fi',
+    rating: 7.1,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/dOh6MJpdlQhYpLBhzhNQeYGKTZ5.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A tech-forward follow-up that gives Riri Williams a sharper emotional and engineering arc while keeping the MCU\'s next-generation energy alive. It leans on invention, ambition, and the consequences of building too quickly.',
+  },
+  {
+    id: 'mcu-friendly-spider-man',
+    title: 'Your Friendly Neighborhood Spider-Man',
+    type: 'Show',
+    year: 2025,
+    genre: 'Animation / Action',
+    rating: 7.8,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'An animated coming-of-age take that keeps Peter Parker bright, quick, and inventive while still grounding the character in personal responsibility. It is lighter than the live-action films but still recognizably Spider-Man.',
+  },
+  {
+    id: 'mcu-deadpool-wolverine',
+    title: 'Deadpool & Wolverine',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Action / Comedy',
+    rating: 8.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A meta, aggressively funny crossover that uses its irreverence to keep the action sharp and the fan service self-aware. The chemistry between Reynolds and Jackman is the engine, and the movie knows it.',
+  },
+  {
+    id: 'mcu-echo',
+    title: 'Echo',
+    type: 'Series',
+    year: 2024,
+    genre: 'Action / Crime',
+    rating: 6.9,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/vFyJH630cF68LohVYjQW49074Sy.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A leaner street-level story that gives Maya Lopez a more personal and culturally rooted arc than most MCU shows. The series works best when it stays close to its character drama and neighborhood stakes.',
+  },
+  {
+    id: 'mcu-agatha-all-along',
+    title: 'Agatha All Along',
+    type: 'Series',
+    year: 2024,
+    genre: 'Fantasy / Comedy',
+    rating: 7.7,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/mGsxKwXUjojitRv2E9qMTbxbBRd.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A sharp, mischievous follow-up that leans into Kathryn Hahn\'s charisma and keeps the witchcraft mythology playful without losing danger. It feels like the MCU finally letting a villain-ish lead carry a series on personality alone.',
+  },
+  {
+    id: 'mcu-the-marvels',
+    title: 'The Marvels',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Action / Sci-Fi',
+    rating: 6.4,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A brisk team-up built on switching powers, quick pacing, and a lighter tone than the MCU\'s heavier films. The movie is at its best when the three leads are bouncing off one another and the action is kept nimble.',
+  },
+  {
+    id: 'mcu-guardians-vol3',
+    title: 'Guardians of the Galaxy Vol. 3',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Sci-Fi / Adventure',
+    rating: 8.4,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A surprisingly emotional closing chapter that gives Rocket the story weight and pathos the trilogy had been building toward. Gunn balances comedy, spectacle, and grief better than most superhero finales manage.',
+  },
+  {
+    id: 'mcu-ant-man-wasp-quantumania',
+    title: 'Ant-Man and the Wasp: Quantumania',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Action / Sci-Fi',
+    rating: 6.1,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/qnqGbB22YJ7dSs4o6M7exTpNxPz.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A quantum-scale adventure that tries to be both a family story and a phase-setting franchise chapter. It is uneven, but the energy stays lively and the visual world-building remains ambitious.',
+  },
+  {
+    id: 'mcu-secret-invasion',
+    title: 'Secret Invasion',
+    type: 'Series',
+    year: 2023,
+    genre: 'Thriller / Sci-Fi',
+    rating: 6.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/f5ZMzzCvt2IzVDxr54gHPv9jlC9.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A paranoia-driven espionage story that wants to feel grounded, even when the scope grows into a larger alien conspiracy. The best material comes from distrust, not spectacle.',
+  },
+  {
+    id: 'mcu-black-panther-wakanda-forever',
+    title: 'Black Panther: Wakanda Forever',
+    type: 'Movie',
+    year: 2022,
+    genre: 'Action / Drama',
+    rating: 8.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/sv1xJUazXeYqALzczSZ3O6nkH75.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A mourning piece as much as a superhero sequel, using grief and political pressure to reshape Wakanda after loss. The film is strongest when it stays centered on emotional fallout and regal responsibility.',
+  },
+  {
+    id: 'mcu-thor-love-and-thunder',
+    title: 'Thor: Love and Thunder',
+    type: 'Movie',
+    year: 2022,
+    genre: 'Action / Comedy',
+    rating: 6.7,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/pIkRyD18kl4FhoCNQuWxWu5cBLM.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A colorful, jokey cosmic romp that is at its best when the movie commits to romance, grief, and absurd fantasy in equal measure. The style is loud, but the emotional beats still land in the key scenes.',
+  },
+  {
+    id: 'mcu-doctor-strange-multiverse-of-madness',
+    title: 'Doctor Strange in the Multiverse of Madness',
+    type: 'Movie',
+    year: 2022,
+    genre: 'Action / Fantasy',
+    rating: 7.2,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/ddJcSKbcp4rKZTmuyWaMhuwcfMz.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Sam Raimi pushes the MCU into more overt genre-horror territory, which gives the film a welcome burst of visual personality. It is messy, but the momentum and style keep it engaging throughout.',
+  },
+  {
+    id: 'mcu-she-hulk',
+    title: 'She-Hulk: Attorney at Law',
+    type: 'Series',
+    year: 2022,
+    genre: 'Comedy / Legal',
+    rating: 7.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/NayynHztziyrJOzvrfux5z6hiZ.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A courtroom sitcom with superhero edges that works best when it embraces workplace comedy and direct audience conversation. It is uneven in places, but the tone is refreshing inside the MCU.',
+  },
+  {
+    id: 'mcu-moon-knight',
+    title: 'Moon Knight',
+    type: 'Series',
+    year: 2022,
+    genre: 'Action / Mystery',
+    rating: 7.4,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/YksR65as1ppF2N48TJAh2PLamX.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A psychological adventure that plays like a mythological thriller with identity-split tension at its center. Oscar Isaac carries the series by making the character feel unstable, tragic, and oddly tender at once.',
+  },
+  {
+    id: 'mcu-ms-marvel',
+    title: 'Ms. Marvel',
+    type: 'Series',
+    year: 2022,
+    genre: 'Action / Coming-of-Age',
+    rating: 7.8,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/3HWWh92kZbD7odwJX7nKmXNZsYo.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A bright coming-of-age series that gives Kamala Khan an energetic, family-centered debut. The show is strongest when it balances teen life, cultural specificity, and superhero aspiration.',
+  },
+  {
+    id: 'mcu-no-way-home',
+    title: 'Spider-Man: No Way Home',
+    type: 'Movie',
+    year: 2021,
+    genre: 'Action / Adventure',
+    rating: 8.6,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A crowd-pleasing multiverse event that keeps the emotional core tied to Peter Parker even as the cameo machine ramps up. It works because the movie remembers the cost of heroism underneath all the noise.',
+  },
+  {
+    id: 'mcu-eternals',
+    title: 'Eternals',
+    type: 'Movie',
+    year: 2021,
+    genre: 'Sci-Fi / Epic',
+    rating: 6.9,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/lFByFSLV5WDJEv3KabbdAF959F2.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A more meditative MCU entry that leans on mythology, scale, and long-history exposition rather than rapid-fire jokes. The ambition is notable even when the pacing is deliberately restrained.',
+  },
+  {
+    id: 'mcu-shang-chi',
+    title: 'Shang-Chi and the Legend of the Ten Rings',
+    type: 'Movie',
+    year: 2021,
+    genre: 'Action / Fantasy',
+    rating: 8.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/9f2Q0U3IOsLgrI2HkvldwSABZy5.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A martial-arts-led superhero film that brings clear choreography and fresh energy to the MCU. The family conflict and mythic dimension give the action a satisfying emotional backbone.',
+  },
+  {
+    id: 'mcu-black-widow',
+    title: 'Black Widow',
+    type: 'Movie',
+    year: 2021,
+    genre: 'Action / Spy Thriller',
+    rating: 7.1,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/7JPpIjhD2V0sKyFvhB9khUMa30d.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A spy-thriller detour that finally gives Natasha Romanoff a solo story with family chemistry and bruised emotional history. It is strongest as a character piece rather than as franchise setup.',
+  },
+  {
+    id: 'mcu-hawkeye',
+    title: 'Hawkeye',
+    type: 'Series',
+    year: 2021,
+    genre: 'Action / Holiday',
+    rating: 7.5,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/ct5pNE5dDHryHLDnxyZPYcqO1sz.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A compact holiday crime story that uses Clint Barton and Kate Bishop to make the MCU feel smaller and more personal. The series works because it keeps the action local and the emotional stakes human.',
+  },
+  {
+    id: 'mcu-wandavision',
+    title: 'WandaVision',
+    type: 'Series',
+    year: 2021,
+    genre: 'Fantasy / Mystery',
+    rating: 8.2,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/frobUz2X5Pc8OiVZU8Oo5K3NKMM.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A genre-bending series that uses sitcom language and grief to tell one of the MCU\'s most emotionally specific stories. It starts strange and gets stranger in the best possible way.',
+  },
+  {
+    id: 'mcu-falcon-winter-soldier',
+    title: 'The Falcon and the Winter Soldier',
+    type: 'Series',
+    year: 2021,
+    genre: 'Action / Drama',
+    rating: 7.3,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A political action series that asks what Captain America means once the shield leaves Steve Rogers. The strongest material comes from the uneasy partnership between Sam and Bucky.',
+  },
+  {
+    id: 'mcu-what-if',
+    title: 'What If...?',
+    type: 'Show',
+    year: 2021,
+    genre: 'Animation / Anthology',
+    rating: 7.4,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/lztz5XBMG1x6Y5ubz7CxfPFsAcW.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'An animated anthology that experiments with alternate timelines, alternate heroes, and a looser MCU tone. Some episodes hit harder than others, but the format keeps the franchise flexible.',
+  },
+  {
     id: 'oppenheimer',
     title: 'Oppenheimer',
     type: 'Movie',
@@ -254,7 +729,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/ptpr0kGAckfQkJeJIt8st5dglvd.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Nolan\'s three-hour meditation on ambition, morality, and nuclear fear becomes increasingly haunting. Cillian Murphy delivers a career-defining performance as a man who realizes too late the consequences of his genius. The non-linear structure weaves physics, politics, and psychological breakdown across multiple timelines. Ludwig Göransson\'s tense score amplifies the moral weight. The Trinity test sequence remains one of cinema\'s most devastating moments. A film that examines how solving one problem creates another. Devastating and absolutely necessary viewing.',
+      'Nolan\'s three-hour meditation on ambition, morality, and nuclear fear becomes increasingly haunting. Cillian Murphy delivers a career-defining performance as a man who realizes too late the consequences of his genius. The non-linear structure weaves physics, politics, and psychological breakdown across multiple timelines. Ludwig GÃ¶ransson\'s tense score amplifies the moral weight. The Trinity test sequence remains one of cinema\'s most devastating moments. A film that examines how solving one problem creates another. Devastating and absolutely necessary viewing.',
     rottenTomatoesScore: 92,
   },
   {
@@ -267,7 +742,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Craig Mazin adapted Naughty Dog\'s acclaimed game by amplifying character psychology over spectacle and action. Pedro Pascal\'s Joel—a smuggler hardened by apocalypse—is partnered with Ellie, a girl immune to the fungal plague. Their relationship becomes the show\'s emotional core, building slowly from transaction to genuine care. The series excels in episodic storytelling, with individual episodes exploring side characters and expanding the world\'s history. Episode 3\'s Texas story rivals greatest television moments for emotional devastation. The production design depicts nature reclaiming civilization without romance—brutality beneath beauty. Violence carries weight rather than spectacle. Gabriel Luna\'s Tommy and Anna Torv\'s Maria provide complex family dynamics. The series argues that survival means nothing without connection. A television adaptation that honors its source while transcending it through intimate character work.',
+      'Craig Mazin adapted Naughty Dog\'s acclaimed game by amplifying character psychology over spectacle and action. Pedro Pascal\'s Joelâ€”a smuggler hardened by apocalypseâ€”is partnered with Ellie, a girl immune to the fungal plague. Their relationship becomes the show\'s emotional core, building slowly from transaction to genuine care. The series excels in episodic storytelling, with individual episodes exploring side characters and expanding the world\'s history. Episode 3\'s Texas story rivals greatest television moments for emotional devastation. The production design depicts nature reclaiming civilization without romanceâ€”brutality beneath beauty. Violence carries weight rather than spectacle. Gabriel Luna\'s Tommy and Anna Torv\'s Maria provide complex family dynamics. The series argues that survival means nothing without connection. A television adaptation that honors its source while transcending it through intimate character work.',
   },
   {
     id: 'the-batman',
@@ -279,7 +754,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Matt Reeves strips Batman to his detective roots, creating a 2h 56m murder mystery that feels genuinely perilous. Pattinson\'s brooding introversion is a revelation. Gotham City itself is a sprawling character—neon-soaked, corruption-strangled, violent. Cinematographer Greig Fraser bathes every scene in noir atmosphere. This is Batman as noir thriller, and it works magnificently. A franchise reset that respects the mythology while forging its own path.',
+      'Matt Reeves strips Batman to his detective roots, creating a 2h 56m murder mystery that feels genuinely perilous. Pattinson\'s brooding introversion is a revelation. Gotham City itself is a sprawling characterâ€”neon-soaked, corruption-strangled, violent. Cinematographer Greig Fraser bathes every scene in noir atmosphere. This is Batman as noir thriller, and it works magnificently. A franchise reset that respects the mythology while forging its own path.',
     rottenTomatoesScore: 85,
   },
   {
@@ -292,7 +767,7 @@ const catalog: Show[] = [
     imageUrl: 'https://media.themoviedb.org/t/p/w600_and_h900_face/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Dan Erickson created a sci-fi premise that becomes perfect corporate horror—workers surgically severed so their work consciousness and personal consciousness never meet. Employees arrive at sterile offices with no memories of personal lives; outside workers live unaware of work identities. Adam Scott\'s Mark Scout navigates the uncanny disconnect between severed selves. The series examines labor, identity, and consent with philosophical precision. Production design contrasts brutalist workplace architecture with intimate personal spaces, reinforcing existential splitting. The mystery deepens across episodes as workers discover their severing hides exploitation. Each episode escalates questions about autonomy and corporate control. The cinematography is meticulous, with cold lighting inside the workplace growing warmer as Mark\'s personal life expands. A original premise executed with thematic precision.',
+      'Dan Erickson created a sci-fi premise that becomes perfect corporate horrorâ€”workers surgically severed so their work consciousness and personal consciousness never meet. Employees arrive at sterile offices with no memories of personal lives; outside workers live unaware of work identities. Adam Scott\'s Mark Scout navigates the uncanny disconnect between severed selves. The series examines labor, identity, and consent with philosophical precision. Production design contrasts brutalist workplace architecture with intimate personal spaces, reinforcing existential splitting. The mystery deepens across episodes as workers discover their severing hides exploitation. Each episode escalates questions about autonomy and corporate control. The cinematography is meticulous, with cold lighting inside the workplace growing warmer as Mark\'s personal life expands. A original premise executed with thematic precision.',
   },
   {
     id: 'wednesday',
@@ -304,7 +779,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/9PFonBhy4cQy7Jz20NpMygczOkv.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Tim Burton directed the pilot for a Addams Family spinoff centered on Wednesday\'s Nevermore Academy years. Jenna Ortega\'s Wednesday is sardonic, formidable, and beautifully performed—a protagonist motivated by investigation rather than typical teenage concerns. The mystery unfolds methodically: a serial killer murdering outcasts in the mining town parallels Wednesday\'s investigation of family secrets. Burton\'s signature aesthetic—goth gothic, whimsy masking darkness—permeates production design. The ensemble supports without overshadowing; Gwendoline Christie\'s principal Larissa Weems carries parental complexity. The romance subplot feels earned rather than obligatory. The series balances standalone episodic investigations with serial mythology. While some plot threads feel convenient, the character work and stylistic consistency carry momentum. A breakout hit that modernized source mythology successfully.',
+      'Tim Burton directed the pilot for a Addams Family spinoff centered on Wednesday\'s Nevermore Academy years. Jenna Ortega\'s Wednesday is sardonic, formidable, and beautifully performedâ€”a protagonist motivated by investigation rather than typical teenage concerns. The mystery unfolds methodically: a serial killer murdering outcasts in the mining town parallels Wednesday\'s investigation of family secrets. Burton\'s signature aestheticâ€”goth gothic, whimsy masking darknessâ€”permeates production design. The ensemble supports without overshadowing; Gwendoline Christie\'s principal Larissa Weems carries parental complexity. The romance subplot feels earned rather than obligatory. The series balances standalone episodic investigations with serial mythology. While some plot threads feel convenient, the character work and stylistic consistency carry momentum. A breakout hit that modernized source mythology successfully.',
   },
   {
     id: 'the-bear',
@@ -316,7 +791,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/sHFlbKS3WLqMnp9t2ghADIJFnuQ.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Christopher Storer created a kitchen-set drama that transforms restaurant work into existential struggle. Jeremy Allen White\'s Carmen Carmen\'s return to Chicago to salvage his family\'s failing sandwich shop becomes a proxy for inherited trauma and redemption. The show understands kitchen dynamics—intensity, respect, failure—through camera work that mirrors stress-cam scenes from fine dining documentaries. Every character wants something different, creating organic conflict. Ebon Moss-Bachrach\'s Richie steals scenes with wounded pride and surprising depth. The series balances absurdist comedy with devastating character moments. By season end, the restaurant renovations become metaphor for internal transformation. A show about ambitious people failing spectacularly while maintaining dignity. Thrilling and deeply human.',
+      'Christopher Storer created a kitchen-set drama that transforms restaurant work into existential struggle. Jeremy Allen White\'s Carmen Carmen\'s return to Chicago to salvage his family\'s failing sandwich shop becomes a proxy for inherited trauma and redemption. The show understands kitchen dynamicsâ€”intensity, respect, failureâ€”through camera work that mirrors stress-cam scenes from fine dining documentaries. Every character wants something different, creating organic conflict. Ebon Moss-Bachrach\'s Richie steals scenes with wounded pride and surprising depth. The series balances absurdist comedy with devastating character moments. By season end, the restaurant renovations become metaphor for internal transformation. A show about ambitious people failing spectacularly while maintaining dignity. Thrilling and deeply human.',
   },
   {
     id: 'loki',
@@ -328,7 +803,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Michael Waldron crafted the MCU\'s most stylistically confident limited series, retrofitting the trickster god into temporal bureaucracy. Tom Hiddleston\'s Loki evolves from chaotic villain into person grappling with variant selves and nexus timelines. The series embraces high-concept sci-fi philosophy—free will versus predetermined fate—without losing playful tone. Owen Wilson\'s Mobius balances gravitas with humor. Sophia Di Martino\'s Sylvie provides Loki\'s moral mirror. The production design oscillates between retro-futuristic and timeless minimalism. The series excels at blending MCU spectacle with intimate character work, particularly Loki\'s evolution from self-serving narcissist toward genuine connection. The climax recontextualizes the entire MCU. Where other MCU shows stumble with pacing, Loki maintains momentum while exploring identity and choice across variants. Stylish, smart, emotionally resonant.',
+      'Michael Waldron crafted the MCU\'s most stylistically confident limited series, retrofitting the trickster god into temporal bureaucracy. Tom Hiddleston\'s Loki evolves from chaotic villain into person grappling with variant selves and nexus timelines. The series embraces high-concept sci-fi philosophyâ€”free will versus predetermined fateâ€”without losing playful tone. Owen Wilson\'s Mobius balances gravitas with humor. Sophia Di Martino\'s Sylvie provides Loki\'s moral mirror. The production design oscillates between retro-futuristic and timeless minimalism. The series excels at blending MCU spectacle with intimate character work, particularly Loki\'s evolution from self-serving narcissist toward genuine connection. The climax recontextualizes the entire MCU. Where other MCU shows stumble with pacing, Loki maintains momentum while exploring identity and choice across variants. Stylish, smart, emotionally resonant.',
   },
   {
     id: 'arcane',
@@ -340,7 +815,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Christian Linke and Alex Yee created an animated series that proves the medium can match live-action cinema in emotional complexity and thematic depth. The story of childhood friendship fractured by class conflict and magical ambition becomes a meditation on power and legacy. The animation style—fluid character animation paired with detailed comic-book backgrounds—creates visual poetry. Each act escalates with confidence, introducing new characters and thematic complexity without losing emotional core. The soundtrack by Imagine Dragons and Sting amplifies character arcs. By series end, every character feels trapped by systems larger than themselves. A rare animated series aimed at adults that achieves profound storytelling. Visually stunning and narratively perfect.',
+      'Christian Linke and Alex Yee created an animated series that proves the medium can match live-action cinema in emotional complexity and thematic depth. The story of childhood friendship fractured by class conflict and magical ambition becomes a meditation on power and legacy. The animation styleâ€”fluid character animation paired with detailed comic-book backgroundsâ€”creates visual poetry. Each act escalates with confidence, introducing new characters and thematic complexity without losing emotional core. The soundtrack by Imagine Dragons and Sting amplifies character arcs. By series end, every character feels trapped by systems larger than themselves. A rare animated series aimed at adults that achieves profound storytelling. Visually stunning and narratively perfect.',
   },
   {
     id: 'dune',
@@ -352,7 +827,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/d5NXSklXo0qyIYkgV94XAgMIckC.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Denis Villeneuve refuses to compromise his vision for accessibility, crafting an adaptation that feels monumental. The cinematography transforms the Arrakis desert into a character unto itself. Hans Zimmer\'s synthesizer-heavy score creates an unsettling atmosphere. The slow-burn pacing allows themes of imperialism and environmental collapse to simmer beneath the surface. Timothée Chalamet and Rebecca Ferguson anchor the philosophical complexity with nuanced performances. Essential science fiction cinema.',
+      'Denis Villeneuve refuses to compromise his vision for accessibility, crafting an adaptation that feels monumental. The cinematography transforms the Arrakis desert into a character unto itself. Hans Zimmer\'s synthesizer-heavy score creates an unsettling atmosphere. The slow-burn pacing allows themes of imperialism and environmental collapse to simmer beneath the surface. TimothÃ©e Chalamet and Rebecca Ferguson anchor the philosophical complexity with nuanced performances. Essential science fiction cinema.',
     rottenTomatoesScore: 83,
   },
   {
@@ -365,7 +840,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/dDlEmu3EZ0Pgg93K2SVNLCjCSvE.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Hwang Dong-hyuk created a phenomenon by weaponizing childhood games into metaphor for economic desperation. Hundreds of debt-burdened people compete in familiar games—red light green light, marbles, glass bridge—knowing elimination means death. The genius is using deceptively simple mechanics to explore trust, betrayal, and class hierarchy. Lee Jung-jae\'s Seong Gi-hun carries the series through moral compromise and traumatic choice. The production design contrasts pastel-colored game arenas with brutal human consequences. Each game escalates stakes while revealing character. The series doesn\'t shy from depicting death—it becomes almost mundane, which is exactly the point. A meditation on how capitalism transforms humans into commodities. Visceral, socially conscious entertainment.',
+      'Hwang Dong-hyuk created a phenomenon by weaponizing childhood games into metaphor for economic desperation. Hundreds of debt-burdened people compete in familiar gamesâ€”red light green light, marbles, glass bridgeâ€”knowing elimination means death. The genius is using deceptively simple mechanics to explore trust, betrayal, and class hierarchy. Lee Jung-jae\'s Seong Gi-hun carries the series through moral compromise and traumatic choice. The production design contrasts pastel-colored game arenas with brutal human consequences. Each game escalates stakes while revealing character. The series doesn\'t shy from depicting deathâ€”it becomes almost mundane, which is exactly the point. A meditation on how capitalism transforms humans into commodities. Visceral, socially conscious entertainment.',
   },
   {
     id: 'chernobyl',
@@ -377,7 +852,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/hlLXt2tOPT6RRnjiUmoxyG1LTFi.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Craig Mazin created a five-episode miniseries that transcends historical recounting to become tragedy about systemic corruption and human courage. The 1986 nuclear disaster becomes lens through which to examine Soviet bureaucracy, denial, and the price of truth. Jared Harris\'s Valery Legasov embodies the scientist forced to navigate political lies while racing against apocalypse. Stellan Skarsgård\'s Boris Shcherbina represents the regime attempting damage control. The production design recreates Pripyat with haunting authenticity. Every act builds toward increasingly devastating human cost. The series doesn\'t sensationalize; instead, it documents quiet horror—men liquidating reactors, families evacuated, futures erased. The final episode cements thematic weight through courtroom testimony about truth versus official narrative. A masterpiece of historical drama that feels urgently contemporary.',
+      'Craig Mazin created a five-episode miniseries that transcends historical recounting to become tragedy about systemic corruption and human courage. The 1986 nuclear disaster becomes lens through which to examine Soviet bureaucracy, denial, and the price of truth. Jared Harris\'s Valery Legasov embodies the scientist forced to navigate political lies while racing against apocalypse. Stellan SkarsgÃ¥rd\'s Boris Shcherbina represents the regime attempting damage control. The production design recreates Pripyat with haunting authenticity. Every act builds toward increasingly devastating human cost. The series doesn\'t sensationalize; instead, it documents quiet horrorâ€”men liquidating reactors, families evacuated, futures erased. The final episode cements thematic weight through courtroom testimony about truth versus official narrative. A masterpiece of historical drama that feels urgently contemporary.',
   },
   {
     id: 'joker',
@@ -402,7 +877,7 @@ const catalog: Show[] = [
     imageUrl: '/parasite.jpg',
     region: 'Asian',
     ownerReview:
-      'Bong Joon-ho\'s masterpiece weaponizes genre to expose class fractures with surgical precision. The Kim family\'s infiltration of the wealthy Park household starts as darkly comic and escalates into something genuinely devastating. Every prop and architectural detail carries thematic weight about affluence and inequality. Song Kang-ho\'s performance captures a man maintaining dignity while losing everything. The film refuses easy heroes or villains. Won Best Picture by defeating prestige favorites—richly deserved.',
+      'Bong Joon-ho\'s masterpiece weaponizes genre to expose class fractures with surgical precision. The Kim family\'s infiltration of the wealthy Park household starts as darkly comic and escalates into something genuinely devastating. Every prop and architectural detail carries thematic weight about affluence and inequality. Song Kang-ho\'s performance captures a man maintaining dignity while losing everything. The film refuses easy heroes or villains. Won Best Picture by defeating prestige favoritesâ€”richly deserved.',
     rottenTomatoesScore: 98,
   },
   {
@@ -441,7 +916,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Eric Kripke created a superhero satire that uses graphic violence to critique corporate fascism and unchecked power. Superheroes aren\'t idealistic symbols but commodified celebrities—products marketed by ruthless corporations. Antony Starr\'s Homelander embodies corporate sociopathy, a charming psychopath whose violence escalates across seasons. Karl Urban\'s Billy Butcher hunts superheroes with vendetta-driven obsession. The ensemble balances satire with genuine character stakes. Violence is intentionally grotesque—not thrilling but nauseating, reinforcing that power without accountability creates horror. The series deconstructs superhero mythology by asking uncomfortable questions about accountability and propaganda. Satire sharpens with each season as real-world politics increasingly mirrors the show\'s fiction. Crude, cynical, and wickedly smart.',
+      'Eric Kripke created a superhero satire that uses graphic violence to critique corporate fascism and unchecked power. Superheroes aren\'t idealistic symbols but commodified celebritiesâ€”products marketed by ruthless corporations. Antony Starr\'s Homelander embodies corporate sociopathy, a charming psychopath whose violence escalates across seasons. Karl Urban\'s Billy Butcher hunts superheroes with vendetta-driven obsession. The ensemble balances satire with genuine character stakes. Violence is intentionally grotesqueâ€”not thrilling but nauseating, reinforcing that power without accountability creates horror. The series deconstructs superhero mythology by asking uncomfortable questions about accountability and propaganda. Satire sharpens with each season as real-world politics increasingly mirrors the show\'s fiction. Crude, cynical, and wickedly smart.',
   },
   {
     id: 'irishman',
@@ -466,7 +941,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/5UaYsGZOFhjFDwQh6GuLjjA1WlF.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Charlie Brooker created an anthology series that functions as sociological horror—near-future technology amplifying existing human flaws into dystopia. Each episode explores how tools intended to improve life become instruments of control or humiliation. The first season\'s "White Christmas" examines consciousness as commodity. "San Junipero" becomes transcendent romance despite its digital premise. "Nosedive" depicts social credit systems predating their real-world implementation. The genius is grounding sci-fi speculation in immediately recognizable human psychology and social dynamics. Best episodes blur line between entertainment and genuine dread. "Nosedive" depicts social credit systems predating their real-world implementation. The genius is grounding sci-fi speculation in immediately recognizable human psychology and social dynamics. Best episodes blur line between entertainment and genuine dread. Later seasons lose sharpness, relying on twist endings rather than thematic depth, but earlier work remains unnervingly prophetic. A show that understood technology before technology understood itself.',
+      'Charlie Brooker created an anthology series that functions as sociological horrorâ€”near-future technology amplifying existing human flaws into dystopia. Each episode explores how tools intended to improve life become instruments of control or humiliation. The first season\'s "White Christmas" examines consciousness as commodity. "San Junipero" becomes transcendent romance despite its digital premise. "Nosedive" depicts social credit systems predating their real-world implementation. The genius is grounding sci-fi speculation in immediately recognizable human psychology and social dynamics. Best episodes blur line between entertainment and genuine dread. "Nosedive" depicts social credit systems predating their real-world implementation. The genius is grounding sci-fi speculation in immediately recognizable human psychology and social dynamics. Best episodes blur line between entertainment and genuine dread. Later seasons lose sharpness, relying on twist endings rather than thematic depth, but earlier work remains unnervingly prophetic. A show that understood technology before technology understood itself.',
   },
   {
     id: 'narcos',
@@ -478,7 +953,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/rTmal9fDbwh5F0waol2hq35U4ah.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Joe Pettigrew and Carlo Bernard created a crime epic structured around DEA agent Steve Murphy hunting Colombian kingpin Pablo Escobar. Pedro Pascal\'s Murphy navigates institutional corruption and moral compromise during the height of drug trafficking. Wagner Moura\'s Escobar is charismatic and increasingly volatile—a man building empire while paranoia corrodes judgment. The series uses documentary-style narration to anchor chaos while maintaining narrative momentum. Cinematography captures Colombia\'s tropical beauty contrasted against cartel brutality. The first season remains taut procedural; later seasons expand scope geographically while potentially losing psychological sharpness. The real-life events give narrative weight—this tragedy actually occurred. The series examines how war on drugs became personal vendetta. Gritty, addictive, and unapologetically violent television.',
+      'Joe Pettigrew and Carlo Bernard created a crime epic structured around DEA agent Steve Murphy hunting Colombian kingpin Pablo Escobar. Pedro Pascal\'s Murphy navigates institutional corruption and moral compromise during the height of drug trafficking. Wagner Moura\'s Escobar is charismatic and increasingly volatileâ€”a man building empire while paranoia corrodes judgment. The series uses documentary-style narration to anchor chaos while maintaining narrative momentum. Cinematography captures Colombia\'s tropical beauty contrasted against cartel brutality. The first season remains taut procedural; later seasons expand scope geographically while potentially losing psychological sharpness. The real-life events give narrative weightâ€”this tragedy actually occurred. The series examines how war on drugs became personal vendetta. Gritty, addictive, and unapologetically violent television.',
   },
   {
     id: 'ozark',
@@ -490,7 +965,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/pCGyPVrI9Fzw6rE1Pvi4BIXF6ET.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Bill Dubuque created a pressure-cooker crime series where a financial advisor launders cartel money in rural Missouri, transforming his ordinary family into money criminals. Jason Bateman carries the series through moral compromise—each decision justified until he\'s unrecognizable. Laura Linney\'s Wendy evolves from victim into architect of family ambitions. The Ozarks become character themselves—beautiful landscape masking criminal infrastructure. The series escalates stakes methodically—each season raising danger while complicating escape routes. Supporting characters are fully realized, with Julia Garner\'s Ruth breaking out as emotional core. The final season spreads itself thin but maintains tension through character relationships rather than plot mechanics. The show understands that criminals convincing themselves of morality become most dangerous. Cold, pervasive dread throughout.',
+      'Bill Dubuque created a pressure-cooker crime series where a financial advisor launders cartel money in rural Missouri, transforming his ordinary family into money criminals. Jason Bateman carries the series through moral compromiseâ€”each decision justified until he\'s unrecognizable. Laura Linney\'s Wendy evolves from victim into architect of family ambitions. The Ozarks become character themselvesâ€”beautiful landscape masking criminal infrastructure. The series escalates stakes methodicallyâ€”each season raising danger while complicating escape routes. Supporting characters are fully realized, with Julia Garner\'s Ruth breaking out as emotional core. The final season spreads itself thin but maintains tension through character relationships rather than plot mechanics. The show understands that criminals convincing themselves of morality become most dangerous. Cold, pervasive dread throughout.',
   },
   {
     id: 'mindhunter',
@@ -502,7 +977,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/fbKE87mojpIETWepSbD5Qt741fp.jpg',
     region: 'Hollywood',
     ownerReview:
-      'David Fincher directed the pilot and set the template—meticulous procedural about FBI profilers constructing criminal psychology from interview sessions. Jonathan Groff\'s Holden Ford obsesses over understanding serial killers, interviewing incarcerated men to map behavioral patterns. Holt McCallany\'s Bill Tench provides grounded counterweight to Holden\'s emerging theorizing. The genius is making dialogue scenes as suspenseful as interrogations. Cinematography favors cold institutional lighting, reinforcing sterile psychological dissection. The show understands that motivation matters more than crime scenes. Interviews with real killers—Ed Kemper, Jerry Brudos—create psychological dread through casual, articulate evil. Rather than glorify violence, the series dissects mindset. Cancelled prematurely, but the first two seasons remain masterwork of procedural television. Unnerving, methodical brilliance.',
+      'David Fincher directed the pilot and set the templateâ€”meticulous procedural about FBI profilers constructing criminal psychology from interview sessions. Jonathan Groff\'s Holden Ford obsesses over understanding serial killers, interviewing incarcerated men to map behavioral patterns. Holt McCallany\'s Bill Tench provides grounded counterweight to Holden\'s emerging theorizing. The genius is making dialogue scenes as suspenseful as interrogations. Cinematography favors cold institutional lighting, reinforcing sterile psychological dissection. The show understands that motivation matters more than crime scenes. Interviews with real killersâ€”Ed Kemper, Jerry Brudosâ€”create psychological dread through casual, articulate evil. Rather than glorify violence, the series dissects mindset. Cancelled prematurely, but the first two seasons remain masterwork of procedural television. Unnerving, methodical brilliance.',
   },
   {
     id: 'money-heist',
@@ -514,7 +989,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Alex de la Iglesia created a Spanish heist series that understands entertainment momentum and character mythology. The Professor\'s genius scheme unfolds across seasons with escalating complications that feel earned rather than contrived. The ensemble cast members—Lisbon, Denver, Berlin—transcend archetypes through consistent character writing. The series doesn\'t fear melodrama; instead, it embraces emotional stakes alongside tactical planning. Cinematography shifts between tense interiors and sprawling landscapes, reinforcing scale and danger. Later seasons expand globally, testing narrative coherence, but the core appeal remains—watching intelligent people execute impossible plans. The show is self-aware about its own implausibility, winking at the audience without breaking tension. Addictive television that knows exactly what it wants to be.',
+      'Alex de la Iglesia created a Spanish heist series that understands entertainment momentum and character mythology. The Professor\'s genius scheme unfolds across seasons with escalating complications that feel earned rather than contrived. The ensemble cast membersâ€”Lisbon, Denver, Berlinâ€”transcend archetypes through consistent character writing. The series doesn\'t fear melodrama; instead, it embraces emotional stakes alongside tactical planning. Cinematography shifts between tense interiors and sprawling landscapes, reinforcing scale and danger. Later seasons expand globally, testing narrative coherence, but the core appeal remainsâ€”watching intelligent people execute impossible plans. The show is self-aware about its own implausibility, winking at the audience without breaking tension. Addictive television that knows exactly what it wants to be.',
   },
   {
     id: 'peaky-blinders',
@@ -526,7 +1001,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Steven Knight created a post-WWI crime saga where trauma becomes the hidden engine driving every character. Birmingham\'s Shelby gang uses violence and ambitious schemes to escape poverty, but history and family psychology prove more dangerous than any rival. Cillian Murphy\'s Thomas Shelby carries emotional scars beneath calculated ruthlessness. The production design is meticulous, creating a grimy universe where expensive suits contrast with brutal methods. The series balances cool aesthetics—sharp editing, anachronistic music—with devastating psychological depth. Later seasons expand scope internationally while maintaining intimate family dysfunction. Helen McCrory as Polly provides moral anchor. The show argues that violence inherited becomes generational curse. A period crime epic that uses style to hide desperate, broken people.',
+      'Steven Knight created a post-WWI crime saga where trauma becomes the hidden engine driving every character. Birmingham\'s Shelby gang uses violence and ambitious schemes to escape poverty, but history and family psychology prove more dangerous than any rival. Cillian Murphy\'s Thomas Shelby carries emotional scars beneath calculated ruthlessness. The production design is meticulous, creating a grimy universe where expensive suits contrast with brutal methods. The series balances cool aestheticsâ€”sharp editing, anachronistic musicâ€”with devastating psychological depth. Later seasons expand scope internationally while maintaining intimate family dysfunction. Helen McCrory as Polly provides moral anchor. The show argues that violence inherited becomes generational curse. A period crime epic that uses style to hide desperate, broken people.',
   },
   {
     id: 'breaking-bad',
@@ -538,7 +1013,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/ineLOBPG8AZsluYwnkMpHRyu7L.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Vince Gilligan created television\'s greatest moral descent by tracking Walter White from desperate teacher to ruthless kingpin with forensic precision. Every season escalates stakes while maintaining character logic—Walt isn\'t driven by external forces but by ego and pride masquerading as necessity. Bryan Cranston\'s performance captures white-collar resentment morphing into sociopathy. Aaron Paul\'s Jesse Pinkman provides moral counterweight, watching his mentor destroy everything including him. The series understands that chemistry is not just the show\'s metaphor but its structure—tense ingredients combining into explosive reactions. The cinematography captures New Mexico\'s beauty to juxtapose against moral ugliness. By series end, Walt achieves everything he wanted and loses everything that mattered. A tragedy about how ambition consumes the ambitious.',
+      'Vince Gilligan created television\'s greatest moral descent by tracking Walter White from desperate teacher to ruthless kingpin with forensic precision. Every season escalates stakes while maintaining character logicâ€”Walt isn\'t driven by external forces but by ego and pride masquerading as necessity. Bryan Cranston\'s performance captures white-collar resentment morphing into sociopathy. Aaron Paul\'s Jesse Pinkman provides moral counterweight, watching his mentor destroy everything including him. The series understands that chemistry is not just the show\'s metaphor but its structureâ€”tense ingredients combining into explosive reactions. The cinematography captures New Mexico\'s beauty to juxtapose against moral ugliness. By series end, Walt achieves everything he wanted and loses everything that mattered. A tragedy about how ambition consumes the ambitious.',
   },
   {
     id: 'better-call-saul',
@@ -550,7 +1025,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/zjg4jpK1Wp2kiRvtt5ND0kznako.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Peter Gould and Vince Gilligan crafted a prequel to Breaking Bad that arguably surpasses its predecessor through meticulous character work and thematic precision. Bob Odenkirk\'s Jimmy McGill transforms from struggling lawyer into slick criminal attorney Saul Goodman, but the series refuses to glamorize his descent. Instead, it traces how rationalization and moral compromise compound. Kim Wexler, played with devastating nuance by Rhea Seehorn, becomes the show\'s moral center—someone repeatedly choosing complicity beside Jimmy. Jonathan Banks returns as Mike Ehrmantraut, and his storyline parallels Jimmy\'s moral erosion through profession rather than personality. The cinematography is deliberately composed, using negative space and symmetry to reinforce institutional coldness. The series takes time with scenes—no rushed momentum, just meticulous attention to dialogue and reaction. The final season devastates through accumulated consequence. A triumph of long-form serialized television that trusts viewers with silence and restraint.',
+      'Peter Gould and Vince Gilligan crafted a prequel to Breaking Bad that arguably surpasses its predecessor through meticulous character work and thematic precision. Bob Odenkirk\'s Jimmy McGill transforms from struggling lawyer into slick criminal attorney Saul Goodman, but the series refuses to glamorize his descent. Instead, it traces how rationalization and moral compromise compound. Kim Wexler, played with devastating nuance by Rhea Seehorn, becomes the show\'s moral centerâ€”someone repeatedly choosing complicity beside Jimmy. Jonathan Banks returns as Mike Ehrmantraut, and his storyline parallels Jimmy\'s moral erosion through profession rather than personality. The cinematography is deliberately composed, using negative space and symmetry to reinforce institutional coldness. The series takes time with scenesâ€”no rushed momentum, just meticulous attention to dialogue and reaction. The final season devastates through accumulated consequence. A triumph of long-form serialized television that trusts viewers with silence and restraint.',
   },
   {
     id: 'the-crown',
@@ -562,7 +1037,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/1M876KPjulVwppEpldhdc8V4o68.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Peter Morgan created a lavish historical drama examining the British monarchy through intimate character focus rather than pageantry. Claire Foy\'s Elizabeth II embodies public restraint versus private anguish—a woman bound by obligation and constitutional duty. The series excels at political maneuvering, showing how queens exercise power through diplomatic subtlety. Gillian Anderson\'s Margaret Thatcher and Olivia Colman\'s later-years Elizabeth bring thematic complexity. Cinematography is deliberately formal, mirrors and frames emphasizing institutional grandeur versus personal isolation. The series navigates allegations and real-life events with dramatization, occasionally favoring narrative drama over historical accuracy—criticism that\'s fair but misses the point. The show examines duty versus personality, institution versus individual. Later seasons become more theatrical as real-world politics blur with fictional interpretation. Elegant, complex, and utterly compelling.',
+      'Peter Morgan created a lavish historical drama examining the British monarchy through intimate character focus rather than pageantry. Claire Foy\'s Elizabeth II embodies public restraint versus private anguishâ€”a woman bound by obligation and constitutional duty. The series excels at political maneuvering, showing how queens exercise power through diplomatic subtlety. Gillian Anderson\'s Margaret Thatcher and Olivia Colman\'s later-years Elizabeth bring thematic complexity. Cinematography is deliberately formal, mirrors and frames emphasizing institutional grandeur versus personal isolation. The series navigates allegations and real-life events with dramatization, occasionally favoring narrative drama over historical accuracyâ€”criticism that\'s fair but misses the point. The show examines duty versus personality, institution versus individual. Later seasons become more theatrical as real-world politics blur with fictional interpretation. Elegant, complex, and utterly compelling.',
   },
   {
     id: 'stranger-things',
@@ -574,7 +1049,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
     region: 'Hollywood',
     ownerReview:
-      'The Duffer Brothers nailed the small-town mystery box formula by grounding supernatural horror in intimate character relationships and authentic 1980s Americana. The ensemble cast chemistry is the series\' greatest asset—every minor character becomes believable and invested. Season One remains a masterclass in pacing and tension, introducing the Upside Down with perfect proportions of horror and wonder. The chemistry between Winona Ryder\'s desperate maternal love and David Harbour\'s gruff redemption carries emotional weight through grotesque set pieces. Later seasons expand scope to global stakes, sometimes sacrificing the intimate horror for spectacle, but never losing the core family dynamics. The show understands that monsters are scariest when they threaten people you care about. A phenomenon that revitalized genre television.',
+      'The Duffer Brothers nailed the small-town mystery box formula by grounding supernatural horror in intimate character relationships and authentic 1980s Americana. The ensemble cast chemistry is the series\' greatest assetâ€”every minor character becomes believable and invested. Season One remains a masterclass in pacing and tension, introducing the Upside Down with perfect proportions of horror and wonder. The chemistry between Winona Ryder\'s desperate maternal love and David Harbour\'s gruff redemption carries emotional weight through grotesque set pieces. Later seasons expand scope to global stakes, sometimes sacrificing the intimate horror for spectacle, but never losing the core family dynamics. The show understands that monsters are scariest when they threaten people you care about. A phenomenon that revitalized genre television.',
   },
   {
     id: 'dark',
@@ -586,7 +1061,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Baran bo Odar and Jantje Friese created the gold standard for time-travel television by refusing to compromise on logic or emotional stakes. The small German town of Winden becomes a character itself—every location carries narrative weight. The interwoven timelines and family trees demand viewer engagement and reward detailed attention with revelations that recontextualize earlier scenes. Rather than rely on spectacle, Dark builds dread through inevitability. The cinematography is deliberately cold, all grays and amber light, reflecting a world trapped by fate. The ensemble embraces quiet desperation. By series end, the show argues that every small action echoes across decades with devastating consequence. A masterpiece of serialized television that respects audience intelligence.',
+      'Baran bo Odar and Jantje Friese created the gold standard for time-travel television by refusing to compromise on logic or emotional stakes. The small German town of Winden becomes a character itselfâ€”every location carries narrative weight. The interwoven timelines and family trees demand viewer engagement and reward detailed attention with revelations that recontextualize earlier scenes. Rather than rely on spectacle, Dark builds dread through inevitability. The cinematography is deliberately cold, all grays and amber light, reflecting a world trapped by fate. The ensemble embraces quiet desperation. By series end, the show argues that every small action echoes across decades with devastating consequence. A masterpiece of serialized television that respects audience intelligence.',
   },
   {
     id: 'haunting-hill-house',
@@ -598,7 +1073,7 @@ const catalog: Show[] = [
     imageUrl: 'https://image.tmdb.org/t/p/w780/38PkhBGRQtmVx2drvPik3F42qHO.jpg',
     region: 'Hollywood',
     ownerReview:
-      'Mike Flanagan adapted Shirley Jackson\'s novel by balancing supernatural horror with family trauma exploration. The Crain family\'s childhood experiences in Hill House echo across adulthood, with psychological damage proving more destructive than ghosts. The production design—creeping shadows, architectural dread—makes the house genuinely unsettling. Flanagan\'s signature extended takes and subtle reveals create sustained tension. Each episode focuses on different family member, revealing how shared trauma creates divergent coping mechanisms. The cinematography moves between warm memories and cold present-day darkness, reinforcing temporal fracture. Victoria Pedretti\'s Nell carries emotional core, with her climactic episode ranking among television\'s greatest hours. The show understands that horror\'s most effective when grounded in believable emotional stakes. Later episodes venture into supernatural spectacle but maintain character focus. A rare horror series that balances scares with profound character writing.',
+      'Mike Flanagan adapted Shirley Jackson\'s novel by balancing supernatural horror with family trauma exploration. The Crain family\'s childhood experiences in Hill House echo across adulthood, with psychological damage proving more destructive than ghosts. The production designâ€”creeping shadows, architectural dreadâ€”makes the house genuinely unsettling. Flanagan\'s signature extended takes and subtle reveals create sustained tension. Each episode focuses on different family member, revealing how shared trauma creates divergent coping mechanisms. The cinematography moves between warm memories and cold present-day darkness, reinforcing temporal fracture. Victoria Pedretti\'s Nell carries emotional core, with her climactic episode ranking among television\'s greatest hours. The show understands that horror\'s most effective when grounded in believable emotional stakes. Later episodes venture into supernatural spectacle but maintain character focus. A rare horror series that balances scares with profound character writing.',
   },
   {
     id: 'inception',
@@ -808,6 +1283,123 @@ const catalog: Show[] = [
       'A high-stakes finale that pays off years of character arcs with emotional clarity and scale. The Battle of Hogwarts is epic without losing personal stakes, and Alan Rickman\'s late-film revelations add unexpected poignancy to the saga\'s closing movements.',
     rottenTomatoesScore: 96,
   },
+  {
+    id: 'blood-diamond',
+    title: 'Blood Diamond',
+    type: 'Movie',
+    year: 2006,
+    genre: 'Action / Drama',
+    rating: 8.1,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Blooddiamondposter.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A tense and emotionally driven thriller that exposes the brutality behind the diamond trade without losing sight of its human cost. Leonardo DiCaprio and Djimon Hounsou give the film its backbone, while Edward Zwick balances action, moral conflict, and political urgency with steady control. The result is a gritty adventure that feels purposeful rather than exploitative.',
+    rottenTomatoesScore: 63,
+  },
+  {
+    id: 'narnia-1',
+    title: 'The Chronicles of Narnia: The Lion, the Witch and the Wardrobe',
+    type: 'Movie',
+    year: 2005,
+    genre: 'Fantasy / Adventure',
+    rating: 7.9,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/1/10/The_Chronicles_of_Narnia_-_The_Lion%2C_the_Witch_and_the_Wardrobe.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A strong fantasy opener that treats Narnia like a genuine world rather than a visual effects showcase. The children are cast well, the witch is memorably imposing, and the film builds toward the Aslan material with real emotional weight. It is earnest in a way that suits the source material and still feels polished as a studio adventure.',
+    rottenTomatoesScore: 76,
+  },
+  {
+    id: 'narnia-2',
+    title: 'The Chronicles of Narnia: Prince Caspian',
+    type: 'Movie',
+    year: 2008,
+    genre: 'Fantasy / Adventure',
+    rating: 7.3,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c8/Principe_Caspain_poster.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A darker sequel that leans harder into war-movie framing and kingdom politics. The return to Narnia is compelling, though the film spends more time on plot mechanics than on wonder. Still, the action is solid, the visuals are ambitious, and Ben Barnes gives the title role enough sincerity to carry the story.',
+    rottenTomatoesScore: 66,
+  },
+  {
+    id: 'narnia-3',
+    title: 'The Chronicles of Narnia: The Voyage of the Dawn Treader',
+    type: 'Movie',
+    year: 2010,
+    genre: 'Fantasy / Adventure',
+    rating: 7.1,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/d/d4/The_Voyage_of_the_Dawn_Treader_poster.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'The most episodic of the trio, this chapter works best when it embraces seafaring adventure and the sense of discovery that comes with each island stop. The film is lighter in scale than the previous entries, but it still delivers enough charm, spectacle, and mythic atmosphere to remain an enjoyable fantasy journey.',
+    rottenTomatoesScore: 49,
+  },
+  {
+    id: 'pirates-1',
+    title: 'Pirates of the Caribbean: The Curse of the Black Pearl',
+    type: 'Movie',
+    year: 2003,
+    genre: 'Action / Adventure',
+    rating: 8.6,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/89/Pirates_of_the_Caribbean_-_The_Curse_of_the_Black_Pearl.png',
+    region: 'Hollywood',
+    ownerReview:
+      'The franchise opener is a rare studio adventure that feels playful, stylish, and genuinely swashbuckling. Johnny Depp turns Jack Sparrow into an instant icon, while the script keeps the swordplay, comedy, and undead pirate mythology moving with surprising confidence. It is big, breezy, and still one of the most rewatchable blockbuster adventures of its era.',
+    rottenTomatoesScore: 79,
+  },
+  {
+    id: 'pirates-2',
+    title: 'Pirates of the Caribbean: Dead Man\'s Chest',
+    type: 'Movie',
+    year: 2006,
+    genre: 'Action / Adventure',
+    rating: 7.8,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/2/2d/Pirates_of_the_caribbean_2_poster_b.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A bigger, busier sequel that pushes the mythology into more chaotic and mythic territory. Davy Jones is a standout creation, the set pieces are expansive, and the film thrives on escalation even when it becomes deliberately tangled. It is less tidy than the first film, but it remains thrilling in its own rambunctious way.',
+    rottenTomatoesScore: 53,
+  },
+  {
+    id: 'pirates-3',
+    title: 'Pirates of the Caribbean: At World\'s End',
+    type: 'Movie',
+    year: 2007,
+    genre: 'Action / Adventure',
+    rating: 7.5,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Pirates_AWE_Poster.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'An overstuffed finale that still delivers on spectacle, naval battles, and larger-than-life pirate mythology. The film juggles too many moving parts, but its ambition is undeniable and its visuals remain consistently impressive. Even when the plot sprawls, the franchise energy is strong enough to carry it through.',
+    rottenTomatoesScore: 44,
+  },
+  {
+    id: 'pirates-4',
+    title: 'Pirates of the Caribbean: On Stranger Tides',
+    type: 'Movie',
+    year: 2011,
+    genre: 'Action / Adventure',
+    rating: 6.7,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5e/Pirates_of_the_Caribbean_-_On_Stranger_Tides.png',
+    region: 'Hollywood',
+    ownerReview:
+      'A lighter, more streamlined outing that swaps some of the trilogy\'s complexity for a cleaner treasure-hunt structure. Johnny Depp is still the main attraction, and the film benefits from a strong sense of movement through its pirate folklore, even if it lacks the momentum of the first two entries.',
+    rottenTomatoesScore: 33,
+  },
+  {
+    id: 'pirates-5',
+    title: 'Pirates of the Caribbean: Dead Men Tell No Tales',
+    type: 'Movie',
+    year: 2017,
+    genre: 'Action / Adventure',
+    rating: 6.8,
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/2/21/Pirates_of_the_Caribbean%2C_Dead_Men_Tell_No_Tales.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A return to the franchise\'s more ghostly and supernatural roots, with Javier Bardem giving the film a strong antagonist presence. The plot is familiar but efficient, and the action is staged with enough energy to keep longtime fans engaged. It is a serviceable capstone to the series so far.',
+    rottenTomatoesScore: 30,
+  },
   // ========== BOLLYWOOD ==========
   {
     id: 'dhurandar-2',
@@ -942,7 +1534,7 @@ const catalog: Show[] = [
     imageUrl: '/lagaan.jpg',
     region: 'Bollywood',
     ownerReview:
-      'Ashutosh Gowariker created an epic period film that uses cricket as metaphor for colonial resistance. Aamir Khan\'s village headman mobilizes his community against oppressive British taxation. The cricket match becomes climactic battle, elevating sports entertainment into political allegory. The scope is genuinely cinematic—landscapes dwarf characters, reinforcing power dynamics. A film that proved Bollywood could achieve international prestige. Nominated for Academy Award.',
+      'Ashutosh Gowariker created an epic period film that uses cricket as metaphor for colonial resistance. Aamir Khan\'s village headman mobilizes his community against oppressive British taxation. The cricket match becomes climactic battle, elevating sports entertainment into political allegory. The scope is genuinely cinematicâ€”landscapes dwarf characters, reinforcing power dynamics. A film that proved Bollywood could achieve international prestige. Nominated for Academy Award.',
   },
   {
     id: 'dev-d',
@@ -978,7 +1570,7 @@ const catalog: Show[] = [
     imageUrl: '/kabhi khushi kabhie gham.jpg',
     region: 'Bollywood',
     ownerReview:
-      'Karan Johar perfected the family melodrama formula—multigenerational conflict resolved through emotional catharsis. Shah Rukh Khan and Kajol\'s chemistry transcends their roles. The film\'s logic is entirely emotional rather than rational, but it works magnificently within that framework. Excessive production design captures aspiration and spectacle. A comfort film that defined an era.',
+      'Karan Johar perfected the family melodrama formulaâ€”multigenerational conflict resolved through emotional catharsis. Shah Rukh Khan and Kajol\'s chemistry transcends their roles. The film\'s logic is entirely emotional rather than rational, but it works magnificently within that framework. Excessive production design captures aspiration and spectacle. A comfort film that defined an era.',
   },
   {
     id: 'english-vinglish-2012',
@@ -1027,7 +1619,7 @@ const catalog: Show[] = [
     imageUrl: '/amar akbar anthony.jpg',
     region: 'Bollywood',
     ownerReview:
-      'Manmohan Desai created a definitional masala film—three brothers separated at birth, raised under different religions, reunited for action-packed chaos. Amitabh Bachchan dominates every frame with charisma. The film\'s logic is absurdist, but earnestness sells every moment. Comedy, action, romance—everything coexist without contradiction. A blueprint for Bollywood spectacle.',
+      'Manmohan Desai created a definitional masala filmâ€”three brothers separated at birth, raised under different religions, reunited for action-packed chaos. Amitabh Bachchan dominates every frame with charisma. The film\'s logic is absurdist, but earnestness sells every moment. Comedy, action, romanceâ€”everything coexist without contradiction. A blueprint for Bollywood spectacle.',
   },
   {
     id: 'sholay',
@@ -1039,7 +1631,7 @@ const catalog: Show[] = [
     imageUrl: '/sholay.jpg',
     region: 'Bollywood',
     ownerReview:
-      'Ramesh Sippy created the Indian Western—a 3.5-hour epic that defined commercial cinema for a generation. Two drifters hired to capture a dacoit. The film has everything: action, romance, comedy, philosophy. Amitabh Bachchan and Dharmendra\'s chemistry is monumental. Laxmikant-Pyarelal\'s score elevates everything. A foundational film that proved Bollywood could achieve international scope.',
+      'Ramesh Sippy created the Indian Westernâ€”a 3.5-hour epic that defined commercial cinema for a generation. Two drifters hired to capture a dacoit. The film has everything: action, romance, comedy, philosophy. Amitabh Bachchan and Dharmendra\'s chemistry is monumental. Laxmikant-Pyarelal\'s score elevates everything. A foundational film that proved Bollywood could achieve international scope.',
   },
   {
     id: 'mughal-a-5',
@@ -1051,7 +1643,7 @@ const catalog: Show[] = [
     imageUrl: '/mughal e  azam.jpg',
     region: 'Bollywood',
     ownerReview:
-      'K. Asif created a technological marvel for its era—sweeping historical drama with elaborate sets and cinematography. A Mughal emperor and a slave girl forbidden romance becomes metaphor for duty versus desire. Dilip Kumar delivers restrained performance amid production spectacle. The film\'s length matches its ambition. A monument of Indian cinema.',
+      'K. Asif created a technological marvel for its eraâ€”sweeping historical drama with elaborate sets and cinematography. A Mughal emperor and a slave girl forbidden romance becomes metaphor for duty versus desire. Dilip Kumar delivers restrained performance amid production spectacle. The film\'s length matches its ambition. A monument of Indian cinema.',
   },
   {
     id: 'mother-india',
@@ -1087,7 +1679,7 @@ const catalog: Show[] = [
     imageUrl: '/dilwale dulhaniya le jayenge.jpg',
     region: 'Bollywood',
     ownerReview:
-      'Aditya Chopra directed what became the defining romance of Hindi cinema—two young people negotiating parental expectations and personal choice. Shah Rukh Khan\'s earnest romantic hero transcended stereotypes. The film balanced traditional values with modern sensibilities. The Swiss scenery becomes character itself. Essential Bollywood that defined an era.',
+      'Aditya Chopra directed what became the defining romance of Hindi cinemaâ€”two young people negotiating parental expectations and personal choice. Shah Rukh Khan\'s earnest romantic hero transcended stereotypes. The film balanced traditional values with modern sensibilities. The Swiss scenery becomes character itself. Essential Bollywood that defined an era.',
   },
   // ========== PUNJABI ==========
   {
@@ -1594,7 +2186,7 @@ function App() {
               curated picks, read Our review, and join the audience conversation.
             </p>
             <p className="hero-meta">
-              {featuredShow.year} • {featuredShow.type} • {featuredShow.genre} • Our rating{' '}
+              {featuredShow.year} â€¢ {featuredShow.type} â€¢ {featuredShow.genre} â€¢ Our rating{' '}
               {featuredShow.rating.toFixed(1)}/10
             </p>
             <div className="hero-actions">
@@ -1637,7 +2229,7 @@ function App() {
                   <img src={resolveImageUrl(show)} alt={show.title} className="show-poster" data-fallback={LOCAL_FALLBACK_POSTER} onError={handleImageError} />
                   <div className="card-overlay">
                     <h3>{show.title}</h3>
-                    <p className="genre">{show.year} • {show.type}</p>
+                    <p className="genre">{show.year} â€¢ {show.type}</p>
                     <p className="row-score">Our rating {show.rating.toFixed(1)}/10</p>
                   </div>
                 </article>
@@ -1798,7 +2390,7 @@ function App() {
       ) : null}
 
       <footer className="site-footer">
-        <p>Moview • Reviews for the stories worth your time.</p>
+        <p>Moview â€¢ Reviews for the stories worth your time.</p>
       </footer>
 
       {activeShow ? (
@@ -1992,7 +2584,7 @@ function DarkSelect<T extends string>({
         aria-label={ariaLabel}
       >
         <span>{selected?.label ?? ''}</span>
-        <span className="dark-select-chevron" aria-hidden="true">▾</span>
+        <span className="dark-select-chevron" aria-hidden="true">â–¾</span>
       </button>
 
       {open ? (
@@ -2018,3 +2610,6 @@ function DarkSelect<T extends string>({
 }
 
 export default App
+
+
+
