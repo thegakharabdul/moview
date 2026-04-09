@@ -23,6 +23,26 @@ type ShowDetails = {
   synopsis: string
 }
 
+type EpisodeReview = {
+  episodeNumber: number
+  title: string
+  review: string
+  synopsis: string
+}
+
+type SeasonReview = {
+  seasonNumber: number
+  review: string
+  episodes: EpisodeReview[]
+}
+
+type EpisodeGuideEntry = {
+  season: number
+  number: number
+  name: string
+  summary: string | null
+}
+
 type Feedback = {
   id: string
   name: string
@@ -246,6 +266,131 @@ function resolveImageUrl(show: Show): string {
   }
 
   return show.imageUrl
+}
+
+function trimText(value: string, maxLength: number): string {
+  const cleaned = value.replace(/\s+/g, ' ').trim()
+  if (cleaned.length <= maxLength) {
+    return cleaned
+  }
+  return `${cleaned.slice(0, maxLength - 3).trimEnd()}...`
+}
+
+const episodeGuideQueryByShowId: Partial<Record<string, string>> = {
+  'money-heist': 'La Casa de Papel',
+}
+
+function stripHtmlSummary(summary: string | null | undefined): string {
+  if (!summary) {
+    return ''
+  }
+
+  return summary.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+async function fetchEpisodeGuide(show: Show): Promise<EpisodeGuideEntry[]> {
+  const query = episodeGuideQueryByShowId[show.id] ?? show.title
+  const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(query)}&embed=episodes`
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    return []
+  }
+
+  const payload = (await response.json()) as {
+    _embedded?: {
+      episodes?: Array<{
+        season?: number | null
+        number?: number | null
+        name?: string | null
+        summary?: string | null
+      }>
+    }
+  }
+
+  const episodes = payload._embedded?.episodes ?? []
+  return episodes
+    .filter((episode) => episode.season && episode.number && episode.name)
+    .map((episode) => ({
+      season: Number(episode.season),
+      number: Number(episode.number),
+      name: String(episode.name),
+      summary: episode.summary ?? null,
+    }))
+    .sort((a, b) => {
+      if (a.season !== b.season) {
+        return a.season - b.season
+      }
+      return a.number - b.number
+    })
+}
+
+function createGeneratedSeasonReviews(show: Show, episodeGuide: EpisodeGuideEntry[]): SeasonReview[] {
+  const extractedSentences =
+    show.ownerReview
+      .replace(/\s+/g, ' ')
+      .match(/[^.!?]+[.!?]?/g)
+      ?.map((entry) => entry.trim())
+      .filter(Boolean) ?? []
+
+  const sentencePool =
+    extractedSentences.length > 0
+      ? extractedSentences
+      : [`${show.title} maintains consistent storytelling and character focus.`]
+
+  const episodesBySeason = episodeGuide.reduce<Record<number, EpisodeGuideEntry[]>>((acc, episode) => {
+    const key = episode.season
+    if (!acc[key]) {
+      acc[key] = []
+    }
+    acc[key].push(episode)
+    return acc
+  }, {})
+
+  const seasonNumbers = Object.keys(episodesBySeason)
+    .map((value) => Number(value))
+    .sort((a, b) => a - b)
+
+  return seasonNumbers.map((seasonNumber, seasonIndex) => {
+    const seasonEpisodes = episodesBySeason[seasonNumber] ?? []
+    const episodeCount = seasonEpisodes.length
+    const seasonSentence = sentencePool[seasonIndex % sentencePool.length]
+
+    const seasonReview = trimText(
+      `Season ${seasonNumber} review: ${seasonSentence} Across ${episodeCount} episodes, the arc builds steadily through character shifts, sharper conflict, and stronger emotional payoff.`,
+      260,
+    )
+
+    const episodes = seasonEpisodes.map((seasonEpisode, episodeIndex) => {
+      const episodeNumber = seasonEpisode.number
+      const sentence = sentencePool[(seasonIndex + episodeIndex) % sentencePool.length]
+      const canonicalSynopsis = stripHtmlSummary(seasonEpisode.summary)
+
+      const episodeReview = trimText(
+        `Episode ${episodeNumber} review: ${sentence} This chapter advances the season with focused pacing, meaningful character decisions, and clear narrative progression.`,
+        220,
+      )
+
+      const episodeSynopsis = trimText(
+        canonicalSynopsis ||
+          `${show.title} S${seasonNumber}E${episodeNumber} follows the ongoing arc as relationships evolve, pressure increases, and the season storyline moves toward its next turning point.`,
+        220,
+      )
+
+      return {
+        episodeNumber,
+        title: seasonEpisode.name,
+        review: episodeReview,
+        synopsis: episodeSynopsis,
+      }
+    })
+
+    return {
+      seasonNumber,
+      review: seasonReview,
+      episodes,
+    }
+  })
 }
 
 const catalog: Show[] = [
@@ -2000,6 +2145,13 @@ function App() {
   const [activeShowId, setActiveShowId] = useState<string | null>(null)
   const [showFeedbackForm, setShowFeedbackForm] = useState(false)
   const [heroIndex, setHeroIndex] = useState(0)
+  const [selectedSeasonByShow, setSelectedSeasonByShow] = useState<Record<string, string>>({})
+  const [episodeGuideByShow, setEpisodeGuideByShow] = useState<
+    Record<string, EpisodeGuideEntry[]>
+  >({})
+  const [episodeGuideLoadingByShow, setEpisodeGuideLoadingByShow] = useState<
+    Record<string, boolean>
+  >({})
   const [formState, setFormState] = useState<
     Record<string, { name: string; rating: string; comment: string }>
   >({})
@@ -2061,6 +2213,45 @@ function App() {
   const featuredShow = catalog[heroIndex % catalog.length]
   const featuredImageUrl = resolveImageUrl(featuredShow)
   const activeShowDetails = activeShow ? showDetailsById[activeShow.id] : null
+  const activeSeasonReviews = useMemo(() => {
+    if (!activeShow || activeShow.type === 'Movie') {
+      return [] as SeasonReview[]
+    }
+
+    const episodeGuide = episodeGuideByShow[activeShow.id] ?? []
+    if (episodeGuide.length === 0) {
+      return [] as SeasonReview[]
+    }
+
+    return createGeneratedSeasonReviews(activeShow, episodeGuide)
+  }, [activeShow, episodeGuideByShow])
+
+  const activeSeasonFilterValue = activeShow
+    ? selectedSeasonByShow[activeShow.id] ?? 'all'
+    : 'all'
+
+  const activeSeasonOptions = useMemo<SelectOption<string>[]>(() => {
+    const seasonOptions = activeSeasonReviews.map((season) => ({
+      value: String(season.seasonNumber),
+      label: `Season ${season.seasonNumber} (${season.episodes.length} episodes)`,
+    }))
+
+    return [{ value: 'all', label: 'All seasons' }, ...seasonOptions]
+  }, [activeSeasonReviews])
+
+  const filteredSeasonReviews = useMemo(() => {
+    if (activeSeasonFilterValue === 'all') {
+      return activeSeasonReviews
+    }
+
+    return activeSeasonReviews.filter(
+      (season) => String(season.seasonNumber) === activeSeasonFilterValue,
+    )
+  }, [activeSeasonFilterValue, activeSeasonReviews])
+
+  const totalEpisodeCount = useMemo(() => {
+    return activeSeasonReviews.reduce((total, season) => total + season.episodes.length, 0)
+  }, [activeSeasonReviews])
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -2070,8 +2261,64 @@ function App() {
     return () => window.clearInterval(timer)
   }, [])
 
+  useEffect(() => {
+    if (!activeShow || activeShow.type === 'Movie') {
+      return
+    }
+
+    if (episodeGuideByShow[activeShow.id]) {
+      return
+    }
+
+    let cancelled = false
+    setEpisodeGuideLoadingByShow((prev) => ({
+      ...prev,
+      [activeShow.id]: true,
+    }))
+
+    fetchEpisodeGuide(activeShow)
+      .then((episodes) => {
+        if (cancelled) {
+          return
+        }
+
+        setEpisodeGuideByShow((prev) => ({
+          ...prev,
+          [activeShow.id]: episodes,
+        }))
+      })
+      .catch(() => {
+        if (cancelled) {
+          return
+        }
+
+        setEpisodeGuideByShow((prev) => ({
+          ...prev,
+          [activeShow.id]: [],
+        }))
+      })
+      .finally(() => {
+        if (cancelled) {
+          return
+        }
+
+        setEpisodeGuideLoadingByShow((prev) => ({
+          ...prev,
+          [activeShow.id]: false,
+        }))
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [activeShow, episodeGuideByShow])
+
   const openShowDetails = (showId: string) => {
     setShowFeedbackForm(false)
+    setSelectedSeasonByShow((prev) => ({
+      ...prev,
+      [showId]: prev[showId] ?? 'all',
+    }))
     setActiveShowId(showId)
   }
 
@@ -2128,6 +2375,13 @@ function App() {
         },
       }
     })
+  }
+
+  const updateSeasonFilter = (showId: string, value: string) => {
+    setSelectedSeasonByShow((prev) => ({
+      ...prev,
+      [showId]: value,
+    }))
   }
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
@@ -2443,6 +2697,79 @@ function App() {
               <h3>Our review</h3>
               <p>{activeShow.ownerReview}</p>
             </section>
+
+            {activeShow.type !== 'Movie' && (
+              <section className="season-breakdown">
+                <h3>Season-wise and episode-wise reviews</h3>
+
+                {episodeGuideLoadingByShow[activeShow.id] && (
+                  <p className="season-summary">Loading official season and episode list...</p>
+                )}
+
+                {!episodeGuideLoadingByShow[activeShow.id] && activeSeasonReviews.length === 0 && (
+                  <p className="season-summary">
+                    Episode guide is unavailable right now. Try reopening this title in a moment.
+                  </p>
+                )}
+
+                {activeSeasonReviews.length > 0 && (
+                  <>
+                    <div className="season-toolbar">
+                      <label>
+                        Season filter
+                        <DarkSelect
+                          value={activeSeasonFilterValue}
+                          onChange={(value) => updateSeasonFilter(activeShow.id, value)}
+                          options={activeSeasonOptions}
+                          ariaLabel="Season filter"
+                        />
+                      </label>
+                      <p className="season-summary">
+                        {totalEpisodeCount} episodes across {activeSeasonReviews.length} season
+                        {activeSeasonReviews.length === 1 ? '' : 's'}
+                      </p>
+                    </div>
+
+                    <ul className="season-count-strip">
+                      {activeSeasonReviews.map((season) => (
+                        <li key={`${activeShow.id}-season-count-${season.seasonNumber}`}>
+                          Season {season.seasonNumber}: {season.episodes.length} episodes
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="season-list">
+                      {filteredSeasonReviews.map((season) => (
+                        <article key={`${activeShow.id}-season-${season.seasonNumber}`} className="season-card">
+                          <h4>
+                            Season {season.seasonNumber}{' '}
+                            <span className="season-episode-count">{season.episodes.length} episodes</span>
+                          </h4>
+                          <p className="season-review-text">{season.review}</p>
+
+                          <ul className="episode-list">
+                            {season.episodes.map((episode) => (
+                              <li
+                                key={`${activeShow.id}-season-${season.seasonNumber}-episode-${episode.episodeNumber}`}
+                                className="episode-card"
+                              >
+                                <p className="episode-title">
+                                  Episode {episode.episodeNumber}: {episode.title}
+                                </p>
+                                <p className="episode-label">Review</p>
+                                <p>{episode.review}</p>
+                                <p className="episode-label">Synopsis</p>
+                                <p>{episode.synopsis}</p>
+                              </li>
+                            ))}
+                          </ul>
+                        </article>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </section>
+            )}
 
             <section className="viewer-feedback">
               <h3>Viewer feedback</h3>

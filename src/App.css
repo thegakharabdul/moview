@@ -505,6 +505,7 @@
 }
 
 .owner-review,
+.season-breakdown,
 .viewer-feedback,
 .feedback-form {
   display: grid;
@@ -512,6 +513,7 @@
 }
 
 .owner-review h3,
+.season-breakdown h3,
 .viewer-feedback h3 {
   margin: 0;
 }
@@ -526,6 +528,120 @@
   list-style: none;
   display: grid;
   gap: 0.5rem;
+}
+
+.season-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.season-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.season-toolbar label {
+  display: grid;
+  gap: 0.34rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  min-width: 220px;
+  flex: 1 1 220px;
+}
+
+.season-summary {
+  margin: 0;
+  color: #cfcfcf;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.season-count-strip {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.season-count-strip li {
+  border-radius: 999px;
+  padding: 0.3rem 0.62rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.season-card {
+  border-radius: 11px;
+  padding: 0.7rem;
+  background: rgba(255, 255, 255, 0.06);
+  display: grid;
+  gap: 0.55rem;
+}
+
+.season-card h4,
+.season-review-text,
+.episode-title,
+.episode-label,
+.episode-card p {
+  margin: 0;
+}
+
+.season-card h4 {
+  font-size: 1.03rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.season-episode-count {
+  font-size: 0.8rem;
+  color: #ffb7bc;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18rem 0.48rem;
+  background: rgba(229, 9, 20, 0.23);
+}
+
+.season-review-text {
+  color: #e6e6e6;
+}
+
+.episode-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.episode-card {
+  border-radius: 10px;
+  padding: 0.62rem;
+  background: rgba(0, 0, 0, 0.34);
+  display: grid;
+  gap: 0.22rem;
+}
+
+.episode-title {
+  font-weight: 700;
+  color: #fff;
+}
+
+.episode-label {
+  margin-top: 0.18rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ff9ca2;
 }
 
 .feedback-item {
@@ -722,6 +838,15 @@
   .toolbar label {
     min-width: 100%;
     flex-basis: 100%;
+  }
+
+  .season-toolbar label {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .season-summary {
+    width: 100%;
   }
 
   .hero {
