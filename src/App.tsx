@@ -94,6 +94,7 @@ const showCastById: Partial<Record<string, string[]>> = {
   'little-women-2019': ['Saoirse Ronan', 'Emma Watson', 'Florence Pugh', 'Eliza Scanlen', 'Timothee Chalamet', 'Laura Dern', 'Meryl Streep'],
   'the-great-gatsby-2013': ['Leonardo DiCaprio', 'Tobey Maguire', 'Carey Mulligan', 'Joel Edgerton', 'Elizabeth Debicki', 'Isla Fisher', 'Jason Clarke'],
   'the-shawshank-redemption': ['Tim Robbins', 'Morgan Freeman', 'Bob Gunton', 'William Sadler', 'Clancy Brown', 'Gil Bellows', 'James Whitmore'],
+  'mystic-river-2003': ['Sean Penn', 'Tim Robbins', 'Kevin Bacon', 'Laurence Fishburne', 'Marcia Gay Harden', 'Laura Linney', 'Tom Guiry'],
   'dune-part-two-2024': ['Timothee Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Josh Brolin', 'Austin Butler', 'Florence Pugh', 'Javier Bardem'],
   'killers-of-the-flower-moon-2023': ['Leonardo DiCaprio', 'Lily Gladstone', 'Robert De Niro', 'Jesse Plemons', 'Tantoo Cardinal', 'Brendan Fraser', 'John Lithgow'],
   'jawan-2023': ['Shah Rukh Khan', 'Nayanthara', 'Vijay Sethupathi', 'Deepika Padukone', 'Priyamani', 'Sanya Malhotra', 'Ridhi Dogra'],
@@ -103,6 +104,7 @@ const showCastById: Partial<Record<string, string[]>> = {
   'legend-of-maula-jatt-2022': ['Fawad Khan', 'Mahira Khan', 'Hamza Ali Abbasi', 'Humaima Malick', 'Faris Shafi', 'Ali Azmat', 'Gohar Rasheed'],
   'gunjal-2023': ['Ahmed Ali Akbar', 'Resham', 'Syed Muhammad Ali', 'Amna Ilyas', 'Shafqat Cheema', 'Mizna Waqas', 'Abdul Ahad'],
   'exhuma-2024': ['Choi Min-sik', 'Kim Go-eun', 'Yoo Hae-jin', 'Lee Do-hyun', 'Kim Jae-cheol', 'Jeon Jin-ki', 'Kim Sun-young'],
+  'a-tale-of-two-sisters-2003': ['Im Soo-jung', 'Moon Geun-young', 'Yum Jung-ah', 'Kim Kap-soo'],
   'godzilla-minus-one-2023': ['Ryunosuke Kamiki', 'Minami Hamabe', 'Yuki Yamada', 'Munetaka Aoki', 'Hidetaka Yoshioka', 'Sakura Ando', 'Kuranosuke Sasaki'],
   'project-hail-mary-2026': ['Ryan Gosling', 'Sandra Huller', 'Milly Alcock', 'Ken Leung', 'Lionel Boyce', 'James Ortiz', 'Bastian Antonio Fuentes'],
   'chal-mera-putt-4-2026': ['Amrinder Gill', 'Simi Chahal', 'Iftikhar Thakur', 'Nasir Chinyoti', 'Nirmal Rishi', 'Hardeep Gill', 'Agha Majid'],
@@ -1204,6 +1206,19 @@ const catalog: Show[] = [
     rottenTomatoesScore: 83,
   },
   {
+    id: 'a-tale-of-two-sisters-2003',
+    title: 'A Tale of Two Sisters',
+    type: 'Movie',
+    year: 2003,
+    genre: 'Horror / Psychological',
+    rating: 8.1,
+    imageUrl: 'https://image.tmdb.org/t/p/original/9x1AdMsDUkN2dsjRoyjbgnF0Dcl.jpg',
+    region: 'Asian',
+    ownerReview:
+      'Kim Jee-woon crafts a gothic psychological horror film where grief, repression, and family tension blur the line between memory and reality. The movie builds dread through atmosphere, production design, and emotional unease instead of relying on cheap shocks. A landmark Korean horror title with lasting influence.',
+    rottenTomatoesScore: 86,
+  },
+  {
     id: 'godzilla-minus-one-2023',
     title: 'Godzilla Minus One',
     type: 'Movie',
@@ -1475,6 +1490,19 @@ const catalog: Show[] = [
     ownerReview:
       'Frank Darabont adapts Stephen King with unusual patience, building a story about institutional cruelty, friendship, and quiet resistance that grows more powerful over time. Tim Robbins gives Andy a restrained inner life, while Morgan Freeman narrates with warmth and hard-earned wisdom that anchors every emotional beat. The film earns its catharsis by focusing on small acts of dignity and hope inside a brutal system. Beautifully acted, tightly written, and emotionally devastating in the best way, it remains one of the most rewatchable dramas ever made.',
     rottenTomatoesScore: 89,
+  },
+  {
+    id: 'mystic-river-2003',
+    title: 'Mystic River',
+    type: 'Movie',
+    year: 2003,
+    genre: 'Crime / Drama',
+    rating: 8.0,
+    imageUrl: 'https://m.media-amazon.com/images/I/41zijzcMysL._AC_.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Clint Eastwood directs a somber crime drama about trauma, grief, and the long shadow of childhood violence. Sean Penn, Tim Robbins, and Kevin Bacon anchor a story that is less about solving a mystery than about watching a neighborhood fracture under suspicion. The film is restrained, bleak, and emotionally heavy in a way that suits its material. A devastating adult drama with strong performances throughout.',
+    rottenTomatoesScore: 88,
   },
   {
     id: 'the-godfather',
