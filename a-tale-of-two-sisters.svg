@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f1a2e"/>
+      <stop offset="100%" stop-color="#3f2a4f"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="900" fill="url(#bg)"/>
+  <rect x="70" y="110" width="460" height="680" rx="24" fill="rgba(255,255,255,0.07)"/>
+  <text x="300" y="360" fill="#f8eefb" font-size="38" font-family="Arial, sans-serif" text-anchor="middle" font-weight="700">A TALE OF</text>
+  <text x="300" y="420" fill="#f8eefb" font-size="50" font-family="Arial, sans-serif" text-anchor="middle" font-weight="700">TWO SISTERS</text>
+  <text x="300" y="500" fill="#d9c6e3" font-size="26" font-family="Arial, sans-serif" text-anchor="middle">Korean Psychological Horror</text>
+</svg>
