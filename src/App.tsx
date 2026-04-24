@@ -133,6 +133,7 @@ const showCastById: Partial<Record<string, string[]>> = {
   'forrest-gump': ['Tom Hanks', 'Robin Wright', 'Gary Sinise', 'Sally Field', 'Mykelti Williamson', 'Michael Conner Humphreys', 'Haley Joel Osment'],
   'the-godfather': ['Marlon Brando', 'Al Pacino', 'James Caan', 'Robert Duvall', 'Diane Keaton', 'Talia Shire', 'John Cazale'],
   'blood-diamond': ['Leonardo DiCaprio', 'Djimon Hounsou', 'Jennifer Connelly', 'Arnold Vosloo', 'Jimi Mistry', 'Basil Wallace', 'Michael Sheen'],
+  'shutter-island': ['Leonardo DiCaprio', 'Mark Ruffalo', 'Ben Kingsley', 'Michelle Williams', 'Emily Mortimer', 'Max von Sydow', 'Patricia Clarkson'],
   'narnia-1': ['Georgie Henley', 'Skandar Keynes', 'William Moseley', 'Anna Popplewell', 'Tilda Swinton', 'James McAvoy', 'Liam Neeson'],
   'narnia-2': ['Georgie Henley', 'Skandar Keynes', 'William Moseley', 'Anna Popplewell', 'Ben Barnes', 'Peter Dinklage', 'Liam Neeson'],
   'narnia-3': ['Georgie Henley', 'Skandar Keynes', 'Ben Barnes', 'Will Poulter', 'Anna Popplewell', 'Simon Pegg', 'Liam Neeson'],
@@ -1660,6 +1661,19 @@ const catalog: Show[] = [
     ownerReview:
       'A tense and emotionally driven thriller that exposes the brutality behind the diamond trade without losing sight of its human cost. Leonardo DiCaprio and Djimon Hounsou give the film its backbone, while Edward Zwick balances action, moral conflict, and political urgency with steady control. The result is a gritty adventure that feels purposeful rather than exploitative.',
     rottenTomatoesScore: 63,
+  },
+  {
+    id: 'shutter-island',
+    title: 'Shutter Island',
+    type: 'Movie',
+    year: 2010,
+    genre: 'Psychological Thriller / Mystery',
+    rating: 8.2,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/4GDy0PHYX3VRXUtwK5ysFbg3kEx.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A gripping psychological mystery that blends noir atmosphere with emotional trauma and unreliable perception. Scorsese keeps tension high through precise pacing, unsettling visuals, and a haunting final reveal that reframes everything you have watched.',
+    rottenTomatoesScore: 69,
   },
   {
     id: 'narnia-1',
