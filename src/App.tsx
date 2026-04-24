@@ -77,6 +77,7 @@ const showCastById: Partial<Record<string, string[]>> = {
   'klaus-2019': ['Jason Schwartzman', 'J.K. Simmons', 'Rashida Jones', 'Joan Cusack', 'Norm Macdonald', 'Will Sasso'],
   'ratatouille-2007': ['Patton Oswalt', 'Ian Holm', 'Lou Romano', 'Brian Dennehy', 'Peter Sohn', 'Brad Garrett'],
   oppenheimer: ['Cillian Murphy', 'Emily Blunt', 'Matt Damon', 'Robert Downey Jr.', 'Florence Pugh', 'Benny Safdie', 'Josh Hartnett'],
+  '1917-2019': ['George MacKay', 'Dean-Charles Chapman', 'Mark Strong', 'Andrew Scott', 'Richard Madden', 'Claire Duburcq', 'Colin Firth'],
   'the-last-of-us': ['Pedro Pascal', 'Bella Ramsey', 'Gabriel Luna', 'Anna Torv', 'Nico Parker', 'Murray Bartlett', 'Nick Offerman'],
   'game-of-thrones': ['Emilia Clarke', 'Kit Harington', 'Peter Dinklage', 'Lena Headey', 'Nikolaj Coster-Waldau', 'Sophie Turner', 'Maisie Williams'],
   'house-of-the-dragon': ['Paddy Considine', 'Matt Smith', 'Emma DArcy', 'Olivia Cooke', 'Milly Alcock', 'Rhys Ifans', 'Eve Best'],
@@ -954,6 +955,19 @@ const catalog: Show[] = [
     ownerReview:
       'Nolan\'s three-hour meditation on ambition, morality, and nuclear fear becomes increasingly haunting. Cillian Murphy delivers a career-defining performance as a man who realizes too late the consequences of his genius. The non-linear structure weaves physics, politics, and psychological breakdown across multiple timelines. Ludwig Goransson\'s tense score amplifies the moral weight. The Trinity test sequence remains one of cinema\'s most devastating moments. A film that examines how solving one problem creates another. Devastating and absolutely necessary viewing.',
     rottenTomatoesScore: 92,
+  },
+  {
+    id: '1917-2019',
+    title: '1917',
+    type: 'Movie',
+    year: 2019,
+    genre: 'War / Drama',
+    rating: 8.3,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/iZf0KyrE25z1sage4SYFLCCrMi9.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'Sam Mendes crafts a tense World War I survival mission with immersive, near-continuous visual storytelling that keeps urgency high from start to finish. The film blends technical precision with emotional weight, turning a simple objective into a deeply human story about duty, fear, and sacrifice.',
+    rottenTomatoesScore: 88,
   },
   {
     id: 'the-last-of-us',
