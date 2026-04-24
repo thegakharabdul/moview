@@ -57,8 +57,6 @@ type SelectOption<T extends string> = {
 }
 
 const LOCAL_FALLBACK_POSTER = '/poster-fallback.svg'
-const INLINE_FALLBACK_POSTER =
-  "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20width%3D'600'%20height%3D'900'%20viewBox%3D'0%200%20600%20900'%3E%3Crect%20width%3D'600'%20height%3D'900'%20fill%3D'%231b1f2b'%2F%3E%3Ctext%20x%3D'300'%20y%3D'430'%20text-anchor%3D'middle'%20fill%3D'%23ffffff'%20font-family%3D'Arial%2Csans-serif'%20font-size%3D'42'%20font-weight%3D'700'%3EPoster%3C%2Ftext%3E%3Ctext%20x%3D'300'%20y%3D'485'%20text-anchor%3D'middle'%20fill%3D'%23ffb7bc'%20font-family%3D'Arial%2Csans-serif'%20font-size%3D'32'%3ENot%20Available%3C%2Ftext%3E%3C%2Fsvg%3E"
 const MCU_SHARED_POSTER =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Marvel_Cinematic_Universe_logo.png/1280px-Marvel_Cinematic_Universe_logo.png'
 const CAST_FALLBACK = ['Cast details are being updated']
@@ -107,6 +105,14 @@ const showCastById: Partial<Record<string, string[]>> = {
   'exhuma-2024': ['Choi Min-sik', 'Kim Go-eun', 'Yoo Hae-jin', 'Lee Do-hyun', 'Kim Jae-cheol', 'Jeon Jin-ki', 'Kim Sun-young'],
   'a-tale-of-two-sisters-2003': ['Im Soo-jung', 'Moon Geun-young', 'Yum Jung-ah', 'Kim Kap-soo'],
   'godzilla-minus-one-2023': ['Ryunosuke Kamiki', 'Minami Hamabe', 'Yuki Yamada', 'Munetaka Aoki', 'Hidetaka Yoshioka', 'Sakura Ando', 'Kuranosuke Sasaki'],
+  'grave-of-the-fireflies-1988': ['Tsutomu Tatsumi', 'Ayano Shiraishi', 'Yoshiko Shinohara', 'Akemi Yamaguchi'],
+  'oldboy-2003': ['Choi Min-sik', 'Yoo Ji-tae', 'Kang Hye-jung', 'Kim Byeong-ok', 'Oh Dal-su'],
+  'memories-of-murder-2003': ['Song Kang-ho', 'Kim Sang-kyung', 'Kim Roi-ha', 'Song Jae-ho', 'Byun Hee-bong'],
+  'the-wailing-2016': ['Kwak Do-won', 'Hwang Jung-min', 'Chun Woo-hee', 'Jun Kunimura', 'Kim Hwan-hee'],
+  'the-handmaiden-2016': ['Kim Min-hee', 'Kim Tae-ri', 'Ha Jung-woo', 'Cho Jin-woong', 'Moon So-ri'],
+  snowpiercer: ['Chris Evans', 'Song Kang-ho', 'Tilda Swinton', 'Jamie Bell', 'John Hurt'],
+  'i-saw-the-devil-2010': ['Lee Byung-hun', 'Choi Min-sik', 'Jeon Gook-hwan', 'Kim Yoon-seo', 'Oh San-ha'],
+  'the-chaser-2008': ['Kim Yoon-seok', 'Ha Jung-woo', 'Seo Young-hee', 'Kim Yoo-jung', 'Jeong In-gi'],
   'project-hail-mary-2026': ['Ryan Gosling', 'Sandra Huller', 'Milly Alcock', 'Ken Leung', 'Lionel Boyce', 'James Ortiz', 'Bastian Antonio Fuentes'],
   'chal-mera-putt-4-2026': ['Amrinder Gill', 'Simi Chahal', 'Iftikhar Thakur', 'Nasir Chinyoti', 'Nirmal Rishi', 'Hardeep Gill', 'Agha Majid'],
   parasite: ['Song Kang-ho', 'Lee Sun-kyun', 'Cho Yeo-jeong', 'Choi Woo-shik', 'Park So-dam', 'Jang Hye-jin', 'Park Myung-hoon'],
@@ -283,7 +289,7 @@ function resolveImageUrl(show: Show): string {
   }
 
   if (show.imageUrl === LOCAL_FALLBACK_POSTER) {
-    return INLINE_FALLBACK_POSTER
+    return LOCAL_FALLBACK_POSTER
   }
 
   if (show.imageUrl.startsWith('/')) {
@@ -1174,12 +1180,103 @@ const catalog: Show[] = [
     type: 'Movie',
     year: 2019,
     genre: 'Thriller / Social Satire',
-    rating: 9.2,
+    rating: 8.5,
     imageUrl: '/parasite.jpg',
     region: 'Asian',
     ownerReview:
       'Bong Joon-ho\'s masterpiece weaponizes genre to expose class fractures with surgical precision. The Kim family\'s infiltration of the wealthy Park household starts as darkly comic and escalates into something genuinely devastating. Every prop and architectural detail carries thematic weight about affluence and inequality. Song Kang-ho\'s performance captures a man maintaining dignity while losing everything. The film refuses easy heroes or villains. Won Best Picture by defeating prestige favorites - richly deserved.',
     rottenTomatoesScore: 98,
+  },
+  {
+    id: 'oldboy-2003',
+    title: 'Oldboy',
+    type: 'Movie',
+    year: 2003,
+    genre: 'Thriller / Neo-noir',
+    rating: 8.4,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/pWDtjs568ZfOTMbURQBYuT4Qxka.jpg',
+    region: 'Asian',
+    ownerReview:
+      'Park Chan-wook delivers a brutal revenge thriller with operatic style, psychological intensity, and one of the most unforgettable twists in modern cinema. Choi Min-sik anchors the film with a ferocious performance that keeps the violence emotionally charged instead of empty spectacle.',
+    rottenTomatoesScore: 82,
+  },
+  {
+    id: 'memories-of-murder-2003',
+    title: 'Memories of Murder',
+    type: 'Movie',
+    year: 2003,
+    genre: 'Crime / Mystery',
+    rating: 8.1,
+    imageUrl: '/memories of murder.jpg',
+    region: 'Asian',
+    ownerReview:
+      'A masterful procedural that blends dark humor, rural realism, and mounting dread as investigators fail to solve a serial case. Bong Joon-ho turns institutional incompetence and social pressure into a haunting portrait of uncertainty that lingers long after the ending.',
+    rottenTomatoesScore: 95,
+  },
+  {
+    id: 'the-wailing-2016',
+    title: 'The Wailing',
+    type: 'Movie',
+    year: 2016,
+    genre: 'Horror / Mystery',
+    rating: 7.4,
+    imageUrl: '/the wailing.jpg',
+    region: 'Asian',
+    ownerReview:
+      'Na Hong-jin builds dread through ambiguity, folklore, and spiritual paranoia, letting fear escalate without easy explanations. The film is unsettling, atmospheric, and emotionally punishing, with a finale that leaves the moral ground deliberately unstable.',
+    rottenTomatoesScore: 99,
+  },
+  {
+    id: 'the-handmaiden-2016',
+    title: 'The Handmaiden',
+    type: 'Movie',
+    year: 2016,
+    genre: 'Thriller / Drama',
+    rating: 8.1,
+    imageUrl: '/the handmaiden.jpg',
+    region: 'Asian',
+    ownerReview:
+      'An exquisitely crafted period thriller where deception, desire, and class power constantly invert. Park Chan-wook combines precise visual design with emotional and erotic tension, delivering a layered narrative that keeps recontextualizing itself.',
+    rottenTomatoesScore: 96,
+  },
+  {
+    id: 'snowpiercer',
+    title: 'Snowpiercer',
+    type: 'Movie',
+    year: 2013,
+    genre: 'Sci-Fi / Action',
+    rating: 7.1,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/nzccOvhrLGI0nvAknCEAk8bchD9.jpg',
+    region: 'Asian',
+    ownerReview:
+      'A propulsive class-war allegory set on a perpetual train, balancing kinetic action with social critique. Bong Joon-ho keeps the pacing tight while each carriage reveals another layer of hierarchy, control, and survival politics.',
+    rottenTomatoesScore: 94,
+  },
+  {
+    id: 'i-saw-the-devil-2010',
+    title: 'I Saw the Devil',
+    type: 'Movie',
+    year: 2010,
+    genre: 'Thriller / Crime',
+    rating: 7.8,
+    imageUrl: '/i saw the devil.jpg',
+    region: 'Asian',
+    ownerReview:
+      'A relentless cat-and-mouse revenge film that pushes both hunter and killer into moral collapse. Kim Jee-woon stages the brutality with surgical control, making the violence disturbing and purposeful rather than sensational.',
+    rottenTomatoesScore: 81,
+  },
+  {
+    id: 'the-chaser-2008',
+    title: 'The Chaser',
+    type: 'Movie',
+    year: 2008,
+    genre: 'Crime / Thriller',
+    rating: 7.8,
+    imageUrl: '/the chaser.jpg',
+    region: 'Asian',
+    ownerReview:
+      'A grim, high-tension thriller that moves with urgency and refuses easy heroics. The film is notable for its ruthless pacing and its critique of institutional failure, with Ha Jung-woo and Kim Yoon-seok delivering powerhouse performances.',
+    rottenTomatoesScore: 82,
   },
   {
     id: 'dasim',
@@ -1245,6 +1342,19 @@ const catalog: Show[] = [
     ownerReview:
       'A postwar character drama wrapped in blockbuster monster spectacle, with strong emotional stakes and memorable destruction sequences. The film treats Godzilla as both physical threat and national trauma metaphor. A major franchise high point with real human weight.',
     rottenTomatoesScore: 98,
+  },
+  {
+    id: 'grave-of-the-fireflies-1988',
+    title: 'Grave of the Fireflies',
+    type: 'Movie',
+    year: 1988,
+    genre: 'Animation / War / Drama',
+    rating: 9.0,
+    imageUrl: 'https://image.tmdb.org/t/p/w780/k9tv1rXZbOhH7eiCk378x61kNQ1.jpg',
+    region: 'Asian',
+    ownerReview:
+      'Isao Takahata delivers one of the most devastating anti-war films ever made, following two siblings trying to survive in wartime Japan. The animation is gentle and human, which makes the tragedy even more heartbreaking. It is emotionally overwhelming, historically grounded, and unforgettable.',
+    rottenTomatoesScore: 100,
   },
   {
     id: 'the-boys',
@@ -2536,7 +2646,7 @@ function App() {
 
   const getPosterUrl = (show: Show): string => {
     if (failedPosterByShow[show.id]) {
-      return INLINE_FALLBACK_POSTER
+      return LOCAL_FALLBACK_POSTER
     }
 
     return resolveImageUrl(show)
@@ -2728,9 +2838,9 @@ function App() {
       }))
     }
 
-    if (img.src !== INLINE_FALLBACK_POSTER) {
+    if (img.src !== LOCAL_FALLBACK_POSTER) {
       img.onerror = null
-      img.src = INLINE_FALLBACK_POSTER
+      img.src = LOCAL_FALLBACK_POSTER
     }
   }
 
