@@ -1,5 +1,5 @@
 ﻿import { useEffect, useMemo, useRef, useState } from 'react'
-import type { FormEvent } from 'react'
+import type { CSSProperties, FormEvent } from 'react'
 import './App.css'
 
 type ShowType = 'Movie' | 'Series' | 'Show'
@@ -22,12 +22,16 @@ type Show = {
 type ShowDetails = {
   cast: string[]
   synopsis: string
+  personalOpinion: string
+  personalOpinionAuthor: string
 }
 
 type EpisodeReview = {
   episodeNumber: number
   title: string
   review: string
+  personalOpinion: string
+  personalOpinionAuthor: string
   synopsis: string
 }
 
@@ -60,6 +64,7 @@ const LOCAL_FALLBACK_POSTER = '/poster-fallback.svg'
 const MCU_SHARED_POSTER =
   'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Marvel_Cinematic_Universe_logo.png/1280px-Marvel_Cinematic_Universe_logo.png'
 const CAST_FALLBACK = ['Cast details are being updated']
+const GROUP_MEMBERS = ['Muhammad Aqdas', 'Hania Noor', 'Zahra Imtiaz', 'Rubab Jameel', 'Noman Ghafoor']
 
 const showCastById: Partial<Record<string, string[]>> = {
   'war-machine-2026': ['Alan Ritchson', 'Dennis Quaid', 'Stephan James', 'Jai Courtney', 'Esai Morales', 'Daniel Webber'],
@@ -279,11 +284,250 @@ function createStorySynopsis(show: Show): string {
   return `${synopsis.slice(0, 297).trimEnd()}...`
 }
 
+function hashString(value: string): number {
+  let hash = 0
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0
+  }
+
+  return hash
+}
+
+function pickGroupMember(show: Show): string {
+  if (show.region === 'Punjabi') {
+    const PunjabiQuota = 65
+    const value = hashString(show.id) % 100
+
+    if (value < PunjabiQuota) {
+      return 'Noman Ghafoor'
+    }
+
+    const alternateMembers = GROUP_MEMBERS.filter((member) => member !== 'Noman Ghafoor')
+    return alternateMembers[hashString(`${show.id}:${show.title}:alt`) % alternateMembers.length]
+  }
+
+  return GROUP_MEMBERS[hashString(`${show.id}:${show.title}`) % GROUP_MEMBERS.length]
+}
+
+function getPrimaryGenre(show: Show): string {
+  return show.genre.split('/')[0]?.trim().toLowerCase() ?? show.genre.toLowerCase()
+}
+
+function getTitleAccent(show: Show): CSSProperties {
+  const primaryGenre = getPrimaryGenre(show)
+  const palette = (() => {
+    if (show.region === 'Punjabi') {
+      return { accent: '#7CFF6B', glow: 'rgba(124, 255, 107, 0.7)', shadow: 'rgba(124, 255, 107, 0.25)' }
+    }
+
+    if (show.region === 'Bollywood') {
+      return { accent: '#FFB23F', glow: 'rgba(255, 178, 63, 0.72)', shadow: 'rgba(255, 178, 63, 0.26)' }
+    }
+
+    if (show.region === 'Lollywood') {
+      return { accent: '#FF5FB8', glow: 'rgba(255, 95, 184, 0.72)', shadow: 'rgba(255, 95, 184, 0.24)' }
+    }
+
+    if (show.region === 'Asian') {
+      return { accent: '#59E6FF', glow: 'rgba(89, 230, 255, 0.72)', shadow: 'rgba(89, 230, 255, 0.24)' }
+    }
+
+    if (primaryGenre.includes('sci-fi')) {
+      return { accent: '#59E6FF', glow: 'rgba(89, 230, 255, 0.75)', shadow: 'rgba(89, 230, 255, 0.26)' }
+    }
+
+    if (primaryGenre.includes('fantasy')) {
+      return { accent: '#A97BFF', glow: 'rgba(169, 123, 255, 0.75)', shadow: 'rgba(169, 123, 255, 0.26)' }
+    }
+
+    if (primaryGenre.includes('animation')) {
+      return { accent: '#61FFD8', glow: 'rgba(97, 255, 216, 0.75)', shadow: 'rgba(97, 255, 216, 0.24)' }
+    }
+
+    if (primaryGenre.includes('comedy')) {
+      return { accent: '#FFD45A', glow: 'rgba(255, 212, 90, 0.72)', shadow: 'rgba(255, 212, 90, 0.26)' }
+    }
+
+    if (primaryGenre.includes('crime')) {
+      return { accent: '#58F2C4', glow: 'rgba(88, 242, 196, 0.7)', shadow: 'rgba(88, 242, 196, 0.22)' }
+    }
+
+    if (primaryGenre.includes('thriller') || primaryGenre.includes('mystery')) {
+      return { accent: '#6CA8FF', glow: 'rgba(108, 168, 255, 0.72)', shadow: 'rgba(108, 168, 255, 0.24)' }
+    }
+
+    if (primaryGenre.includes('horror')) {
+      return { accent: '#7CFF6B', glow: 'rgba(124, 255, 107, 0.72)', shadow: 'rgba(124, 255, 107, 0.24)' }
+    }
+
+    if (primaryGenre.includes('romance')) {
+      return { accent: '#FF7CD2', glow: 'rgba(255, 124, 210, 0.72)', shadow: 'rgba(255, 124, 210, 0.24)' }
+    }
+
+    if (primaryGenre.includes('historical') || primaryGenre.includes('biography')) {
+      return { accent: '#FFB96A', glow: 'rgba(255, 185, 106, 0.72)', shadow: 'rgba(255, 185, 106, 0.24)' }
+    }
+
+    if (primaryGenre.includes('drama')) {
+      return { accent: '#FF6F91', glow: 'rgba(255, 111, 145, 0.72)', shadow: 'rgba(255, 111, 145, 0.24)' }
+    }
+
+    return { accent: '#E50914', glow: 'rgba(229, 9, 20, 0.78)', shadow: 'rgba(229, 9, 20, 0.26)' }
+  })()
+
+  return {
+    '--title-accent': palette.accent,
+    '--title-glow': palette.glow,
+    '--title-shadow': palette.shadow,
+  } as CSSProperties
+}
+
+function getAnalyticalAngles(show: Show): { theme: string; craft: string; verdict: string } {
+  const primaryGenre = getPrimaryGenre(show)
+
+  if (primaryGenre.includes('animation')) {
+    return {
+      theme: 'identity, growth, and the emotional life hidden inside spectacle',
+      craft: 'Its animation style and production design do a lot of emotional lifting, using color and movement to express feeling as much as plot.',
+      verdict: 'That gives the title a sincerity that can survive even its more familiar story beats.',
+    }
+  }
+
+  if (primaryGenre.includes('action')) {
+    return {
+      theme: 'power, consequence, and the cost of escalation',
+      craft: 'The best moments come when the staging is clear and the editing lets each blow or chase register instead of just feeling loud.',
+      verdict: 'When the film trusts precision over noise, it feels sharper and more satisfying.',
+    }
+  }
+
+  if (primaryGenre.includes('sci-fi')) {
+    return {
+      theme: 'the tension between ambition and human vulnerability',
+      craft: 'The visual effects and world-building matter most when they serve a character problem rather than just scale.',
+      verdict: 'That balance keeps the story grounded even when the concepts get huge.',
+    }
+  }
+
+  if (primaryGenre.includes('fantasy')) {
+    return {
+      theme: 'belonging, myth, and the pull between wonder and responsibility',
+      craft: 'Its production design and tonal control decide whether the fantasy feels immersive or merely decorative.',
+      verdict: 'The strongest scenes are the ones that make the world feel emotionally lived-in.',
+    }
+  }
+
+  if (primaryGenre.includes('thriller') || primaryGenre.includes('mystery')) {
+    return {
+      theme: 'uncertainty, paranoia, and the pressure of not knowing what is true',
+      craft: 'The pacing and sound design matter because suspense depends on restraint as much as revelation.',
+      verdict: 'The title works best when it keeps the audience off-balance without losing narrative control.',
+    }
+  }
+
+  if (primaryGenre.includes('crime')) {
+    return {
+      theme: 'morality, systems of power, and the moral damage done by institutions',
+      craft: 'A strong crime story needs texture in performance and detail in framing, otherwise it becomes just procedural motion.',
+      verdict: 'This one stands out when it treats the conflict as ethical pressure rather than simple plot mechanics.',
+    }
+  }
+
+  if (primaryGenre.includes('drama')) {
+    return {
+      theme: 'emotional consequence, self-knowledge, and the way people change under pressure',
+      craft: 'Performance nuance and scene rhythm matter more than spectacle here, so the smallest choices often carry the most weight.',
+      verdict: 'That gives the story room to breathe and makes the quieter beats land harder.',
+    }
+  }
+
+  if (primaryGenre.includes('comedy')) {
+    return {
+      theme: 'timing, embarrassment, and how humor can reveal character',
+      craft: 'The writing and performance have to stay nimble, because comic rhythm is the difference between a joke landing and feeling forced.',
+      verdict: 'When the film or series commits to its tone, the comedy becomes part of the character work instead of a distraction from it.',
+    }
+  }
+
+  if (primaryGenre.includes('historical') || primaryGenre.includes('biography')) {
+    return {
+      theme: 'memory, responsibility, and the pressure of telling history honestly',
+      craft: 'Period detail matters, but the real test is whether the direction and performances make the past feel morally immediate.',
+      verdict: 'The best scenes make history feel less like a lesson and more like a lived consequence.',
+    }
+  }
+
+  if (primaryGenre.includes('superhero')) {
+    return {
+      theme: 'identity, duty, and the burden of inheriting a symbol',
+      craft: 'Superhero stories rise or fall on whether the action has personality and the emotional beats feel earned.',
+      verdict: 'This one succeeds when it remembers that scale matters less than the person wearing the suit.',
+    }
+  }
+
+  if (primaryGenre.includes('family') || primaryGenre.includes('coming-of-age')) {
+    return {
+      theme: 'belonging, growth, and the awkwardness of becoming someone new',
+      craft: 'The emotional clarity matters more than complexity, so the best choices are the ones that keep the tone warm without becoming soft.',
+      verdict: 'That makes the story approachable while still giving it enough weight to feel memorable.',
+    }
+  }
+
+  if (primaryGenre.includes('legal')) {
+    return {
+      theme: 'systems, persuasion, and the conflict between truth and performance',
+      craft: 'A legal drama succeeds when dialogue has bite and the scenes feel staged like arguments rather than exposition dumps.',
+      verdict: 'The best stretches turn procedure into tension and character into strategy.',
+    }
+  }
+
+  if (primaryGenre.includes('horror')) {
+    return {
+      theme: 'fear, guilt, and what people refuse to face',
+      craft: 'Atmosphere, sound, and restraint usually matter more than outright shocks if the film wants its dread to last.',
+      verdict: 'It becomes much more effective when it trusts unease over cheap jolts.',
+    }
+  }
+
+  return {
+    theme: 'character pressure and the emotional stakes hidden beneath the plot',
+    craft: 'The title benefits most when performance, pacing, and visual detail are all working toward the same mood.',
+    verdict: 'That coherence is what separates a forgettable watch from one that feels worth revisiting.',
+  }
+}
+
+function createPersonalOpinion(show: Show): { text: string; author: string } {
+  const angles = getAnalyticalAngles(show)
+  const member = pickGroupMember(show)
+  const formatPhrase =
+    show.type === 'Movie'
+      ? 'As a movie, it depends on whether the direction can keep the emotional thread strong enough to justify the scale of the story.'
+      : show.type === 'Series'
+        ? 'As a series, it works best when the longer structure gives the characters room to evolve instead of repeating the same beats.'
+        : 'As a show, it succeeds when the format lets the atmosphere and character arcs build gradually across episodes.'
+
+  const tonalPhrase =
+    show.rating >= 8.5
+      ? 'It feels especially confident, because it knows exactly what it wants the audience to feel and how to earn that response.'
+      : show.rating >= 7.0
+        ? 'It is engaging enough to stay memorable, even if a few ideas feel more ambitious than fully realized.'
+        : 'It has ideas worth noticing, but the execution is uneven enough that the stronger elements do more of the work.'
+
+  return {
+    text: `${show.title} is most interesting when you look beyond the plot and focus on what it is trying to say about ${angles.theme}. ${angles.craft} ${formatPhrase} ${tonalPhrase} ${angles.verdict}`,
+    author: member,
+  }
+}
+
 function getShowDetails(show: Show): ShowDetails {
   const curatedCast = showCastById[show.id]
+  const personalOpinion = createPersonalOpinion(show)
   return {
     cast: curatedCast && curatedCast.length > 0 ? curatedCast : CAST_FALLBACK,
     synopsis: createStorySynopsis(show),
+    personalOpinion: personalOpinion.text,
+    personalOpinionAuthor: personalOpinion.author,
   }
 }
 
@@ -327,6 +571,63 @@ function buildEpisodeSourceSentence(show: Show, sentence: string): string {
   }
 
   return `${show.title} balances character conflict and momentum with steady storytelling.`
+}
+
+function ensureSentenceEnd(value: string): string {
+  const cleaned = value.replace(/\s+/g, ' ').trim()
+
+  if (!cleaned) {
+    return ''
+  }
+
+  return /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`
+}
+
+function createEpisodeReviewContent(
+  show: Show,
+  seasonNumber: number,
+  episodeNumber: number,
+  episodeName: string,
+  summary: string | null,
+  sentence: string,
+  episodeIndex: number,
+): {
+  review: string
+  personalOpinion: string
+  personalOpinionAuthor: string
+} {
+  const angles = getAnalyticalAngles(show)
+  const cleanSummary = stripHtmlSummary(summary)
+  const sourceSentence = buildEpisodeSourceSentence(show, sentence)
+  const episodeLabel = episodeName || `Episode ${episodeNumber}`
+  const episodeMember = GROUP_MEMBERS[(hashString(`${show.id}:${seasonNumber}:${episodeNumber}`) + episodeIndex) % GROUP_MEMBERS.length]
+
+  const review = [
+    `Episode ${episodeNumber} review: ${episodeLabel} keeps the season focused on ${angles.theme}`,
+    ensureSentenceEnd(cleanSummary || sourceSentence),
+    angles.craft,
+    ensureSentenceEnd(`The episode works best when its pacing stays controlled and its emotional beats feel earned rather than rushed`),
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const personalOpinion = [
+    `I think ${episodeLabel} stands out because it translates ${angles.theme} into a more immediate, scene-by-scene experience.`,
+    show.type === 'Series'
+      ? 'Its serial format gives the character work room to breathe, which makes the episode feel more layered.'
+      : 'Its shorter shape keeps the ideas tight and direct.',
+    show.rating >= 8.5
+      ? 'The episode feels confident and polished.'
+      : show.rating >= 7
+        ? 'The episode is solid and memorable, even when it is not the flashiest entry.'
+        : 'The episode has interesting ideas, but the execution is more uneven than the better entries.',
+  ].join(' ')
+
+  return {
+    review,
+    personalOpinion,
+    personalOpinionAuthor: episodeMember,
+  }
 }
 
 const episodeGuideQueryByShowId: Partial<Record<string, string>> = {
@@ -419,8 +720,15 @@ function createGeneratedSeasonReviews(show: Show, episodeGuide: EpisodeGuideEntr
       const sentence = sentencePool[(seasonIndex + episodeIndex) % sentencePool.length]
       const episodeSourceSentence = buildEpisodeSourceSentence(show, sentence)
       const canonicalSynopsis = stripHtmlSummary(seasonEpisode.summary)
-
-      const episodeReview = `Episode ${episodeNumber} review: ${episodeSourceSentence} This chapter advances the season with focused pacing, meaningful character decisions, and clear narrative progression.`
+      const episodeContent = createEpisodeReviewContent(
+        show,
+        seasonNumber,
+        episodeNumber,
+        seasonEpisode.name,
+        seasonEpisode.summary,
+        episodeSourceSentence,
+        episodeIndex,
+      )
 
       const episodeSynopsis = trimText(
         canonicalSynopsis ||
@@ -431,7 +739,9 @@ function createGeneratedSeasonReviews(show: Show, episodeGuide: EpisodeGuideEntr
       return {
         episodeNumber,
         title: seasonEpisode.name,
-        review: episodeReview,
+        review: episodeContent.review,
+        personalOpinion: episodeContent.personalOpinion,
+        personalOpinionAuthor: episodeContent.personalOpinionAuthor,
         synopsis: episodeSynopsis,
       }
     })
@@ -1718,7 +2028,7 @@ const catalog: Show[] = [
     year: 2003,
     genre: 'Comedy / Family',
     rating: 7.0,
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/9/98/Freaky_Friday_%282003_film%29.png',
+    imageUrl: '/freaky friday.jpg',
     region: 'Hollywood',
     ownerReview:
       'A surprisingly effective family comedy that earns its emotional beats through genuine character work. Jamie Lee Curtis and Lindsay Lohan create electric chemistry. The script smartly uses the body swap to force both characters to walk in each other\'s shoes, building empathy through comic situations. The film avoids schmaltz despite inherent sentimentality, keeping things breezy and entertaining. A reliable choice for family viewing that surprisingly holds up to nostalgia and affection.',
@@ -1861,7 +2171,7 @@ const catalog: Show[] = [
     year: 2005,
     genre: 'Fantasy / Adventure',
     rating: 7.9,
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/1/10/The_Chronicles_of_Narnia_-_The_Lion%2C_the_Witch_and_the_Wardrobe.jpg',
+    imageUrl: '/narnia 1.jpg',
     region: 'Hollywood',
     ownerReview:
       'A strong fantasy opener that treats Narnia like a genuine world rather than a visual effects showcase. The children are cast well, the witch is memorably imposing, and the film builds toward the Aslan material with real emotional weight. It is earnest in a way that suits the source material and still feels polished as a studio adventure.',
@@ -1952,7 +2262,7 @@ const catalog: Show[] = [
     year: 2017,
     genre: 'Action / Adventure',
     rating: 6.8,
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/2/21/Pirates_of_the_Caribbean%2C_Dead_Men_Tell_No_Tales.jpg',
+    imageUrl: '/pirates 5.jpg',
     region: 'Hollywood',
     ownerReview:
       'A return to the franchise\'s more ghostly and supernatural roots, with Javier Bardem giving the film a strong antagonist presence. The plot is familiar but efficient, and the action is staged with enough energy to keep longtime fans engaged. It is a serviceable capstone to the series so far.',
@@ -2718,7 +3028,11 @@ function App() {
       return LOCAL_FALLBACK_POSTER
     }
 
-    return resolveImageUrl(show)
+    try {
+      return encodeURI(resolveImageUrl(show))
+    } catch (e) {
+      return LOCAL_FALLBACK_POSTER
+    }
   }
 
   const featuredShow = catalog[heroIndex % catalog.length]
@@ -2956,7 +3270,8 @@ function App() {
           <section
             className="hero"
             style={{
-              backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.86)), url(${featuredImageUrl})`,
+              backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.86)), url('${featuredImageUrl}')`,
+              ...getTitleAccent(featuredShow),
             }}
           >
             <p className="live-pill">
@@ -2965,7 +3280,7 @@ function App() {
             <h1>Featured: {featuredShow.title}</h1>
             <p className="lead">
               A premium review destination for movies, series, and shows. Browse
-              curated picks, read Our review, and join the audience conversation.
+              curated picks, read reviews, and join the audience conversation.
             </p>
             <p className="hero-meta">
               {featuredShow.year}  |  {featuredShow.type}  |  {featuredShow.genre}  |  Our rating{' '}
@@ -3082,7 +3397,7 @@ function App() {
                     </div>
                     <div className="catalog-grid">
                       {regionShows.map((show) => (
-                        <article key={show.id} className="show-card">
+                        <article key={show.id} className="show-card" style={getTitleAccent(show)}>
                           <img src={getPosterUrl(show)} alt={show.title} className="show-poster" loading="lazy" decoding="async" referrerPolicy="no-referrer" data-fallback={LOCAL_FALLBACK_POSTER} onError={(event) => handleImageError(event, show.id)} />
                           <div className="card-overlay">
                             <div className="show-header">
@@ -3116,7 +3431,7 @@ function App() {
             <main className="catalog-grid">
               {filteredAndSortedCatalog.map((show) => {
                 return (
-                  <article key={show.id} className="show-card">
+                  <article key={show.id} className="show-card" style={getTitleAccent(show)}>
                     <img src={getPosterUrl(show)} alt={show.title} className="show-poster" loading="lazy" decoding="async" referrerPolicy="no-referrer" data-fallback={LOCAL_FALLBACK_POSTER} onError={(event) => handleImageError(event, show.id)} />
                     <div className="card-overlay">
                       <div className="show-header">
@@ -3177,7 +3492,7 @@ function App() {
 
       {activeShow ? (
         <div className="modal-overlay" role="dialog" aria-modal="true" onClick={closeShowDetails}>
-          <article className="review-modal" onClick={(event) => event.stopPropagation()}>
+          <article className="review-modal" onClick={(event) => event.stopPropagation()} style={getTitleAccent(activeShow)}>
             <button
               type="button"
               className="modal-close"
@@ -3235,9 +3550,17 @@ function App() {
               <p>{(activeShowDetails?.cast ?? CAST_FALLBACK).join(', ')}</p>
             </section>
 
-            <section className="owner-review">
-              <h3>Our review</h3>
+            <section className="owner-review review-highlight">
+              <h3>Review</h3>
               <p>{activeShow.ownerReview}</p>
+            </section>
+
+            <section className="owner-review opinion-panel">
+              <h3>Personal opinion</h3>
+              <p>{activeShowDetails?.personalOpinion ?? 'Personal opinion is not available yet.'}</p>
+              <p className="opinion-author">
+                {activeShowDetails?.personalOpinionAuthor ?? 'Member credit unavailable'}
+              </p>
             </section>
 
             {activeShow.type !== 'Movie' && (
@@ -3282,7 +3605,11 @@ function App() {
 
                     <div className="season-list">
                       {filteredSeasonReviews.map((season) => (
-                        <article key={`${activeShow.id}-season-${season.seasonNumber}`} className="season-card">
+                        <article
+                          key={`${activeShow.id}-season-${season.seasonNumber}`}
+                          className="season-card"
+                          style={getTitleAccent(activeShow)}
+                        >
                           <h4>
                             Season {season.seasonNumber}{' '}
                             <span className="season-episode-count">{season.episodes.length} episodes</span>
@@ -3299,7 +3626,10 @@ function App() {
                                   Episode {episode.episodeNumber}: {episode.title}
                                 </p>
                                 <p className="episode-label">Review</p>
-                                <p>{episode.review}</p>
+                                <p className="episode-review-text">{episode.review}</p>
+                                <p className="episode-label">Personal opinion</p>
+                                <p className="episode-opinion-text">{episode.personalOpinion}</p>
+                                <p className="episode-opinion-author">{episode.personalOpinionAuthor}</p>
                                 <p className="episode-label">Synopsis</p>
                                 <p>{episode.synopsis}</p>
                               </li>
