@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Tu Jhoothi Main Makkaar</title>
+  <desc id="desc">Poster for Tu Jhoothi Main Makkaar.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="900" fill="url(#bg)" />
+  <rect x="56" y="60" width="488" height="780" rx="30" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" stroke-width="2" />
+  <text x="300" y="320" text-anchor="middle" fill="#e9d5ff" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4">ROMANCE • COMEDY</text>
+  <text x="300" y="430" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="48" font-weight="800">TU JHOOTHI</text>
+  <text x="300" y="495" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="44" font-weight="800">MAIN MAKKAAR</text>
+  <text x="300" y="650" text-anchor="middle" fill="#f5f3ff" font-family="Arial, sans-serif" font-size="24">Love • Lies • Laughter</text>
+</svg>
