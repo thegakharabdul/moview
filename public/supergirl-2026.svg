@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Supergirl</title>
+  <desc id="desc">Local poster for Supergirl 2026.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#09131f" />
+      <stop offset="60%" stop-color="#17365a" />
+      <stop offset="100%" stop-color="#6c1120" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#ffdf7a" stop-opacity="0.9" />
+      <stop offset="55%" stop-color="#ff4d5a" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#ff4d5a" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="900" fill="url(#bg)" />
+  <circle cx="300" cy="270" r="180" fill="url(#glow)" />
+  <rect x="56" y="64" width="488" height="772" rx="30" fill="rgba(0,0,0,0.22)" stroke="rgba(255,255,255,0.14)" stroke-width="2" />
+  <text x="300" y="215" text-anchor="middle" fill="#ffeaa7" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="5">DC LEGACY</text>
+  <text x="300" y="415" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="62" font-weight="800">SUPERGIRL</text>
+  <text x="300" y="470" text-anchor="middle" fill="#f3d7dc" font-family="Arial, sans-serif" font-size="24" font-weight="700">2026</text>
+  <text x="300" y="610" text-anchor="middle" fill="#e7eef7" font-family="Arial, sans-serif" font-size="24">Resilience. Identity. Flight.</text>
+</svg>

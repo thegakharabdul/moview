@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Stree 2</title>
+  <desc id="desc">Poster for Stree 2.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#4c1d95" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="900" fill="url(#bg)" />
+  <rect x="48" y="54" width="504" height="792" rx="30" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.16)" stroke-width="2" />
+  <text x="300" y="330" text-anchor="middle" fill="#fef3c7" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="4">BOLLYWOOD HORROR</text>
+  <text x="300" y="430" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="58" font-weight="800">STREE 2</text>
+  <text x="300" y="650" text-anchor="middle" fill="#f5d0fe" font-family="Arial, sans-serif" font-size="24">Comedy • Horror • Supernatural</text>
+</svg>

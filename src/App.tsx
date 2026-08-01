@@ -784,6 +784,54 @@ const catalog: Show[] = [
     rottenTomatoesScore: 87,
   },
   {
+    id: 'supergirl-2026',
+    title: 'Supergirl',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Action / Superhero',
+    rating: 7.8,
+    imageUrl: '/supergirl 2026.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A character-first superhero story that centers resilience, identity, and the burden of legacy. It should play best when it leans into Kara Zor-El\'s determination instead of generic franchise spectacle.',
+  },
+  {
+    id: 'obsession-2026',
+    title: 'Obsession',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Thriller / Drama',
+    rating: 7.4,
+    imageUrl: '/obsession.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A tense psychological drama built around fixation, control, and the damage that follows when desire becomes self-destruction. The film works if it keeps the pressure intimate and the character choices sharp.',
+  },
+  {
+    id: 'the-odyssey-2026',
+    title: 'The Odyssey',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Adventure / Epic',
+    rating: 8.2,
+    imageUrl: '/The Odyssey.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A sweeping adaptation that should feel mythic, perilous, and deeply human at the same time. The best version of this story relies on endurance, temptation, and the cost of getting home.',
+  },
+  {
+    id: 'spider-man-brand-new-day-2026',
+    title: 'Spider-Man: Brand New Day',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Action / Superhero',
+    rating: 8.1,
+    imageUrl: '/spiderman brand new day.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A fresh-start Spider-Man chapter that should focus on consequences, loneliness, and rebuilding Peter Parker\'s world from the ground up. The title promises a reset, so the story should feel personal before it feels cosmic.',
+  },
+  {
     id: 'avatar-3',
     title: 'Avatar 3',
     type: 'Movie',
@@ -2283,6 +2331,186 @@ const catalog: Show[] = [
     rottenTomatoesScore: 70,
   },
   {
+    id: 'stree-2-2024',
+    title: 'Stree 2',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Comedy / Horror',
+    rating: 8.0,
+    imageUrl: '/stree-2-2024.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A crowd-pleasing sequel that balances supernatural chills with sharp comic timing and a surprisingly warm emotional core. Rajkummar Rao and Shraddha Kapoor keep the film lively even when the plotting leans into familiar genre beats.',
+  },
+  {
+    id: 'madgaon-express-2024',
+    title: 'Madgaon Express',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Comedy / Adventure',
+    rating: 7.6,
+    imageUrl: '/madgaon-express-2024.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A breezy ensemble comedy about friendship, travel, and the comic mess of expectations. The film succeeds because its characters feel specific and its humor is rooted in everyday awkwardness rather than just broad punchlines.',
+  },
+  {
+    id: 'kanguva-2024',
+    title: 'Kanguva',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Action / Fantasy',
+    rating: 7.2,
+    imageUrl: '/kanguva-2024.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A grand-scale fantasy action film that leans heavily into visual spectacle and mythic ambition. Its biggest strength is its willingness to be bold, even when the storytelling becomes more sprawling than coherent.',
+  },
+  {
+    id: 'shaitaan-2024',
+    title: 'Shaitaan',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Horror / Thriller',
+    rating: 7.8,
+    imageUrl: '/shaitaan-2024.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A tense supernatural thriller that uses family drama and creeping dread to create a strong psychological hook. The film is at its best when it turns everyday domestic spaces into sites of escalating terror.',
+  },
+  {
+    id: 'metro-in-dino-2026',
+    title: 'Metro... In Dino',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Romance / Drama',
+    rating: 7.9,
+    imageUrl: '/metro-in-dino-2026.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A contemporary romantic drama that explores urban loneliness, desire, and emotional detours through multiple intersecting lives. The film aims for emotional realism while keeping the emotional palette broad and cinematic.',
+  },
+  {
+    id: 'sikandar-2026',
+    title: 'Sikandar',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Action / Drama',
+    rating: 7.5,
+    imageUrl: '/sikandar-2026.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A high-voltage action drama built around a charismatic lead and a strong moral center. The film looks set to deliver mass entertainment with a sharper emotional hook than typical star vehicles.',
+  },
+  {
+    id: 'jai-hanuman-2026',
+    title: 'Jai Hanuman',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Mythological / Action',
+    rating: 7.7,
+    imageUrl: '/jai-hanuman-2026.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A mythological action film that leans on devotional grandeur, visual scale, and cultural symbolism. The biggest appeal comes from the sense of cinematic ceremony and spiritual stakes rather than conventional realism.',
+  },
+  {
+    id: 'alpha-2026',
+    title: 'Alpha',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Action / Thriller',
+    rating: 7.4,
+    imageUrl: '/alpha-2026.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'An intense action thriller that appears designed around momentum, intimidation, and a larger-than-life central performance. The film should work best when it treats danger as both physical and emotional.',
+  },
+  {
+    id: 'housefull-5-2026',
+    title: 'Housefull 5',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Comedy / Action',
+    rating: 7.3,
+    imageUrl: '/housefull-5-2026.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A broad ensemble comedy built around chaos, mistaken identity, and a big-star cast. The appeal is predictably commercial: fast pacing, comic confusion, and enough personality to keep the silliness entertaining.',
+  },
+  {
+    id: 'singham-again-2024',
+    title: 'Singham Again',
+    type: 'Movie',
+    year: 2024,
+    genre: 'Action / Thriller',
+    rating: 7.8,
+    imageUrl: '/singham-again-2024.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A stylish, muscular action spectacle that leans on star power, robust stunt choreography, and a larger-than-life moral stance. It works as a crowd-pleasing entertainer when it embraces spectacle over subtlety.',
+  },
+  {
+    id: 'fukrey-3-2023',
+    title: 'Fukrey 3',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Comedy / Drama',
+    rating: 7.5,
+    imageUrl: '/fukrey-3-2023.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A spirited follow-up that keeps the friendship-heavy comedy engine intact while layering in more emotional stakes. The humor is messy in the best way, and the cast sells the chemistry effortlessly.',
+  },
+  {
+    id: 'animal-2023',
+    title: 'Animal',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Action / Crime',
+    rating: 7.9,
+    imageUrl: '/animal-2023.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A brutal, high-voltage crime drama that turns father-son conflict into a storm of violence, ambition, and obsession. It is unrelenting in tone, but the emotional extremity gives it a strange, memorable force.',
+  },
+  {
+    id: 'tu-jhoothi-main-makkaar-2023',
+    title: 'Tu Jhoothi Main Makkaar',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Romance / Comedy',
+    rating: 7.4,
+    imageUrl: '/tu-jhoothi-main-makkaar-2023.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A glossy romantic comedy that uses flirtation, public image, and modern relationship anxiety as its main engine. The chemistry and breezy tone keep it enjoyable even when the story feels familiar.',
+  },
+  {
+    id: 'sam-bahadur-2023',
+    title: 'Sam Bahadur',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Biography / War Drama',
+    rating: 7.7,
+    imageUrl: '/sam-bahadur-2023.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A grounded biographical drama that presents military leadership as a mix of duty, ego, and political compromise. The film is strongest when it focuses on the cost of public service rather than on spectacle.',
+  },
+  {
+    id: 'rocky-aur-rani-ki-prem-kahaani-2023',
+    title: 'Rocky Aur Rani Ki Prem Kahani',
+    type: 'Movie',
+    year: 2023,
+    genre: 'Romance / Drama',
+    rating: 7.6,
+    imageUrl: '/rocky-aur-rani-ki-prem-kahaani-2023.svg',
+    region: 'Bollywood',
+    ownerReview:
+      'A colorful family romance that mixes social satire, generational conflict, and heartfelt emotion. It is exuberant and openly theatrical, which helps it land as a big, affectionate celebration of love and tradition.',
+  },
+  {
     id: '12th-fail-2023',
     title: '12th Fail',
     type: 'Movie',
@@ -2949,6 +3177,7 @@ function App() {
     () => getInitialFeedback(),
   )
   const [page, setPage] = useState<Page>('home')
+  const [searchQuery, setSearchQuery] = useState('')
   const [region, setRegion] = useState<RegionFilter>('All')
   const [category, setCategory] = useState<CategoryFilter>('All')
   const [genre, setGenre] = useState<GenreFilter>('All')
@@ -2973,8 +3202,24 @@ function App() {
     localStorage.setItem(storageKey, JSON.stringify(feedbackByShow))
   }, [feedbackByShow])
 
+  const normalizedSearchQuery = searchQuery.trim().toLowerCase()
+
+  const searchFilteredCatalog = useMemo(() => {
+    if (!normalizedSearchQuery) {
+      return catalog
+    }
+
+    return catalog.filter((show) => {
+      const searchableText = [show.title, show.genre, show.region, show.type, String(show.year)]
+        .join(' ')
+        .toLowerCase()
+
+      return searchableText.includes(normalizedSearchQuery)
+    })
+  }, [normalizedSearchQuery])
+
   const filteredAndSortedCatalog = useMemo(() => {
-    let filtered = [...catalog]
+    let filtered = [...searchFilteredCatalog]
 
     if (region !== 'All') {
       filtered = filtered.filter((show) => show.region === region)
@@ -3002,7 +3247,7 @@ function App() {
     })
 
     return filtered
-  }, [region, category, genre, sortBy])
+  }, [searchFilteredCatalog, region, category, genre, sortBy])
 
   const activeShow = useMemo(
     () => catalog.find((show) => show.id === activeShowId) ?? null,
@@ -3016,12 +3261,12 @@ function App() {
   }, [])
 
   const topRated = useMemo(() => {
-    return [...catalog].sort((a, b) => b.rating - a.rating).slice(0, 5)
-  }, [])
+    return [...searchFilteredCatalog].sort((a, b) => b.rating - a.rating).slice(0, 5)
+  }, [searchFilteredCatalog])
 
   const latestDrops = useMemo(() => {
-    return [...catalog].sort((a, b) => b.year - a.year).slice(0, 5)
-  }, [])
+    return [...searchFilteredCatalog].sort((a, b) => b.year - a.year).slice(0, 5)
+  }, [searchFilteredCatalog])
 
   const getPosterUrl = (show: Show): string => {
     if (failedPosterByShow[show.id]) {
@@ -3263,6 +3508,31 @@ function App() {
             About
           </button>
         </nav>
+        <form
+          className="nav-search"
+          role="search"
+          onSubmit={(event) => {
+            event.preventDefault()
+            setPage('library')
+          }}
+        >
+          <label className="sr-only" htmlFor="site-search">
+            Search catalog
+          </label>
+          <input
+            id="site-search"
+            className="nav-search-input"
+            type="search"
+            placeholder="Search titles, genres, years"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+          {searchQuery ? (
+            <button type="button" className="nav-search-clear" onClick={() => setSearchQuery('')}>
+              Clear
+            </button>
+          ) : null}
+        </form>
       </header>
 
       {page === 'home' ? (
