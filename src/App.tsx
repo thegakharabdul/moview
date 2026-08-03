@@ -119,6 +119,7 @@ const showCastById: Partial<Record<string, string[]>> = {
   'i-saw-the-devil-2010': ['Lee Byung-hun', 'Choi Min-sik', 'Jeon Gook-hwan', 'Kim Yoon-seo', 'Oh San-ha'],
   'the-chaser-2008': ['Kim Yoon-seok', 'Ha Jung-woo', 'Seo Young-hee', 'Kim Yoo-jung', 'Jeong In-gi'],
   'project-hail-mary-2026': ['Ryan Gosling', 'Sandra Huller', 'Milly Alcock', 'Ken Leung', 'Lionel Boyce', 'James Ortiz', 'Bastian Antonio Fuentes'],
+  'the-drama-2026': ['Meryl Streep', 'Adam Driver', 'Zendaya', 'Colman Domingo', 'Ayo Edebiri', 'Harris Dickinson'],
   'chal-mera-putt-4-2026': ['Amrinder Gill', 'Simi Chahal', 'Iftikhar Thakur', 'Nasir Chinyoti', 'Nirmal Rishi', 'Hardeep Gill', 'Agha Majid'],
   parasite: ['Song Kang-ho', 'Lee Sun-kyun', 'Cho Yeo-jeong', 'Choi Woo-shik', 'Park So-dam', 'Jang Hye-jin', 'Park Myung-hoon'],
   'train-to-busan': ['Gong Yoo', 'Jung Yu-mi', 'Ma Dong-seok', 'Kim Su-an', 'Kim Eui-sung', 'Choi Woo-shik', 'Ahn So-hee'],
@@ -806,6 +807,19 @@ const catalog: Show[] = [
     region: 'Hollywood',
     ownerReview:
       'A tense psychological drama built around fixation, control, and the damage that follows when desire becomes self-destruction. The film works if it keeps the pressure intimate and the character choices sharp.',
+  },
+  {
+    id: 'the-drama-2026',
+    title: 'The Drama',
+    type: 'Movie',
+    year: 2026,
+    genre: 'Drama / Romance',
+    rating: 7.9,
+    imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTcwOGZhYmItYTg3ZS00NjUwLWJiMmQtMjU5YjEwYWY0NmNkXkEyXkFqcGc@._V1_QL75_UX380_CR0,16,380,562_.jpg',
+    region: 'Hollywood',
+    ownerReview:
+      'A character-driven 2026 drama about relationships, reputations, and the emotional fallout that follows when private choices become public. It works best when the performances stay intimate and the conflicts feel lived-in rather than melodramatic.',
+    rottenTomatoesScore: 79,
   },
   {
     id: 'the-odyssey-2026',
